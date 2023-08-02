@@ -13,6 +13,18 @@ body {
     color: #1a1f16;
 }
 
+.nav {
+    margin: 0 auto;
+    padding: 1em 1em;
+    max-width: 1400px;
+    background-color: #ededed;
+    color: var(--clr-dark);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 2em;
+}
+
 .master-container {
     margin: 0 auto;
     padding: 1em 0;
