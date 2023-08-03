@@ -48,7 +48,7 @@ body {
 
 .container-right {
     padding: 0 1em 1em 1em;
-    border-bottom: 2px solid var(--clr-dark);
+    /* border-bottom: 2px solid var(--clr-dark); */
 }
 
 @media (min-width: 576px) {
@@ -210,18 +210,32 @@ body {
     /* box-shadow: 5px 5px var(--clr-white); */
 }
 
+.cart-total-amount-wrapper {
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border: 1px dashed red;
+}
+
+.cart-total-amount {
+    font-size: 0.75em;
+}
+
+.cart-checkout-btn-wrapper,
 .cart-goto-btn-wrapper {
     margin-top: 1em;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     border: 1px dashed red;
 }
 
+.cart-checkout-btn,
 .cart-goto-btn {
     font-family: inherit;
     margin-inline: auto;
-    padding: 0.5em 2em;
+    padding: 0.5em 1em;
     color: var(--clr-white);
     background-color: var(--clr-black);
     border: 1px solid var(--clr-grey);
@@ -230,14 +244,16 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1em;
+    gap: 0.5em;
 }
 
+.cart-checkout-btn:hover,
 .cart-goto-btn:hover {
     background-color: var(--clr-grey);
     border: 1px solid var(--clr-black);
 }
 
+.cart-checkout-btn img,
 .cart-goto-btn img {
     height: 1.5em;
 }
@@ -359,3 +375,50 @@ body {
     font-size: 1.25em;
 }
 /* END of PRODUCT CARD */
+
+/* CART WRAPPER */
+.cart-wrapper {
+    /* display: flex;
+    flex-direction: column; */
+    border: 1px dashed red;
+}
+
+.cart-title {
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.cart-items-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    border: 1px dashed green;
+}
+
+.cart-item {
+    padding: 1em;
+    border-radius: 1.5em;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    background-color: var(--clr-white);
+}
+
+.cart-item__img-wrapper {
+    flex: 1;
+}
+
+.cart-item__summary-wrapper {
+    flex: 3;
+}
+
+.cart-item__img {
+    width: 100%;
+    border-radius: 1em;
+}
+
+.cart-item__support-txt {
+    color: red;
+}
+
+/* END of CART WRAPPER */
