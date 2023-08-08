@@ -1,6 +1,6 @@
 export const customersData = [
     {
-        custId: "";
+        custId: "",
         custLegalName: "AeroSupplyPlus LLC",
         custAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
         custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
@@ -9,7 +9,7 @@ export const customersData = [
         custContactName: "Mattew Yampolski",
         custKYChecked: "",
         custPaymentTerms: "Net30",
-        custPaymentMethods: 
+        custPaymentMethods: "",
         custStatus: "active",
     },
 ];
