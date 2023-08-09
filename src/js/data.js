@@ -14,3 +14,5 @@ export const customersData = [
         custStatus: "active",
     },
 ];
+
+// custPaymentTerms: wire, card, net10, net30
