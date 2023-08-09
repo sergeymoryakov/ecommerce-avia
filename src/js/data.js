@@ -9,6 +9,7 @@ export const customersData = [
         custContactName: "Mattew Yampolski",
         custKYChecked: "",
         custPaymentTerms: "Net30",
+        custHandlingFee: "0.015",
         custPaymentMethods: "",
         custStatus: "active",
     },
