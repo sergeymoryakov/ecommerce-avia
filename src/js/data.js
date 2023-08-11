@@ -44,6 +44,7 @@ export const productItems = [
         itemID: "",
         itemSetDate: "",
         itemName: "Wheel Main Assy",
+        itemCat: "component",
         itemImg: "",
         itemPN: "BS30-737NG-3254",
         itemSN: "030-48621R",
@@ -60,6 +61,8 @@ export const productItems = [
         itemID: "",
         itemSetDate: "",
         itemName: "Filter Assy Fuel",
+        itemCat: "component",
+        itemImg: "",
         itemPN: "123-98418-2752",
         itemSN: "1498P174",
         itemPrice: 12690.0,
@@ -75,6 +78,8 @@ export const productItems = [
         itemID: "",
         itemSetDate: "",
         itemName: "Seat Block Assy",
+        itemCat: "component",
+        itemImg: "",
         itemPN: "SA7428-777-3000",
         itemSN: "777-7428-3-0095",
         itemPrice: 27490.0,
@@ -90,6 +95,8 @@ export const productItems = [
         itemID: "",
         itemSetDate: "",
         itemName: "Engine Module Fan Assy",
+        itemCat: "module",
+        itemImg: "",
         itemPN: "CF38-10E-2491849-04",
         itemSN: "72-872048",
         itemPrice: 984270.0,
@@ -107,6 +114,7 @@ export const productItems = [
 // itemID: Item ID, set automatically at time of creation (type - TBD);
 // itemSetDate: Item Setup Date, set automatically at time of item creation (date);
 // itemName: Item Name (string);
+// itemCat: Item Category (sting - pick one from the follwoing options: "part", "component", "module", "consumable", "book", "aircraft");
 // itemImg: Item Image Link (link/src);
 // itemPN: Item Part Number (string);
 // itemSN: Item Serial Number (string);
