@@ -9,14 +9,14 @@ export const customersData = [
         custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
         custPhone: "+1 898 9289289",
         custEmail: "supply@aerosupplyplus.aero",
-        custContactName: "Mattew Yampolski",
+        custContactId: "",
         custKycChecked: true,
         custKycDate: "",
-        custPaymentTerms: ["wire", "card", "Net30"],
+        custPaymentTerms: ["wire", "card", "net30"],
         custPaymentMethod: "card",
         custHandlingFee: 0.015,
-        custStatus: "active",
-        customerOrders: "",
+        custActive: true,
+        custOrders: ["", "", ""],
     },
 ];
 
@@ -28,7 +28,7 @@ export const customersData = [
 // custBillToAddress: Customer Bill-To Address (string);
 // custPhone: Customer Contact Phone (string/phone);
 // custEmail: Customer Contact Email (string/email);
-// custContactName: Customer Contact Name (string);
+// custContactId: Primary Contact's ID (type - TBD/string);
 // custKycChecked: Customer KYC Check Status (boolean);
 // custKycDate: Customer KYC Check Date (date);
 // custPaymentTerms: Customer Approved Payment Terms (array of strings - TBD);
@@ -36,8 +36,32 @@ export const customersData = [
 // custPaymentMethod: Customer Preffered Payment Method (string);
 // NOTE: Select "custPaymentMethod" from approved "custPaymentTerms" options;
 // custHandlingFee: Customer Approved Handling Fee - set individually in range 0...3.5% (number/percent);
-// custStatus: Customer Status (string: "active"/"inactive");
-// customerOrders: Customer Orders (array of Order IDs - TBD)
+// custActive: Customer Active Status (boolean);
+// custOrders: Customer Orders (array of Order IDs - TBD)
+
+export const usersData = [
+    {
+        userId: "",
+        custId: "",
+        userName: "Mattew Yampolski",
+        userSetDate: "",
+        userAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
+        userPhone: "+1 898 9289289",
+        userEmail: "matt.y@aerosupplyplus.aero",
+        userActive: true,
+        userAdmin: true,
+    },
+];
+
+// Comments to "customersData":
+// userId: User ID, set automatically at time of creation (type - TBD);
+// custId: Customer ID, selected automatically at time of creation (type - TBD);
+// userSetDate: User Setup Date, set automatically at time of creation (date);
+// userAddress: User Address (string);
+// userPhone: User Contact Phone (string/phone);
+// userEmail: User Contact Email (string/email);
+// userActive: User Active Status (boolean);
+// userAdmin: User Admin Status (boolean);
 
 export const productItems = [
     {
@@ -130,6 +154,7 @@ export const ordersData = [
     {
         orderID: "",
         orderCustID: "",
+        orderUserID: "",
         orderDateSet: "",
         orderDatePlaced: "",
         orderDateReady: "",
@@ -142,6 +167,8 @@ export const ordersData = [
             custEmail: "supply@aerosupplyplus.aero",
         },
         orderPaymentMethod: "card",
+        orderPaymentDeadline: "",
+        orderPaymentDone: "",
         orderCart: [
             {
                 itemID: "",
@@ -157,10 +184,15 @@ export const ordersData = [
 
 // Comments to "ordersData":
 // orderID: Order ID, set automatically at time of creation (type - TBD);
+// orderCustID: Order Customer ID, set automatically at time of creation (type - TBD);
+// orderUserID: Order User ID, set automatically at time of creation (type - TBD);
 // orderDateSet: Order Day Set, set automatically at time of creation (type - TBD);
 // orderDatePlaced: Order Day Placed, set automatically at time of placement (type - TBD);
 // orderDateReady: Order Day Ready for pickup, set automatically at "orderDatePlaced + 1 day" (type - TBD);
 // orderDateCompleted: Order Day Completed, set random at "orderDatePlaced + 1...10 days" (type - TBD);
+// orderPaymentMethod: Order Payment Method selected from array ["wire", "card", "net30"] at time of placement (string);
+// orderPaymentDeadline: Order Payment Deadline, set at time of placement: same day for "wire" and "card", and "current + 30" for "net30" (type - Date);
+// orderPaymentDone: Order Payment Date, actual payment date (type - Date);
 // orderCart: Order Items (Cart), set at time of creation and includes: "itemID", "itemPrice", "qty" (array of objects);
 // Note: For simplicity "orderCart" does not specify SN and does not include other details. Might be reconsidered for production quality;
 // orderPriceItems: Order Items Price, set automatically at time of placement (number/accounting);
