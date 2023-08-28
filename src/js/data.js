@@ -1,5 +1,40 @@
 // Preliminary Specification for Aviation Parts Marketplace
 
+export const usersData = [
+    {
+        userId: "User ID",
+        custId: "Customer ID",
+        userName: "User Name",
+        userSetDate: "Date Set",
+        userAddress: "User Address",
+        userPhone: "User Phone",
+        userEmail: "User Email",
+        userActive: "User Active",
+        userAdmin: "User Admin",
+    },
+    {
+        userId: "user001",
+        custId: "cust001",
+        userName: "Mattew Yampolski",
+        userSetDate: "20230815",
+        userAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
+        userPhone: "+1 898 9289289",
+        userEmail: "matt.y@aerosupplyplus.aero",
+        userActive: true,
+        userAdmin: true,
+    },
+];
+
+// Comments to "usersData":
+// userId: User ID, set automatically at time of creation (type - TBD);
+// custId: Customer ID, selected automatically at time of creation (type - TBD);
+// userSetDate: User Setup Date, set automatically at time of creation (date);
+// userAddress: User Address (string);
+// userPhone: User Contact Phone (string/phone);
+// userEmail: User Contact Email (string/email);
+// userActive: User Active Status (boolean);
+// userAdmin: User Admin Status (boolean);
+
 export const customersData = [
     {
         custId: "cust001",
@@ -38,30 +73,6 @@ export const customersData = [
 // custHandlingFee: Customer Approved Handling Fee - set individually in range 0...3.5% (number/percent);
 // custActive: Customer Active Status (boolean);
 // custOrders: Customer Orders (array of Order IDs - TBD)
-
-export const usersData = [
-    {
-        userId: "user001",
-        custId: "cust001",
-        userName: "Mattew Yampolski",
-        userSetDate: "20230815",
-        userAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
-        userPhone: "+1 898 9289289",
-        userEmail: "matt.y@aerosupplyplus.aero",
-        userActive: true,
-        userAdmin: true,
-    },
-];
-
-// Comments to "customersData":
-// userId: User ID, set automatically at time of creation (type - TBD);
-// custId: Customer ID, selected automatically at time of creation (type - TBD);
-// userSetDate: User Setup Date, set automatically at time of creation (date);
-// userAddress: User Address (string);
-// userPhone: User Contact Phone (string/phone);
-// userEmail: User Contact Email (string/email);
-// userActive: User Active Status (boolean);
-// userAdmin: User Admin Status (boolean);
 
 export const productItems = [
     {

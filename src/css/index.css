@@ -850,38 +850,54 @@ html {
 /* END of POPUP*/
 
 /* ADMIN */
-.admin-products,
-.admin-orders {
+.admin-users,
+.admin-customers,
+.admin-orders,
+.admin-products {
+    margin-bottom: 1em;
     width: 100%;
     overflow-y: hidden;
     overflow-x: scroll;
     /* white-space: nowrap; */
 }
 
+.admin-users__title,
+.admin-customers__title,
+.admin-orders__title,
 .admin-products__title,
-.admin-orders__title {
+.admin-menu-title {
     font-size: 1.5rem;
     font-weight: 700;
 }
 
-.admin-products__table,
-.admin-orders__table {
+.admin-users__table,
+.admin-customers__table,
+.admin-orders__table,
+.admin-products__table {
     margin-top: 1em;
     width: max-content;
     font-size: 1rem;
 }
 
-.admin-products table,
-.admin-products th,
-.admin-products td,
+.admin-users table,
+.admin-users th,
+.admin-users td,
+.admin-customers table,
+.admin-customers th,
+.admin-customers td,
 .admin-orders table,
 .admin-orders th,
-.admin-orders td {
+.admin-orders td,
+.admin-products table,
+.admin-products th,
+.admin-products td {
     border: 1px solid black;
 }
 
-.admin-products__table-raw_data,
-.admin-orders__table-raw_data {
+.admin-users__table-raw_data,
+.admin-customers__table-raw_data,
+.admin-orders__table-raw_data,
+.admin-products__table-raw_data {
     padding: 0.5em;
     width: fit-content;
     max-width: 20em;
@@ -894,5 +910,30 @@ html {
     font-weight: 700;
     border-radius: 0.5em;
     cursor: pointer;
+}
+
+.admin-menu-btn-wrapper {
+    display: block;
+    margin-top: 1em;
+    width: 100%;
+    border: 1px dashed red;
+}
+
+.admin-menu-btn {
+    display: block;
+    font-family: inherit;
+    padding: 0.5em;
+    text-align: center;
+    color: var(--clr-white);
+    background-color: var(--clr-black);
+    border: 1px solid var(--clr-black);
+    border-radius: 0.7em;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.admin-menu-btn:hover {
+    color: var(--clr-black);
+    background-color: var(--clr-white);
 }
 /* END of ADMIN */

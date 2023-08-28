@@ -30,7 +30,190 @@
         </div>
         <div class="master-container">
             <div class="container-left">
-                <div class="admin-products">
+                <div class="admin-users" id="adminUsers">
+                    <h2 class="admin-users__title">Users</h2>
+                    <table class="admin-users__table">
+                        <tr class="admin-users__table-raw">
+                            <th class="admin-users__table-raw_data"></th>
+                            <th class="admin-users__table-raw_data">User ID</th>
+                            <th class="admin-users__table-raw_data">
+                                Customer ID
+                            </th>
+                            <th class="admin-users__table-raw_data">
+                                User Name
+                            </th>
+                            <th class="admin-users__table-raw_data">
+                                Date Set
+                            </th>
+                            <th class="admin-users__table-raw_data">
+                                User Address
+                            </th>
+                            <th class="admin-users__table-raw_data">
+                                User Phone
+                            </th>
+                            <th class="admin-users__table-raw_data">
+                                User Email
+                            </th>
+                            <th class="admin-users__table-raw_data">
+                                User Active
+                            </th>
+                            <th class="admin-users__table-raw_data">
+                                User Admin
+                            </th>
+                            <th class="admin-users__table-raw_data"></th>
+                        </tr>
+                        <tr class="admin-users__table-raw">
+                            <td class="admin-users__table-raw_data">
+                                <button class="add-btn">+</button>
+                            </td>
+                            <td class="admin-users__table-raw_data">user001</td>
+                            <td class="admin-users__table-raw_data">cust001</td>
+                            <td class="admin-users__table-raw_data">
+                                Mattew Yampolski
+                            </td>
+                            <td class="admin-users__table-raw_data">
+                                20230815
+                            </td>
+                            <td class="admin-users__table-raw_data">
+                                2023, Cactus Road, Springdale, FL, 33761 USA
+                            </td>
+                            <td class="admin-users__table-raw_data">
+                                +1 898 9289289
+                            </td>
+                            <td class="admin-users__table-raw_data">
+                                matt.y@aerosupplyplus.aero
+                            </td>
+                            <td class="admin-users__table-raw_data">true</td>
+                            <td class="admin-users__table-raw_data">true</td>
+                            <td class="admin-users__table-raw_data">
+                                <button class="admin-update-btn">U</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="admin-customers" id="adminCustomers">
+                    <h2 class="admin-customers__title">Customers</h2>
+                    <table class="admin-customers__table">
+                        <tr class="admin-customers__table-raw">
+                            <th class="admin-customers__table-raw_data"></th>
+                        </tr>
+                        <tr class="admin-customers__table-raw">
+                            <td class="admin-customers__table-raw_data"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="admin-orders" id="adminOrders">
+                    <h2 class="admin-orders__title">Orders List</h2>
+                    <table class="admin-orders__table">
+                        <tr class="admin-orders__table-raw">
+                            <th class="admin-orders__table-raw_data"></th>
+                            <th class="admin-orders__table-raw_data">
+                                Order ID
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Customer ID
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                User ID
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Date Set
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Date Placed
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Date Ready
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Date Completed
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Bill To
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Payment Method
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Payment Deadline
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Payment Done
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Order Cart
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Price Items
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Price Handling
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Price Total
+                            </th>
+                            <th class="admin-orders__table-raw_data">
+                                Currency
+                            </th>
+                            <th class="admin-orders__table-raw_data"></th>
+                        </tr>
+                        <tr class="admin-orders__table-raw">
+                            <td class="admin-orders__table-raw_data">
+                                <button class="add-btn">+</button>
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                order001
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                cust001
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                user001
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                20230820
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                20230820
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                20230824
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                20230825
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                custLegalName: "AeroSupplyPlus LLC",
+                                custBillToAddress: "2023, Cactus Road,
+                                Springdale, FL, 33761 USA", custContactName:
+                                "Mattew Yampolski", custPhone: "+1 898 9289289",
+                                custEmail: "supply@aerosupplyplus.aero"
+                            </td>
+                            <td class="admin-orders__table-raw_data">card</td>
+                            <td class="admin-orders__table-raw_data">
+                                20230820
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                20230820
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                Order Cart
+                            </td>
+                            <td class="admin-orders__table-raw_data">
+                                1374982.0
+                            </td>
+                            <td class="admin-orders__table-raw_data">378.0</td>
+                            <td class="admin-orders__table-raw_data">
+                                1375360.0
+                            </td>
+                            <td class="admin-orders__table-raw_data">$</td>
+                            <td class="admin-orders__table-raw_data">
+                                <button class="admin-update-btn">U</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="admin-products" id="adminProducts">
                     <h2 class="admin-products__title">Products List</h2>
                     <table class="admin-products__table">
                         <tr class="admin-products__table-raw">
@@ -306,168 +489,27 @@
                         </tr>
                     </table>
                 </div>
-                <div class="admin-orders">
-                    <h2 class="admin-orders__title">Orders List</h2>
-                    <table class="admin-orders__table">
-                        <tr class="admin-orders__table-raw">
-                            <th class="admin-orders__table-raw_data"></th>
-                            <th class="admin-orders__table-raw_data">
-                                Order ID
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Customer ID
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                User ID
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Date Set
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Date Placed
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Date Ready
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Date Completed
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Bill To
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Payment Method
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Payment Deadline
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Payment Done
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Order Cart
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Price Items
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Price Handling
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Price Total
-                            </th>
-                            <th class="admin-orders__table-raw_data">
-                                Currency
-                            </th>
-                            <th class="admin-orders__table-raw_data"></th>
-                        </tr>
-                        <tr class="admin-orders__table-raw">
-                            <td class="admin-orders__table-raw_data">
-                                <button class="add-btn">+</button>
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                order001
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                cust001
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                user001
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                20230820
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                20230820
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                20230824
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                20230825
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                custLegalName: "AeroSupplyPlus LLC",
-                                custBillToAddress: "2023, Cactus Road,
-                                Springdale, FL, 33761 USA", custContactName:
-                                "Mattew Yampolski", custPhone: "+1 898 9289289",
-                                custEmail: "supply@aerosupplyplus.aero"
-                            </td>
-                            <td class="admin-orders__table-raw_data">card</td>
-                            <td class="admin-orders__table-raw_data">
-                                20230820
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                20230820
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                Order Cart
-                            </td>
-                            <td class="admin-orders__table-raw_data">
-                                1374982.0
-                            </td>
-                            <td class="admin-orders__table-raw_data">378.0</td>
-                            <td class="admin-orders__table-raw_data">
-                                1375360.0
-                            </td>
-                            <td class="admin-orders__table-raw_data">$</td>
-                            <td class="admin-orders__table-raw_data">
-                                <button class="admin-update-btn">U</button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
             </div>
             <div class="container-right">
-                <h2 class="cart-links-title">Cart</h2>
-                <div class="cart-links-wrapper">
-                    <button
-                        class="cart-link-btn"
-                        style="
-                            background-image: url(./images/img_comp_display_1.jpeg);
-                        "
-                    ></button>
-                    <button
-                        class="cart-link-btn"
-                        style="
-                            background-image: url(./images/img_cabin_seat_business_01.jpeg);
-                        "
-                    ></button>
-                    <button
-                        class="cart-link-btn"
-                        style="
-                            background-image: url(./images/img_comp_flt_rec_1.jpeg);
-                        "
-                    ></button>
-                    <button
-                        class="cart-link-btn"
-                        style="
-                            background-image: url(./images/img_cockpit_watch_1.jpeg);
-                        "
-                    ></button>
-                    <button
-                        class="cart-link-btn"
-                        style="background-image: url(./images/img_eng_01.jpeg)"
-                    ></button>
-                    <!-- <button
-                        class="cart-link-btn"
-                        style="background-image: url(./images/img_eng_04.jpeg)"
-                    ></button> -->
-                </div>
-                <div class="cart-goto-btn-wrapper">
-                    <button class="cart-goto-btn">
-                        <img src="./other_assets/Icon-order.png" alt="Select" />
-                        Cart
-                    </button>
-                </div>
-                <h2 class="order-list-title">Orders</h2>
-                <div class="orders-list">
-                    <button class="order-number-btn">923561234</button>
-                    <button class="order-number-btn">423679290</button>
-                    <button class="order-number-btn">879145761</button>
-                    <button class="order-number-btn">923561234</button>
-                    <button class="order-number-btn">423679290</button>
-                </div>
+                <h2 class="admin-menu-title">Admin Menu</h2>
+                <ul>
+                    <li class="admin-menu-btn-wrapper">
+                        <a class="admin-menu-btn" href="#adminUsers">Users</a>
+                    </li>
+                    <li class="admin-menu-btn-wrapper">
+                        <a class="admin-menu-btn" href="#adminCustomers"
+                            >Customers</a
+                        >
+                    </li>
+                    <li class="admin-menu-btn-wrapper">
+                        <a class="admin-menu-btn" href="#adminOrders">Orders</a>
+                    </li>
+                    <li class="admin-menu-btn-wrapper">
+                        <a class="admin-menu-btn" href="#adminProducts"
+                            >Products</a
+                        >
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- <script src="./js/index.js"></script> -->
