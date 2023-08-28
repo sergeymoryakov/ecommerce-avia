@@ -2,16 +2,16 @@
 
 export const customersData = [
     {
-        custId: "",
-        custSetDate: "",
+        custId: "cust001",
+        custSetDate: "20230812",
         custLegalName: "AeroSupplyPlus LLC",
         custAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
         custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
         custPhone: "+1 898 9289289",
         custEmail: "supply@aerosupplyplus.aero",
-        custContactId: "",
+        custContactId: "user001",
         custKycChecked: true,
-        custKycDate: "",
+        custKycDate: "20230812",
         custPaymentTerms: ["wire", "card", "net30"],
         custPaymentMethod: "card",
         custHandlingFee: 0.015,
@@ -41,10 +41,10 @@ export const customersData = [
 
 export const usersData = [
     {
-        userId: "",
-        custId: "",
+        userId: "user001",
+        custId: "cust001",
         userName: "Mattew Yampolski",
-        userSetDate: "",
+        userSetDate: "20230815",
         userAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
         userPhone: "+1 898 9289289",
         userEmail: "matt.y@aerosupplyplus.aero",
@@ -168,13 +168,31 @@ export const productItems = [
 
 export const ordersData = [
     {
-        orderID: "",
-        orderCustID: "",
-        orderUserID: "",
-        orderDateSet: "",
-        orderDatePlaced: "",
-        orderDateReady: "",
-        orderDateCompleted: "",
+        orderID: "Order ID",
+        orderCustID: "Customer ID",
+        orderUserID: "User ID",
+        orderDateSet: "Date Set",
+        orderDatePlaced: "Date Placed",
+        orderDateReady: "Date Ready",
+        orderDateCompleted: "Date Completed",
+        orderBillTo: "Bill To",
+        orderPaymentMethod: "Payment Method",
+        orderPaymentDeadline: "Payment Deadline",
+        orderPaymentDone: "Payment Done",
+        orderCart: "Order Cart",
+        orderPriceItems: "Price Items",
+        orderPriceHandling: "Price Handling",
+        orderPriceTotal: "Price Total",
+        orderCurrency: "Currency",
+    },
+    {
+        orderID: "order001",
+        orderCustID: "cust001",
+        orderUserID: "user001",
+        orderDateSet: "20230820",
+        orderDatePlaced: "20230820",
+        orderDateReady: "20230824",
+        orderDateCompleted: "20230825",
         orderBillTo: {
             custLegalName: "AeroSupplyPlus LLC",
             custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
@@ -183,8 +201,8 @@ export const ordersData = [
             custEmail: "supply@aerosupplyplus.aero",
         },
         orderPaymentMethod: "card",
-        orderPaymentDeadline: "",
-        orderPaymentDone: "",
+        orderPaymentDeadline: "20230820",
+        orderPaymentDone: "20230820",
         orderCart: [
             {
                 itemID: "",
@@ -195,6 +213,7 @@ export const ordersData = [
         orderPriceItems: 1374982.0,
         orderPriceHandling: 378.0,
         orderPriceTotal: 1375360.0,
+        orderCurrency: "$",
     },
 ];
 

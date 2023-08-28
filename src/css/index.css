@@ -850,27 +850,49 @@ html {
 /* END of POPUP*/
 
 /* ADMIN */
-.admin-products {
+.admin-products,
+.admin-orders {
     width: 100%;
     overflow-y: hidden;
     overflow-x: scroll;
     /* white-space: nowrap; */
 }
 
-.admin-products__title {
-    margin-top: 1em;
+.admin-products__title,
+.admin-orders__title {
     font-size: 1.5rem;
     font-weight: 700;
 }
 
-.admin-products__table {
+.admin-products__table,
+.admin-orders__table {
+    margin-top: 1em;
     width: max-content;
     font-size: 1rem;
 }
 
-.admin-products__table-raw_data {
+.admin-products table,
+.admin-products th,
+.admin-products td,
+.admin-orders table,
+.admin-orders th,
+.admin-orders td {
+    border: 1px solid black;
+}
+
+.admin-products__table-raw_data,
+.admin-orders__table-raw_data {
+    padding: 0.5em;
     width: fit-content;
     max-width: 20em;
-    padding-inline: 0.5em;
+}
+
+.add-btn,
+.admin-update-btn {
+    background-color: var(--clr-black);
+    color: var(--clr-white);
+    font-weight: 700;
+    border-radius: 0.5em;
+    cursor: pointer;
 }
 /* END of ADMIN */
