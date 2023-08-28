@@ -37,6 +37,23 @@ export const usersData = [
 
 export const customersData = [
     {
+        custId: "Customer ID",
+        custSetDate: "Date Set",
+        custLegalName: "Legal Name",
+        custAddress: "Address",
+        custBillToAddress: "Bill-To-Address",
+        custPhone: "Customer Phone",
+        custEmail: "Customer Email",
+        custContactId: "User ID",
+        custKycChecked: "KYC Checked",
+        custKycDate: "Date KYC",
+        custPaymentTerms: "Payment Terms",
+        custPaymentMethod: "Payment Method",
+        custHandlingFee: "Handling Fee",
+        custActive: "Customer Active",
+        custOrders: "Customer Orders",
+    },
+    {
         custId: "cust001",
         custSetDate: "20230812",
         custLegalName: "AeroSupplyPlus LLC",
