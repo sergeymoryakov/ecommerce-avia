@@ -65,6 +65,22 @@ export const usersData = [
 
 export const productItems = [
     {
+        itemID: "Item ID",
+        itemSetDate: "Set Date",
+        itemName: "Item Name",
+        itemCat: "Category",
+        itemImg: "Image",
+        itemPN: "Part Number",
+        itemSN: "Serial Number",
+        itemPrice: "Price",
+        itemQty: "Quantity",
+        itemCurrency: "Currency",
+        itemCondition: "Condition",
+        itemCertification: "Certification",
+        itemLeadTime: "Lead Time",
+        itemDescription: "Description",
+    },
+    {
         itemID: "",
         itemSetDate: "",
         itemName: "Wheel Main Assy",
