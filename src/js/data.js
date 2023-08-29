@@ -1,17 +1,17 @@
 // Preliminary Specification for Aviation Parts Marketplace
 
 export const usersData = [
-    {
-        userId: "User ID",
-        custId: "Customer ID",
-        userName: "User Name",
-        userSetDate: "Date Set",
-        userAddress: "User Address",
-        userPhone: "User Phone",
-        userEmail: "User Email",
-        userActive: "User Active",
-        userAdmin: "User Admin",
-    },
+    // {
+    //     userId: "User ID",
+    //     custId: "Customer ID",
+    //     userName: "User Name",
+    //     userSetDate: "Date Set",
+    //     userAddress: "User Address",
+    //     userPhone: "User Phone",
+    //     userEmail: "User Email",
+    //     userActive: "User Active",
+    //     userAdmin: "User Admin",
+    // },
     {
         userId: "1001",
         custId: "c001",
@@ -48,24 +48,24 @@ export const usersData = [
 // itemId: 0001-0001 ->
 
 export const customersData = [
-    {
-        custId: "Customer ID",
-        custCode: "Customer Code",
-        custSetDate: "Date Set",
-        custLegalName: "Legal Name",
-        custAddress: "Address",
-        custBillToAddress: "Bill-To-Address",
-        custPhone: "Customer Phone",
-        custEmail: "Customer Email",
-        custContactId: "User ID",
-        custKycChecked: "KYC Checked",
-        custKycDate: "Date KYC",
-        custPaymentTerms: "Payment Terms",
-        custPaymentMethod: "Payment Method",
-        custHandlingFee: "Handling Fee",
-        custActive: "Customer Active",
-        custOrders: "Customer Orders",
-    },
+    // {
+    //     custId: "Customer ID",
+    //     custCode: "Customer Code",
+    //     custSetDate: "Date Set",
+    //     custLegalName: "Legal Name",
+    //     custAddress: "Address",
+    //     custBillToAddress: "Bill-To-Address",
+    //     custPhone: "Customer Phone",
+    //     custEmail: "Customer Email",
+    //     custContactId: "User ID",
+    //     custKycChecked: "KYC Checked",
+    //     custKycDate: "Date KYC",
+    //     custPaymentTerms: "Payment Terms",
+    //     custPaymentMethod: "Payment Method",
+    //     custHandlingFee: "Handling Fee",
+    //     custActive: "Customer Active",
+    //     custOrders: "Customer Orders",
+    // },
     {
         custId: "c001",
         custCode: "aespl",
@@ -107,24 +107,24 @@ export const customersData = [
 // custOrders: Customer Orders (array of Order IDs - TBD)
 
 export const productItems = [
+    // {
+    //     itemId: "Item ID",
+    //     itemSetDate: "Set Date",
+    //     itemName: "Item Name",
+    //     itemCat: "Category",
+    //     itemImg: "Image",
+    //     itemPN: "Part Number",
+    //     itemSN: "Serial Number",
+    //     itemPrice: "Price",
+    //     itemQty: "Quantity",
+    //     itemCurrency: "Currency",
+    //     itemCondition: "Condition",
+    //     itemCertification: "Certification",
+    //     itemLeadTime: "Lead Time",
+    //     itemDescription: "Description",
+    // },
     {
-        itemID: "Item ID",
-        itemSetDate: "Set Date",
-        itemName: "Item Name",
-        itemCat: "Category",
-        itemImg: "Image",
-        itemPN: "Part Number",
-        itemSN: "Serial Number",
-        itemPrice: "Price",
-        itemQty: "Quantity",
-        itemCurrency: "Currency",
-        itemCondition: "Condition",
-        itemCertification: "Certification",
-        itemLeadTime: "Lead Time",
-        itemDescription: "Description",
-    },
-    {
-        itemID: "0032-0001-000",
+        itemId: "0032-0001-000",
         itemSetDate: "20230812",
         itemName: "Wheel Main Assy",
         itemCat: "component",
@@ -141,7 +141,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemID: "0032-0002-000",
+        itemId: "0032-0002-000",
         itemSetDate: "20230812",
         itemName: "Wheel Nose Assy",
         itemCat: "component",
@@ -158,7 +158,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemID: "0032-0001-100",
+        itemId: "0032-0001-100",
         itemSetDate: "20230825",
         itemName: "Wheel Main Assy",
         itemCat: "component",
@@ -175,7 +175,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemID: "0079-0001-000",
+        itemId: "0079-0001-000",
         itemSetDate: "20230815",
         itemName: "Filter Assy Oil",
         itemCat: "component",
@@ -192,7 +192,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemID: "0079-0002-000",
+        itemId: "0079-0002-000",
         itemSetDate: "20230815",
         itemName: "Filter Element",
         itemCat: "part",
@@ -209,7 +209,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemID: "0025-0001-000",
+        itemId: "0025-0001-000",
         itemSetDate: "20230816",
         itemName: "Seat Block Assy",
         itemCat: "component",
@@ -226,7 +226,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemID: "1000-0001-000",
+        itemId: "1000-0001-000",
         itemSetDate: "20230820",
         itemName: "Handbook, Aviation Maintenance Technician - General",
         itemCat: "manual",
@@ -245,7 +245,7 @@ export const productItems = [
 ];
 
 // Comments to "productItems":
-// itemID: Item ID, set automatically at time of creation (type - TBD);
+// itemId: Item ID, set automatically at time of creation (type - TBD);
 // itemSetDate: Item Setup Date, set automatically at time of item creation (date);
 // itemName: Item Name (string);
 // itemCat: Item Category (sting - pick one from the follwoing options: "part", "component", "module", "consumable", "book", "aircraft");
@@ -260,29 +260,45 @@ export const productItems = [
 // itemLeadTime: Item Availability/Lead Time (sting - pick one from the follwoing options: "On Stock", "7 Days", "30 Days", "60 Days", "90 Days");
 // itemDescription: Item Description;
 
+export const cartsData = [
+    // {
+    //     userId: "User ID",
+    //     itemsId: "Order ID",
+    // },
+    {
+        userId: "1001",
+        cart: [
+            {
+                itemId: "",
+                qty: "",
+            },
+        ],
+    },
+];
+
 export const ordersData = [
+    // {
+    //     orderId: "Order ID",
+    //     orderCustId: "Customer ID",
+    //     orderUserId: "User ID",
+    //     orderDateSet: "Date Set",
+    //     orderDatePlaced: "Date Placed",
+    //     orderDateReady: "Date Ready",
+    //     orderDateCompleted: "Date Completed",
+    //     orderBillTo: "Bill To",
+    //     orderPaymentMethod: "Payment Method",
+    //     orderPaymentDeadline: "Payment Deadline",
+    //     orderPaymentDone: "Payment Done",
+    //     orderCart: "Order Cart",
+    //     orderPriceItems: "Price Items",
+    //     orderPriceHandling: "Price Handling",
+    //     orderPriceTotal: "Price Total",
+    //     orderCurrency: "Currency",
+    // },
     {
-        orderID: "Order ID",
-        orderCustID: "Customer ID",
-        orderUserID: "User ID",
-        orderDateSet: "Date Set",
-        orderDatePlaced: "Date Placed",
-        orderDateReady: "Date Ready",
-        orderDateCompleted: "Date Completed",
-        orderBillTo: "Bill To",
-        orderPaymentMethod: "Payment Method",
-        orderPaymentDeadline: "Payment Deadline",
-        orderPaymentDone: "Payment Done",
-        orderCart: "Order Cart",
-        orderPriceItems: "Price Items",
-        orderPriceHandling: "Price Handling",
-        orderPriceTotal: "Price Total",
-        orderCurrency: "Currency",
-    },
-    {
-        orderID: "100001",
-        orderCustID: "c001",
-        orderUserID: "1001",
+        orderId: "100001",
+        orderCustId: "c001",
+        orderUserId: "1001",
         orderDateSet: "20230828",
         orderDatePlaced: "20230828",
         orderDateReady: "20230828",
@@ -299,7 +315,7 @@ export const ordersData = [
         orderPaymentDone: "20230828",
         orderCart: [
             {
-                itemID: "",
+                itemId: "",
                 itemPrice: "",
                 qty: "",
             },
@@ -310,9 +326,9 @@ export const ordersData = [
         orderCurrency: "$",
     },
     {
-        orderID: "100002",
-        orderCustID: "c001",
-        orderUserID: "1001",
+        orderId: "100002",
+        orderCustId: "c001",
+        orderUserId: "1001",
         orderDateSet: "20230828",
         orderDatePlaced: "20230828",
         orderDateReady: "20230828",
@@ -329,7 +345,7 @@ export const ordersData = [
         orderPaymentDone: "20230828",
         orderCart: [
             {
-                itemID: "",
+                itemId: "",
                 itemPrice: "",
                 qty: "",
             },
@@ -340,9 +356,9 @@ export const ordersData = [
         orderCurrency: "$",
     },
     {
-        orderID: "100003",
-        orderCustID: "c001",
-        orderUserID: "1001",
+        orderId: "100003",
+        orderCustId: "c001",
+        orderUserId: "1001",
         orderDateSet: "20230828",
         orderDatePlaced: "20230828",
         orderDateReady: "20230828",
@@ -359,7 +375,7 @@ export const ordersData = [
         orderPaymentDone: "20230828",
         orderCart: [
             {
-                itemID: "",
+                itemId: "",
                 itemPrice: "",
                 qty: "",
             },
@@ -372,9 +388,9 @@ export const ordersData = [
 ];
 
 // Comments to "ordersData":
-// orderID: Order ID, set automatically at time of creation (type - TBD);
-// orderCustID: Order Customer ID, set automatically at time of creation (type - TBD);
-// orderUserID: Order User ID, set automatically at time of creation (type - TBD);
+// orderId: Order ID, set automatically at time of creation (type - TBD);
+// orderCustId: Order Customer ID, set automatically at time of creation (type - TBD);
+// orderUserId: Order User ID, set automatically at time of creation (type - TBD);
 // orderDateSet: Order Day Set, set automatically at time of creation (type - TBD);
 // orderDatePlaced: Order Day Placed, set automatically at time of placement (type - TBD);
 // orderDateReady: Order Day Ready for pickup, set automatically at "orderDatePlaced + 1 day" (type - TBD);
@@ -382,7 +398,7 @@ export const ordersData = [
 // orderPaymentMethod: Order Payment Method selected from array ["wire", "card", "net30"] at time of placement (string);
 // orderPaymentDeadline: Order Payment Deadline, set at time of placement: same day for "wire" and "card", and "current + 30" for "net30" (type - Date);
 // orderPaymentDone: Order Payment Date, actual payment date (type - Date);
-// orderCart: Order Items (Cart), set at time of creation and includes: "itemID", "itemPrice", "qty" (array of objects);
+// orderCart: Order Items (Cart), set at time of creation and includes: "itemId", "itemPrice", "qty" (array of objects);
 // Note: For simplicity "orderCart" does not specify SN and does not include other details. Might be reconsidered for production quality;
 // orderPriceItems: Order Items Price, set automatically at time of placement (number/accounting);
 // orderPriceHandling: Order Handling Fee Price, set automatically at time of placement (number/accounting);
