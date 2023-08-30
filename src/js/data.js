@@ -1,17 +1,17 @@
 // Preliminary Specification for Aviation Parts Marketplace
 
 export const usersData = [
-    // {
-    //     userId: "User ID",
-    //     custId: "Customer ID",
-    //     userName: "User Name",
-    //     userSetDate: "Date Set",
-    //     userAddress: "User Address",
-    //     userPhone: "User Phone",
-    //     userEmail: "User Email",
-    //     userActive: "User Active",
-    //     userAdmin: "User Admin",
-    // },
+    {
+        userId: "User ID",
+        custId: "Customer ID",
+        userName: "User Name",
+        userSetDate: "Date Set",
+        userAddress: "User Address",
+        userPhone: "User Phone",
+        userEmail: "User Email",
+        userActive: "User Active",
+        userAdmin: "User Admin",
+    },
     {
         userId: "1001",
         custId: "c001",
