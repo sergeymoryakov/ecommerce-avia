@@ -6,7 +6,7 @@ const containerRightNode = document.getElementById("containerRight");
 console.log("Module linked succesfully");
 console.log(customersData);
 
-createHeaderRow = (object) => {
+const createHeaderRow = (object) => {
     const newHeaderRow = document.createElement("tr");
     // newHeaderRow.className = `${object}`;
     for (const [key, value] of Object.entries(object)) {
@@ -18,7 +18,7 @@ createHeaderRow = (object) => {
     return newHeaderRow;
 };
 
-createDataRow = (object) => {
+const createDataRow = (object) => {
     const newDataRow = document.createElement("tr");
     // newDataRow.className = `${object}`;
     for (const [key, value] of Object.entries(object)) {
@@ -30,7 +30,7 @@ createDataRow = (object) => {
     return newDataRow;
 };
 
-createTable = (array) => {
+const createTable = (array) => {
     // Create new Table
     const newTable = document.createElement("table");
 
@@ -46,15 +46,15 @@ createTable = (array) => {
     return newTable;
 };
 
-clearContainerLeft = () => {
+const clearContainerLeft = () => {
     containerLeftNode.innerHTML = "";
 };
 
-clearContainerRight = () => {
+const clearContainerRight = () => {
     containerRightNode.innerHTML = "";
 };
 
-renderTable = (array, title) => {
+const renderTable = (array, title) => {
     const tableWrapper = document.createElement("div");
     tableWrapper.classList = "admin-users";
 
@@ -72,7 +72,7 @@ renderTable = (array, title) => {
     containerLeftNode.appendChild(tableWrapper);
 };
 
-displayTables = () => {
+const displayTables = () => {
     clearContainerLeft();
     renderTable(usersData, "Users");
     renderTable(customersData, "Customers");
