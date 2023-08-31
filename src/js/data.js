@@ -1,17 +1,17 @@
 // Preliminary Specification for Aviation Parts Marketplace
 
 export const usersData = [
-    {
-        userId: "User ID",
-        custId: "Customer ID",
-        userName: "User Name",
-        userSetDate: "Date Set",
-        userAddress: "User Address",
-        userPhone: "User Phone",
-        userEmail: "User Email",
-        userActive: "User Active",
-        userAdmin: "User Admin",
-    },
+    // {
+    //     userId: "User ID",
+    //     custId: "Customer ID",
+    //     userName: "User Name",
+    //     userSetDate: "Date Set",
+    //     userAddress: "User Address",
+    //     userPhone: "User Phone",
+    //     userEmail: "User Email",
+    //     userActive: "User Active",
+    //     userAdmin: "User Admin",
+    // },
     {
         userId: "1001",
         custId: "c001",
@@ -48,24 +48,24 @@ export const usersData = [
 // itemId: 0001-0001 ->
 
 export const customersData = [
-    {
-        custId: "Customer ID",
-        custCode: "Customer Code",
-        custSetDate: "Date Set",
-        custLegalName: "Legal Name",
-        custAddress: "Address",
-        custBillToAddress: "Bill-To-Address",
-        custPhone: "Customer Phone",
-        custEmail: "Customer Email",
-        custContactId: "User ID",
-        custKycChecked: "KYC Checked",
-        custKycDate: "Date KYC",
-        custPaymentTerms: "Payment Terms",
-        custPaymentMethod: "Payment Method",
-        custHandlingFee: "Handling Fee",
-        custActive: "Customer Active",
-        custOrders: "Customer Orders",
-    },
+    // {
+    //     custId: "Customer ID",
+    //     custCode: "Customer Code",
+    //     custSetDate: "Date Set",
+    //     custLegalName: "Legal Name",
+    //     custAddress: "Address",
+    //     custBillToAddress: "Bill-To-Address",
+    //     custPhone: "Customer Phone",
+    //     custEmail: "Customer Email",
+    //     custContactId: "User ID",
+    //     custKycChecked: "KYC Checked",
+    //     custKycDate: "Date KYC",
+    //     custPaymentTerms: "Payment Terms",
+    //     custPaymentMethod: "Payment Method",
+    //     custHandlingFee: "Handling Fee",
+    //     custActive: "Customer Active",
+    //     custOrders: "Customer Orders",
+    // },
     {
         custId: "c001",
         custCode: "aespl",

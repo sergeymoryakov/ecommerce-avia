@@ -1,38 +1,98 @@
-import { usersData } from "./data";
+import { customersData, productItems, usersData, ordersData } from "./data";
 
-/*
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+const containerLeftNode = document.getElementById("containerLeft");
+const containerRightNode = document.getElementById("containerRight");
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyAaafzn29XLZBor7sXmsi3PMDsg_cxcakk",
-    authDomain: "ecommerce-c2b5f.firebaseapp.com",
-    projectId: "ecommerce-c2b5f",
-    storageBucket: "ecommerce-c2b5f.appspot.com",
-    messagingSenderId: "267989030227",
-    appId: "1:267989030227:web:28088cbcc5c292d8eebda6",
+console.log("Module linked succesfully");
+
+createHeaderRow = (object) => {
+    const newHeaderRow = document.createElement("tr");
+    // newHeaderRow.className = `${object}`;
+    for (const [key, value] of Object.entries(object)) {
+        const newHeaderElement = document.createElement("th");
+        newHeaderElement.innerText = `${key}`;
+
+        newHeaderRow.appendChild(newHeaderElement);
+    }
+    return newHeaderRow;
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-*/
+createDataRow = (object) => {
+    const newDataRow = document.createElement("tr");
+    // newDataRow.className = `${object}`;
+    for (const [key, value] of Object.entries(object)) {
+        const newDataElement = document.createElement("td");
+        newDataElement.innerText = `${value}`;
 
-console.log("Hi, superadmin module linked succesfully");
-
-// console.log(usersData);
-// console.log(usersData[0]);
-// console.log(usersData[0].userId, ":", usersData[1].userId);
-// console.log(usersData[0].userName, ":", usersData[1].userName);
-// console.log(usersData[0].userEmail, ":", usersData[1].userEmail);
-// console.log(usersData[0].userAddress, ":", usersData[1].userAddress);
-
-for (const user of usersData) {
-    console.log("New User Object:");
-    for (const [key, value] of Object.entries(user)) {
-        console.log(`${key}: ${value}`);
-        // console.log(`Field name: ${key}, Field value: ${value}`);
+        newDataRow.appendChild(newDataElement);
     }
-}
+    return newDataRow;
+};
+
+createTable = (array) => {
+    // Create new Table
+    const newTable = document.createElement("table");
+
+    // create Header Row and add to Table:
+    const headerRow = createHeaderRow(array[0]);
+    newTable.appendChild(headerRow);
+
+    // create Data Rows and add to Table
+    for (const object of array) {
+        const dataRow = createDataRow(object);
+        newTable.appendChild(dataRow);
+    }
+    return newTable;
+};
+
+clearContainerLeft = () => {
+    containerLeftNode.innerHTML = "";
+};
+
+clearContainerRight = () => {
+    containerRightNode.innerHTML = "";
+};
+
+renderTable = (array, title) => {
+    const tableWrapper = document.createElement("div");
+    tableWrapper.classList = "admin-users";
+
+    const tableTitle = document.createElement("h2");
+    tableTitle.classList = "admin-users__title";
+    tableTitle.innerText = title;
+
+    const table = createTable(array);
+    table.classList = "admin-users__table";
+
+    tableWrapper.appendChild(tableTitle);
+    tableWrapper.appendChild(table);
+    console.log(tableWrapper);
+
+    containerLeftNode.appendChild(tableWrapper);
+};
+
+displayTables = () => {
+    clearContainerLeft();
+    renderTable(usersData, "Users");
+    renderTable(customersData, "Customers");
+    renderTable(productItems, "Products");
+    renderTable(ordersData, "Orders");
+};
+
+displayTables();
+
+// console.log(usersData[0].userId, ":", usersData[1].userId);
+
+// Function: Render all keys and values of objects in array:
+// renderArrayOfObjects = (array) => {
+//     for (const object of array) {
+//         console.log("New User Object:");
+//         for (const [key, value] of Object.entries(object)) {
+//             console.log(`${key}: ${value}`);
+//             // console.log(`Field name: ${key}, Field value: ${value}`);
+//         }
+//     }
+// };
+
+// Call function:
+// renderArrayOfObjects(productItems);
