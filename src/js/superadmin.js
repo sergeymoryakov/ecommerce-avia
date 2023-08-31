@@ -1,9 +1,10 @@
-import { customersData, productItems, usersData, ordersData } from "./data";
+import { customersData, productItems, usersData, ordersData } from "./data.js";
 
 const containerLeftNode = document.getElementById("containerLeft");
 const containerRightNode = document.getElementById("containerRight");
 
 console.log("Module linked succesfully");
+console.log(customersData);
 
 createHeaderRow = (object) => {
     const newHeaderRow = document.createElement("tr");
