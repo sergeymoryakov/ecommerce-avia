@@ -116,6 +116,7 @@ const renderTable = (array, arrayName) => {
 
     const tableTitle = document.createElement("h2");
     tableTitle.classList = "db-section__title";
+    tableTitle.id = `${arrayName}`;
     tableTitle.innerText = arrayName;
 
     const table = createTable(array, arrayName);
