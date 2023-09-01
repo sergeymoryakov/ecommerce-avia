@@ -2,7 +2,7 @@
 
 export const usersData = [
     // {
-    //     userId: "User ID",
+    //     id: "User ID",
     //     custId: "Customer ID",
     //     userName: "User Name",
     //     userSetDate: "Date Set",
@@ -13,7 +13,7 @@ export const usersData = [
     //     userAdmin: "User Admin",
     // },
     {
-        userId: "1001",
+        id: "1001",
         custId: "c001",
         userName: "Mattew Yampolski",
         userSetDate: "20230815",
@@ -26,7 +26,7 @@ export const usersData = [
 ];
 
 // Comments to "usersData":
-// userId: User ID, set automatically at time of creation (type - TBD);
+// id: User ID, set automatically at time of creation (type - TBD);
 // custId: Customer ID, selected automatically at time of creation (type - TBD);
 // userSetDate: User Setup Date, set automatically at time of creation (date);
 // userAddress: User Address (string);
@@ -36,8 +36,8 @@ export const usersData = [
 // userAdmin: User Admin Status (boolean);
 
 // ID RANGES:
-// userId: 0001 - 1000 reserved
-// userId: 1001 ->
+// id: 0001 - 1000 reserved
+// id: 1001 ->
 // custId: C001 ->
 // custCode: XX, XXX, XXXXX
 // orderId: 000000 - 100000 reserved
@@ -49,7 +49,7 @@ export const usersData = [
 
 export const customersData = [
     // {
-    //     custId: "Customer ID",
+    //     id: "Customer ID",
     //     custCode: "Customer Code",
     //     custSetDate: "Date Set",
     //     custLegalName: "Legal Name",
@@ -67,7 +67,7 @@ export const customersData = [
     //     custOrders: "Customer Orders",
     // },
     {
-        custId: "c001",
+        id: "c001",
         custCode: "aespl",
         custSetDate: "20230812",
         custLegalName: "AeroSupplyPlus LLC",
@@ -87,7 +87,7 @@ export const customersData = [
 ];
 
 // Comments to "customersData":
-// custId: Customer ID, set automatically at time of creation (type - TBD);
+// id: Customer ID, set automatically at time of creation (type - TBD);
 // custCode: Customer Code, set as IATA 2-digit, ICAO 3-digit, or cusom 5-digit code;
 // custSetDate: Customer Setup Date, set automatically at time of creation (date);
 // custLegalName: Customer Legal Name (string);
@@ -108,7 +108,7 @@ export const customersData = [
 
 export const productItems = [
     // {
-    //     itemId: "Item ID",
+    //     id: "Item ID",
     //     itemSetDate: "Set Date",
     //     itemName: "Item Name",
     //     itemCat: "Category",
@@ -124,7 +124,7 @@ export const productItems = [
     //     itemDescription: "Description",
     // },
     {
-        itemId: "0032-0001-000",
+        id: "0032-0001-000",
         itemSetDate: "20230812",
         itemName: "Wheel Main Assy",
         itemCat: "component",
@@ -141,7 +141,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemId: "0032-0002-000",
+        id: "0032-0002-000",
         itemSetDate: "20230812",
         itemName: "Wheel Nose Assy",
         itemCat: "component",
@@ -158,7 +158,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemId: "0032-0001-100",
+        id: "0032-0001-100",
         itemSetDate: "20230825",
         itemName: "Wheel Main Assy",
         itemCat: "component",
@@ -175,7 +175,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemId: "0079-0001-000",
+        id: "0079-0001-000",
         itemSetDate: "20230815",
         itemName: "Filter Assy Oil",
         itemCat: "component",
@@ -192,7 +192,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemId: "0079-0002-000",
+        id: "0079-0002-000",
         itemSetDate: "20230815",
         itemName: "Filter Element",
         itemCat: "part",
@@ -209,7 +209,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemId: "0025-0001-000",
+        id: "0025-0001-000",
         itemSetDate: "20230816",
         itemName: "Seat Block Assy",
         itemCat: "component",
@@ -226,7 +226,7 @@ export const productItems = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
     },
     {
-        itemId: "1000-0001-000",
+        id: "1000-0001-000",
         itemSetDate: "20230820",
         itemName: "Handbook, Aviation Maintenance Technician - General",
         itemCat: "manual",
@@ -245,7 +245,7 @@ export const productItems = [
 ];
 
 // Comments to "productItems":
-// itemId: Item ID, set automatically at time of creation (type - TBD);
+// id: Item ID, set automatically at time of creation (type - TBD);
 // itemSetDate: Item Setup Date, set automatically at time of item creation (date);
 // itemName: Item Name (string);
 // itemCat: Item Category (sting - pick one from the follwoing options: "part", "component", "module", "consumable", "book", "aircraft");
@@ -278,7 +278,7 @@ export const cartsData = [
 
 export const ordersData = [
     // {
-    //     orderId: "Order ID",
+    //     id: "Order ID",
     //     orderCustId: "Customer ID",
     //     orderUserId: "User ID",
     //     orderDateSet: "Date Set",
@@ -296,7 +296,7 @@ export const ordersData = [
     //     orderCurrency: "Currency",
     // },
     {
-        orderId: "100001",
+        id: "100001",
         orderCustId: "c001",
         orderUserId: "1001",
         orderDateSet: "20230828",
@@ -326,7 +326,7 @@ export const ordersData = [
         orderCurrency: "$",
     },
     {
-        orderId: "100002",
+        id: "100002",
         orderCustId: "c001",
         orderUserId: "1001",
         orderDateSet: "20230828",
@@ -356,7 +356,7 @@ export const ordersData = [
         orderCurrency: "$",
     },
     {
-        orderId: "100003",
+        id: "100003",
         orderCustId: "c001",
         orderUserId: "1001",
         orderDateSet: "20230828",
@@ -388,7 +388,7 @@ export const ordersData = [
 ];
 
 // Comments to "ordersData":
-// orderId: Order ID, set automatically at time of creation (type - TBD);
+// id: Order ID, set automatically at time of creation (type - TBD);
 // orderCustId: Order Customer ID, set automatically at time of creation (type - TBD);
 // orderUserId: Order User ID, set automatically at time of creation (type - TBD);
 // orderDateSet: Order Day Set, set automatically at time of creation (type - TBD);

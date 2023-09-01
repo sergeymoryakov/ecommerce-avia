@@ -850,10 +850,12 @@ html {
 /* END of POPUP*/
 
 /* ADMIN */
-.admin-users,
+
+/* .admin-users,
 .admin-customers,
 .admin-orders,
-.admin-products {
+.admin-products, */
+.db-section {
     margin-bottom: 1em;
     width: 100%;
     overflow-y: hidden;
@@ -861,25 +863,27 @@ html {
     /* white-space: nowrap; */
 }
 
-.admin-users__title,
+/* .admin-users__title,
 .admin-customers__title,
 .admin-orders__title,
 .admin-products__title,
-.admin-menu-title {
+.admin-menu-title, */
+.db-section__title {
     font-size: 1.5rem;
     font-weight: 700;
 }
 
-.admin-users__table,
+/* .admin-users__table,
 .admin-customers__table,
 .admin-orders__table,
-.admin-products__table {
+.admin-products__table, */
+.db-section__table {
     margin-top: 1em;
     width: max-content;
     font-size: 1rem;
 }
 
-.admin-users table,
+/* .admin-users table,
 .admin-users th,
 .admin-users td,
 .admin-customers table,
@@ -890,21 +894,26 @@ html {
 .admin-orders td,
 .admin-products table,
 .admin-products th,
-.admin-products td {
+.admin-products td, */
+.db-section table,
+.db-section th,
+.db-section td {
     border: 1px solid black;
 }
 
 .admin-users__table-raw_data,
 .admin-customers__table-raw_data,
 .admin-orders__table-raw_data,
-.admin-products__table-raw_data {
+.admin-products__table-raw_data,
+.db-section__table_cell {
     padding: 0.5em;
     width: fit-content;
     max-width: 20em;
 }
 
 .add-btn,
-.admin-update-btn {
+.admin-update-btn,
+.db-section__table_button {
     background-color: var(--clr-black);
     color: var(--clr-white);
     font-weight: 700;
