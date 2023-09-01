@@ -10,6 +10,13 @@ console.log(customersData);
 
 const createHeaderRow = (object) => {
     const newHeaderRow = document.createElement("tr");
+
+    // create two empty elements and add as first child:
+    const newEmptyElement1 = document.createElement("th");
+    newHeaderRow.appendChild(newEmptyElement1);
+    const newEmptyElement2 = document.createElement("th");
+    newHeaderRow.appendChild(newEmptyElement2);
+
     // newHeaderRow.className = `${object}`;
     for (const [key, value] of Object.entries(object)) {
         const newHeaderElement = document.createElement("th");
@@ -17,11 +24,25 @@ const createHeaderRow = (object) => {
 
         newHeaderRow.appendChild(newHeaderElement);
     }
+
+    // Add another empty element at the end of the row:
+    const newEmptyElement3 = document.createElement("th");
+    newHeaderRow.appendChild(newEmptyElement3);
+
     return newHeaderRow;
 };
 
 const createDataRow = (object) => {
     const newDataRow = document.createElement("tr");
+
+    // create two button elements and add as first child:
+    const newButtonElement1 = document.createElement("td");
+    newButtonElement1.innerText = "button";
+    newDataRow.appendChild(newButtonElement1);
+    const newButtonElement2 = document.createElement("td");
+    newButtonElement2.innerText = "button";
+    newDataRow.appendChild(newButtonElement2);
+
     // newDataRow.className = `${object}`;
     for (const [key, value] of Object.entries(object)) {
         const newDataElement = document.createElement("td");
@@ -29,6 +50,12 @@ const createDataRow = (object) => {
 
         newDataRow.appendChild(newDataElement);
     }
+
+    // Add another button element to the end of row:
+    const newButtonElement3 = document.createElement("td");
+    newButtonElement3.innerText = "button";
+    newDataRow.appendChild(newButtonElement3);
+
     return newDataRow;
 };
 
