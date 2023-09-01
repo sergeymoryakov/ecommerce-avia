@@ -61,18 +61,35 @@ const createDataRow = (object, arrayName) => {
     newButtonElement2.appendChild(newButton2);
     newDataRow.appendChild(newButtonElement2);
 
-    // create data cells in loop
+    // create data cells in loop - WORKING VERSION:
+    // for (const [key, value] of Object.entries(object)) {
+    //     const newDataElement = document.createElement("td");
+    //     newDataElement.classList = "db-section__table_cell";
+
+    //     // Add element ID here:
+    //     newDataElement.id = `${arrayName}__${object.id}_${key}`;
+
+    //     newDataElement.innerText = `${value}`;
+
+    //     newDataRow.appendChild(newDataElement);
+    // }
+    // create data cells in loop - WORKING VERSION - END HERE
+
+    // TESTING NEW VERSION:
     for (const [key, value] of Object.entries(object)) {
+        // Add table cell element, class and ID:
         const newDataElement = document.createElement("td");
         newDataElement.classList = "db-section__table_cell";
-
-        // Add element ID here:
         newDataElement.id = `${arrayName}__${object.id}_${key}`;
 
-        newDataElement.innerText = `${value}`;
+        const newInput = document.createElement("input");
+        newInput.type = "text";
+        newInput.value = `${value}`;
 
+        newDataElement.appendChild(newInput);
         newDataRow.appendChild(newDataElement);
     }
+    // END TEST
 
     // Add another button element to the end of row:
     const newButtonElement3 = document.createElement("td");
