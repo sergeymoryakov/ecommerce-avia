@@ -868,7 +868,8 @@ html {
 .admin-orders__title,
 .admin-products__title,
 .admin-menu-title, */
-.db-section__title {
+.db-section__title,
+.menu-title {
     font-size: 1.5rem;
     font-weight: 700;
 }
@@ -901,18 +902,18 @@ html {
     border: 1px solid black;
 }
 
-.admin-users__table-raw_data,
+/* .admin-users__table-raw_data,
 .admin-customers__table-raw_data,
 .admin-orders__table-raw_data,
-.admin-products__table-raw_data,
+.admin-products__table-raw_data, */
 .db-section__table_cell {
     padding: 0.5em;
     width: fit-content;
     max-width: 20em;
 }
 
-.add-btn,
-.admin-update-btn,
+/* .add-btn,
+.admin-update-btn, */
 .db-section__table_button {
     background-color: var(--clr-black);
     color: var(--clr-white);
@@ -921,14 +922,21 @@ html {
     cursor: pointer;
 }
 
-.admin-menu-btn-wrapper {
+.db-section__table_button:hover {
+    color: var(--clr-black);
+    background-color: var(--clr-white);
+}
+
+/* .admin-menu-btn-wrapper, */
+.menu-btn-wrapper {
     display: block;
     margin-top: 1em;
     width: 100%;
     border: 1px dashed red;
 }
 
-.admin-menu-btn {
+/* .admin-menu-btn, */
+.menu-btn {
     display: block;
     font-family: inherit;
     padding: 0.5em;
@@ -941,7 +949,8 @@ html {
     cursor: pointer;
 }
 
-.admin-menu-btn:hover {
+/* .admin-menu-btn:hover, */
+.menu-btn:hover {
     color: var(--clr-black);
     background-color: var(--clr-white);
 }

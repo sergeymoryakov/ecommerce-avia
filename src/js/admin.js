@@ -136,7 +136,61 @@ const displayTables = () => {
     renderTable(ordersData, ordersDataName);
 };
 
+// Menu Section Functions
+
+const createMenuBtn = (arrayName) => {
+    const menuBtnWrapper = document.createElement("li");
+    menuBtnWrapper.classList = "menu-btn-wrapper";
+
+    const menuBtn = document.createElement("a");
+    menuBtn.classList = "menu-btn";
+    menuBtn.href = `#${arrayName}`;
+    menuBtn.innerText = `${arrayName}`;
+
+    menuBtnWrapper.appendChild(menuBtn);
+    return menuBtnWrapper;
+};
+
+const createMenu = () => {
+    // Init menu wrapper:
+    const menuWrapper = document.createElement("div");
+    menuWrapper.classList = "menu-section";
+
+    // Add menu title:
+    const menuTitle = document.createElement("h2");
+    menuTitle.classList = "menu-title";
+    menuTitle.innerText = "Tables";
+    menuWrapper.appendChild(menuTitle);
+
+    // Create menu list:
+    const menuList = document.createElement("ul");
+
+    const usersDataBtn = createMenuBtn(usersDataName);
+    menuList.appendChild(usersDataBtn);
+
+    const customersDataBtn = createMenuBtn(customersDataName);
+    menuList.appendChild(customersDataBtn);
+
+    const productItemsBtn = createMenuBtn(productItemsName);
+    menuList.appendChild(productItemsBtn);
+
+    const ordersDataBtn = createMenuBtn(ordersDataName);
+    menuList.appendChild(ordersDataBtn);
+
+    // Add menu to wrapper:
+    menuWrapper.appendChild(menuList);
+
+    return menuWrapper;
+};
+
+const renderMenu = () => {
+    clearContainerRight();
+    const menu = createMenu();
+    containerRightNode.appendChild(menu);
+};
+
 displayTables();
+renderMenu();
 
 // console.log(usersData[0].userId, ":", usersData[1].userId);
 
