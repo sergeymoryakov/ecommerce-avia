@@ -907,7 +907,7 @@ html {
 .admin-orders__table-raw_data,
 .admin-products__table-raw_data, */
 .db-section__table_cell {
-    padding: 0.5em;
+    padding: 0.2em;
     width: fit-content;
     max-width: 20em;
 }
