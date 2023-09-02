@@ -13,6 +13,18 @@ console.log("Module linked succesfully");
 // Verification proper import:
 console.log(customersData);
 
+// FUNCTIONS: GENERAL
+
+const clearContainerLeft = () => {
+    containerLeftNode.innerHTML = "";
+};
+
+const clearContainerRight = () => {
+    containerRightNode.innerHTML = "";
+};
+
+// FUNCTIONS: RENDER DATA TABLES
+
 const createHeaderRow = (object) => {
     const newHeaderRow = document.createElement("tr");
 
@@ -61,35 +73,20 @@ const createDataRow = (object, arrayName) => {
     newButtonElement2.appendChild(newButton2);
     newDataRow.appendChild(newButtonElement2);
 
-    // create data cells in loop - WORKING VERSION:
-    // for (const [key, value] of Object.entries(object)) {
-    //     const newDataElement = document.createElement("td");
-    //     newDataElement.classList = "db-section__table_cell";
-
-    //     // Add element ID here:
-    //     newDataElement.id = `${arrayName}__${object.id}_${key}`;
-
-    //     newDataElement.innerText = `${value}`;
-
-    //     newDataRow.appendChild(newDataElement);
-    // }
-    // create data cells in loop - WORKING VERSION - END HERE
-
-    // TESTING NEW VERSION:
     for (const [key, value] of Object.entries(object)) {
         // Add table cell element, class and ID:
         const newDataElement = document.createElement("td");
         newDataElement.classList = "db-section__table_cell";
-        newDataElement.id = `${arrayName}__${object.id}_${key}`;
+        newDataElement.id = `${arrayName}_${object.id}_${key}`;
 
         const newInput = document.createElement("input");
         newInput.type = "text";
+        newInput.id = `${arrayName}_${object.id}_${key}_input`;
         newInput.value = `${value}`;
 
         newDataElement.appendChild(newInput);
         newDataRow.appendChild(newDataElement);
     }
-    // END TEST
 
     // Add another button element to the end of row:
     const newButtonElement3 = document.createElement("td");
@@ -119,14 +116,6 @@ const createTable = (array, arrayName) => {
     return newTable;
 };
 
-const clearContainerLeft = () => {
-    containerLeftNode.innerHTML = "";
-};
-
-const clearContainerRight = () => {
-    containerRightNode.innerHTML = "";
-};
-
 const renderTable = (array, arrayName) => {
     const tableWrapper = document.createElement("div");
     tableWrapper.classList = "db-section";
@@ -154,7 +143,7 @@ const displayTables = () => {
     renderTable(ordersData, ordersDataName);
 };
 
-// Menu Section Functions
+// FUNCTIONS: RENDER MENU
 
 const createMenuBtn = (arrayName) => {
     const menuBtnWrapper = document.createElement("li");
@@ -207,21 +196,37 @@ const renderMenu = () => {
     containerRightNode.appendChild(menu);
 };
 
+// FUNCTIONS: SUPPORT AND TBS
+
+// Function gets ID and Value of Input element and returns in
+// mini-object format:
+const extractInfoFromId = (fullId, inputValue) => {
+    idParts = fullId.split("_");
+    const arrayName = idParts[0];
+    const objectId = idParts[2];
+    const key = idParts[3];
+    const value = inputValue;
+
+    return {
+        arrayName: arrayName,
+        objectId: objectId,
+        key: key,
+        value: value,
+    };
+};
+
+// Function monitors input changes and displays details in console:
+document.addEventListener("input", function (event) {
+    if (event.target.tagName === "INPUT") {
+        const fullId = event.target.id;
+        const inputValue = event.target.value;
+
+        const info = extractInfoFromId(fullId, inputValue);
+        console.log(info);
+    }
+});
+
+// COMMANDS
+
 displayTables();
 renderMenu();
-
-// console.log(usersData[0].userId, ":", usersData[1].userId);
-
-// Function: Render all keys and values of objects in array:
-// renderArrayOfObjects = (array) => {
-//     for (const object of array) {
-//         console.log("New User Object:");
-//         for (const [key, value] of Object.entries(object)) {
-//             console.log(`${key}: ${value}`);
-//             // console.log(`Field name: ${key}, Field value: ${value}`);
-//         }
-//     }
-// };
-
-// Call function:
-// renderArrayOfObjects(productItems);
