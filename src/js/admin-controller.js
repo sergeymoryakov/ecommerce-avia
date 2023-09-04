@@ -1,9 +1,31 @@
-import { customersData, productItems, usersData, ordersData } from "./data.js";
+import { AdminView } from "./admin-view.js";
+import { AdminModel } from "./admin-model.js";
+
+export class AdminController {
+    constructor() {
+        this.adminView = new AdminView();
+        this.adminModel = new AdminModel();
+    }
+    initializeAppMain = () => {
+        console.log("HELLO! INIT CARRIED OUT SUCCESFULLY");
+        this.adminView.checkModuleLinkage();
+        this.adminModel.checkModuleLinkage();
+    };
+}
+
+import {
+    usersData,
+    customersData,
+    cartsData,
+    ordersData,
+    productItems,
+} from "./data.js";
 
 const customersDataName = "customersData";
 const productItemsName = "productItems";
 const usersDataName = "usersData";
 const ordersDataName = "ordersData";
+const cartsDataName = "cartsData";
 
 const containerLeftNode = document.getElementById("containerLeft");
 const containerRightNode = document.getElementById("containerRight");
@@ -139,8 +161,9 @@ const displayTables = () => {
     clearContainerLeft();
     renderTable(usersData, usersDataName);
     renderTable(customersData, customersDataName);
-    renderTable(productItems, productItemsName);
+    renderTable(cartsData, cartsDataName);
     renderTable(ordersData, ordersDataName);
+    renderTable(productItems, productItemsName);
 };
 
 // FUNCTIONS: RENDER MENU
@@ -178,11 +201,14 @@ const createMenu = () => {
     const customersDataBtn = createMenuBtn(customersDataName);
     menuList.appendChild(customersDataBtn);
 
-    const productItemsBtn = createMenuBtn(productItemsName);
-    menuList.appendChild(productItemsBtn);
+    const cartsDataBtn = createMenuBtn(cartsDataName);
+    menuList.appendChild(cartsDataBtn);
 
     const ordersDataBtn = createMenuBtn(ordersDataName);
     menuList.appendChild(ordersDataBtn);
+
+    const productItemsBtn = createMenuBtn(productItemsName);
+    menuList.appendChild(productItemsBtn);
 
     // Add menu to wrapper:
     menuWrapper.appendChild(menuList);
