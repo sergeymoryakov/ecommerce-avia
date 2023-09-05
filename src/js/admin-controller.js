@@ -228,6 +228,8 @@ const renderMenu = () => {
 // mini-object format:
 const extractInfoFromId = (fullId, inputValue) => {
     idParts = fullId.split("_");
+    // For reference, elemment ID:
+    // "DataElement.id = `${arrayName}_${object.id}_${key}`;"
     const arrayName = idParts[0];
     const objectId = idParts[2];
     const key = idParts[3];

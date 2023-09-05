@@ -1,5 +1,11 @@
 // Preliminary Specification for Aviation Parts Marketplace
 
+// Common keys for all DB elements:
+// transDate: Transaction Date - set at the time of element creation,
+// transId: Transaction ID - set at the time of element creation and
+// used in Firestore two times for each document: as a Document ID
+// and as a key (for convenience reading);
+
 export const usersData = [
     // {
     //     id: "User ID",
@@ -16,12 +22,13 @@ export const usersData = [
         id: "1001",
         custId: "c001",
         userName: "Mattew Yampolski",
-        userSetDate: "20230815",
         userAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
         userPhone: "+1 898 9289289",
         userEmail: "matt.y@aerosupplyplus.aero",
         userActive: true,
         userAdmin: true,
+        transDate: "20230815",
+        transId: "jkjur-tewvn-00001",
     },
 ];
 
@@ -69,7 +76,6 @@ export const customersData = [
     {
         id: "c001",
         custCode: "aespl",
-        custSetDate: "20230812",
         custLegalName: "AeroSupplyPlus LLC",
         custAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
         custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
@@ -83,6 +89,8 @@ export const customersData = [
         custHandlingFee: 0.015,
         custActive: true,
         custOrders: ["100001", "100002", "100003"],
+        transDate: "20230812",
+        transId: "jkjur-tewvn-00002",
     },
 ];
 
@@ -125,7 +133,6 @@ export const productItems = [
     // },
     {
         id: "0032-0001-000",
-        itemSetDate: "20230812",
         itemName: "Wheel Main Assy",
         itemCat: "component",
         itemImg: "",
@@ -139,10 +146,11 @@ export const productItems = [
         itemLeadTime: "on stock",
         itemDescription:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
+        transDate: "20230812",
+        transId: "jkjur-tewvn-00003",
     },
     {
         id: "0032-0002-000",
-        itemSetDate: "20230812",
         itemName: "Wheel Nose Assy",
         itemCat: "component",
         itemImg: "",
@@ -156,10 +164,11 @@ export const productItems = [
         itemLeadTime: "On Stock",
         itemDescription:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
+        transDate: "20230812",
+        transId: "jkjur-tewvn-00004",
     },
     {
         id: "0032-0001-100",
-        itemSetDate: "20230825",
         itemName: "Wheel Main Assy",
         itemCat: "component",
         itemImg: "",
@@ -173,10 +182,11 @@ export const productItems = [
         itemLeadTime: "On Stock",
         itemDescription:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
+        transDate: "20230825",
+        transId: "jkjur-tewvn-00005",
     },
     {
         id: "0079-0001-000",
-        itemSetDate: "20230815",
         itemName: "Filter Assy Oil",
         itemCat: "component",
         itemImg: "",
@@ -190,10 +200,11 @@ export const productItems = [
         itemLeadTime: "On Stock",
         itemDescription:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
+        transDate: "20230815",
+        transId: "jkjur-tewvn-00006",
     },
     {
         id: "0079-0002-000",
-        itemSetDate: "20230815",
         itemName: "Filter Element",
         itemCat: "part",
         itemImg: "",
@@ -207,10 +218,11 @@ export const productItems = [
         itemLeadTime: "On Stock",
         itemDescription:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
+        transDate: "20230815",
+        transId: "jkjur-tewvn-00007",
     },
     {
         id: "0025-0001-000",
-        itemSetDate: "20230816",
         itemName: "Seat Block Assy",
         itemCat: "component",
         itemImg: "",
@@ -224,10 +236,11 @@ export const productItems = [
         itemLeadTime: "60 Days",
         itemDescription:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
+        transDate: "20230816",
+        transId: "jkjur-tewvn-00008",
     },
     {
         id: "1000-0001-000",
-        itemSetDate: "20230820",
         itemName: "Handbook, Aviation Maintenance Technician - General",
         itemCat: "manual",
         itemImg: "",
@@ -241,6 +254,8 @@ export const productItems = [
         itemLeadTime: "On Stock",
         itemDescription:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
+        transDate: "20230820",
+        transId: "jkjur-tewvn-00009",
     },
 ];
 
@@ -273,6 +288,8 @@ export const cartsData = [
                 qty: "",
             },
         ],
+        transDate: "20230830",
+        transId: "jkjur-tewvn-00010",
     },
 ];
 
@@ -299,7 +316,6 @@ export const ordersData = [
         id: "100001",
         orderCustId: "c001",
         orderUserId: "1001",
-        orderDateSet: "20230828",
         orderDatePlaced: "20230828",
         orderDateReady: "20230828",
         orderDateCompleted: "20230829",
@@ -324,12 +340,13 @@ export const ordersData = [
         orderPriceHandling: 378.0,
         orderPriceTotal: 1375360.0,
         orderCurrency: "$",
+        transDate: "20230828",
+        transId: "jkjur-tewvn-00011",
     },
     {
         id: "100002",
         orderCustId: "c001",
         orderUserId: "1001",
-        orderDateSet: "20230828",
         orderDatePlaced: "20230828",
         orderDateReady: "20230828",
         orderDateCompleted: "20230829",
@@ -354,12 +371,13 @@ export const ordersData = [
         orderPriceHandling: 378.0,
         orderPriceTotal: 1375360.0,
         orderCurrency: "$",
+        transDate: "20230828",
+        transId: "jkjur-tewvn-00012",
     },
     {
         id: "100003",
         orderCustId: "c001",
         orderUserId: "1001",
-        orderDateSet: "20230828",
         orderDatePlaced: "20230828",
         orderDateReady: "20230828",
         orderDateCompleted: "20230829",
@@ -384,6 +402,8 @@ export const ordersData = [
         orderPriceHandling: 378.0,
         orderPriceTotal: 1375360.0,
         orderCurrency: "$",
+        transDate: "20230828",
+        transId: "jkjur-tewvn-00013",
     },
 ];
 
