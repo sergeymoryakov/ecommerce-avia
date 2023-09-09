@@ -2,6 +2,22 @@ import { AdminView } from "./admin-view.js";
 import { AdminModel } from "./admin-model.js";
 import { AdminFirebase } from "./admin-firebase.js";
 
+import {
+    usersData,
+    customersData,
+    cartsData,
+    ordersData,
+    productItems,
+} from "./admin-data.js";
+
+import {
+    customersDataName,
+    productItemsName,
+    usersDataName,
+    ordersDataName,
+    cartsDataName,
+} from "./admin-constants.js";
+
 export class AdminController {
     constructor() {
         this.adminView = new AdminView();
@@ -13,215 +29,215 @@ export class AdminController {
         this.adminView.checkModuleLinkage();
         this.adminModel.checkModuleLinkage();
         this.adminFirebase.checkModuleLinkage();
+
+        this.displayTables();
+
+        // Verify source (this. - ?) and initiate here:
+        this.adminView.renderMenu(
+            customersDataName,
+            productItemsName,
+            usersDataName,
+            ordersDataName,
+            cartsDataName
+        );
+    };
+
+    displayTables = () => {
+        this.adminView.clearContainerLeft();
+        this.adminView.renderTable(usersData, usersDataName);
+        this.adminView.renderTable(customersData, customersDataName);
+        this.adminView.renderTable(cartsData, cartsDataName);
+        this.adminView.renderTable(ordersData, ordersDataName);
+        this.adminView.renderTable(productItems, productItemsName);
     };
 }
 
-import {
-    usersData,
-    customersData,
-    cartsData,
-    ordersData,
-    productItems,
-} from "./data.js";
-
-const customersDataName = "customersData";
-const productItemsName = "productItems";
-const usersDataName = "usersData";
-const ordersDataName = "ordersData";
-const cartsDataName = "cartsData";
-
-const containerLeftNode = document.getElementById("containerLeft");
-const containerRightNode = document.getElementById("containerRight");
+// Moved to admin-view:
+// const containerLeftNode = document.getElementById("containerLeft");
+// const containerRightNode = document.getElementById("containerRight");
 
 // Verification proper linkage and import:
 // console.log("Module linked succesfully");
 // console.log(customersData);
 
 // FUNCTIONS: GENERAL
-const clearContainerLeft = () => {
-    containerLeftNode.innerHTML = "";
-};
+// Moved to admin-view:
+// const clearContainerLeft = () => {
+//     containerLeftNode.innerHTML = "";
+// };
 
-const clearContainerRight = () => {
-    containerRightNode.innerHTML = "";
-};
+// const clearContainerRight = () => {
+//     containerRightNode.innerHTML = "";
+// };
 
 // FUNCTIONS: RENDER DATA TABLES
 
-const createHeaderRow = (object) => {
-    const newHeaderRow = document.createElement("tr");
+// Moved to admin-view:
+// const createHeaderRow = (object) => {
+//     const newHeaderRow = document.createElement("tr");
 
-    // create two empty elements and add as first child:
-    const newEmptyElement1 = document.createElement("th");
-    newEmptyElement1.classList = "db-section__table_cell";
-    newHeaderRow.appendChild(newEmptyElement1);
-    const newEmptyElement2 = document.createElement("th");
-    newEmptyElement2.classList = "db-section__table_cell";
-    newHeaderRow.appendChild(newEmptyElement2);
+//     // create two empty elements and add as first child:
+//     const newEmptyElement1 = document.createElement("th");
+//     newEmptyElement1.classList = "db-section__table_cell";
+//     newHeaderRow.appendChild(newEmptyElement1);
+//     const newEmptyElement2 = document.createElement("th");
+//     newEmptyElement2.classList = "db-section__table_cell";
+//     newHeaderRow.appendChild(newEmptyElement2);
 
-    // create header cells in loop
-    for (const [key, value] of Object.entries(object)) {
-        const newHeaderElement = document.createElement("th");
-        newHeaderElement.classList = "db-section__table_cell";
-        newHeaderElement.innerText = `${key}`;
+//     // create header cells in loop
+//     for (const [key, value] of Object.entries(object)) {
+//         const newHeaderElement = document.createElement("th");
+//         newHeaderElement.classList = "db-section__table_cell";
+//         newHeaderElement.innerText = `${key}`;
 
-        newHeaderRow.appendChild(newHeaderElement);
-    }
+//         newHeaderRow.appendChild(newHeaderElement);
+//     }
 
-    // Add another empty element at the end of the row:
-    const newEmptyElement3 = document.createElement("th");
-    newEmptyElement3.classList = "db-section__table_cell";
-    newHeaderRow.appendChild(newEmptyElement3);
+//     // Add another empty element at the end of the row:
+//     const newEmptyElement3 = document.createElement("th");
+//     newEmptyElement3.classList = "db-section__table_cell";
+//     newHeaderRow.appendChild(newEmptyElement3);
 
-    return newHeaderRow;
-};
+//     return newHeaderRow;
+// };
 
-const createDataRow = (object, arrayName) => {
-    const newDataRow = document.createElement("tr");
+// const createDataRow = (object, arrayName) => {
+//     const newDataRow = document.createElement("tr");
 
-    // create two button elements and add as first child:
-    const newButtonElement1 = document.createElement("td");
-    newButtonElement1.classList = "db-section__table_cell";
-    const newButton1 = document.createElement("button");
-    newButton1.classList = "db-section__table_button";
-    newButton1.innerText = "+";
-    newButtonElement1.appendChild(newButton1);
-    newDataRow.appendChild(newButtonElement1);
+//     // create two button elements and add as first child:
+//     const newButtonElement1 = document.createElement("td");
+//     newButtonElement1.classList = "db-section__table_cell";
+//     const newButton1 = document.createElement("button");
+//     newButton1.classList = "db-section__table_button";
+//     newButton1.innerText = "+";
+//     newButtonElement1.appendChild(newButton1);
+//     newDataRow.appendChild(newButtonElement1);
 
-    const newButtonElement2 = document.createElement("td");
-    newButtonElement2.classList = "db-section__table_cell";
-    const newButton2 = document.createElement("button");
-    newButton2.classList = "db-section__table_button";
-    newButton2.innerText = "u";
-    newButtonElement2.appendChild(newButton2);
-    newDataRow.appendChild(newButtonElement2);
+//     const newButtonElement2 = document.createElement("td");
+//     newButtonElement2.classList = "db-section__table_cell";
+//     const newButton2 = document.createElement("button");
+//     newButton2.classList = "db-section__table_button";
+//     newButton2.innerText = "u";
+//     newButtonElement2.appendChild(newButton2);
+//     newDataRow.appendChild(newButtonElement2);
 
-    for (const [key, value] of Object.entries(object)) {
-        // Add table cell element, class and ID:
-        const newDataElement = document.createElement("td");
-        newDataElement.classList = "db-section__table_cell";
-        newDataElement.id = `${arrayName}_${object.id}_${key}`;
+//     for (const [key, value] of Object.entries(object)) {
+//         // Add table cell element, class and ID:
+//         const newDataElement = document.createElement("td");
+//         newDataElement.classList = "db-section__table_cell";
+//         newDataElement.id = `${arrayName}_${object.id}_${key}`;
 
-        const newInput = document.createElement("input");
-        newInput.type = "text";
-        newInput.id = `${arrayName}_${object.id}_${key}_input`;
-        newInput.value = `${value}`;
+//         const newInput = document.createElement("input");
+//         newInput.type = "text";
+//         newInput.id = `${arrayName}_${object.id}_${key}_input`;
+//         newInput.value = `${value}`;
 
-        newDataElement.appendChild(newInput);
-        newDataRow.appendChild(newDataElement);
-    }
+//         newDataElement.appendChild(newInput);
+//         newDataRow.appendChild(newDataElement);
+//     }
 
-    // Add another button element to the end of row:
-    const newButtonElement3 = document.createElement("td");
-    newButtonElement3.classList = "db-section__table_cell";
-    const newButton3 = document.createElement("button");
-    newButton3.classList = "db-section__table_button";
-    newButton3.innerText = "-";
-    newButtonElement3.appendChild(newButton3);
-    newDataRow.appendChild(newButtonElement3);
+//     // Add another button element to the end of row:
+//     const newButtonElement3 = document.createElement("td");
+//     newButtonElement3.classList = "db-section__table_cell";
+//     const newButton3 = document.createElement("button");
+//     newButton3.classList = "db-section__table_button";
+//     newButton3.innerText = "-";
+//     newButtonElement3.appendChild(newButton3);
+//     newDataRow.appendChild(newButtonElement3);
 
-    return newDataRow;
-};
+//     return newDataRow;
+// };
 
-const createTable = (array, arrayName) => {
-    // Create new Table
-    const newTable = document.createElement("table");
+// const createTable = (array, arrayName) => {
+//     // Create new Table
+//     const newTable = document.createElement("table");
 
-    // create Header Row and add to Table:
-    const headerRow = createHeaderRow(array[0]);
-    newTable.appendChild(headerRow);
+//     // create Header Row and add to Table:
+//     const headerRow = createHeaderRow(array[0]);
+//     newTable.appendChild(headerRow);
 
-    // create Data Rows and add to Table
-    for (const object of array) {
-        const dataRow = createDataRow(object, arrayName);
-        newTable.appendChild(dataRow);
-    }
-    return newTable;
-};
+//     // create Data Rows and add to Table
+//     for (const object of array) {
+//         const dataRow = createDataRow(object, arrayName);
+//         newTable.appendChild(dataRow);
+//     }
+//     return newTable;
+// };
 
-const renderTable = (array, arrayName) => {
-    const tableWrapper = document.createElement("div");
-    tableWrapper.classList = "db-section";
+// const renderTable = (array, arrayName) => {
+//     const tableWrapper = document.createElement("div");
+//     tableWrapper.classList = "db-section";
 
-    const tableTitle = document.createElement("h2");
-    tableTitle.classList = "db-section__title";
-    tableTitle.id = `${arrayName}`;
-    tableTitle.innerText = arrayName;
+//     const tableTitle = document.createElement("h2");
+//     tableTitle.classList = "db-section__title";
+//     tableTitle.id = `${arrayName}`;
+//     tableTitle.innerText = arrayName;
 
-    const table = createTable(array, arrayName);
-    table.classList = "db-section__table";
+//     const table = createTable(array, arrayName);
+//     table.classList = "db-section__table";
 
-    tableWrapper.appendChild(tableTitle);
-    tableWrapper.appendChild(table);
-    console.log(tableWrapper);
+//     tableWrapper.appendChild(tableTitle);
+//     tableWrapper.appendChild(table);
+//     console.log(tableWrapper);
 
-    containerLeftNode.appendChild(tableWrapper);
-};
-
-const displayTables = () => {
-    clearContainerLeft();
-    renderTable(usersData, usersDataName);
-    renderTable(customersData, customersDataName);
-    renderTable(cartsData, cartsDataName);
-    renderTable(ordersData, ordersDataName);
-    renderTable(productItems, productItemsName);
-};
+//     containerLeftNode.appendChild(tableWrapper);
+// };
 
 // FUNCTIONS: RENDER MENU
 
-const createMenuBtn = (arrayName) => {
-    const menuBtnWrapper = document.createElement("li");
-    menuBtnWrapper.classList = "menu-btn-wrapper";
+// const createMenuBtn = (arrayName) => {
+//     const menuBtnWrapper = document.createElement("li");
+//     menuBtnWrapper.classList = "menu-btn-wrapper";
 
-    const menuBtn = document.createElement("a");
-    menuBtn.classList = "menu-btn";
-    menuBtn.href = `#${arrayName}`;
-    menuBtn.innerText = `${arrayName}`;
+//     const menuBtn = document.createElement("a");
+//     menuBtn.classList = "menu-btn";
+//     menuBtn.href = `#${arrayName}`;
+//     menuBtn.innerText = `${arrayName}`;
 
-    menuBtnWrapper.appendChild(menuBtn);
-    return menuBtnWrapper;
-};
+//     menuBtnWrapper.appendChild(menuBtn);
+//     return menuBtnWrapper;
+// };
 
-const createMenu = () => {
-    // Init menu wrapper:
-    const menuWrapper = document.createElement("div");
-    menuWrapper.classList = "menu-section";
+// const createMenu = () => {
+//     // Init menu wrapper:
+//     const menuWrapper = document.createElement("div");
+//     menuWrapper.classList = "menu-section";
 
-    // Add menu title:
-    const menuTitle = document.createElement("h2");
-    menuTitle.classList = "menu-title";
-    menuTitle.innerText = "Tables";
-    menuWrapper.appendChild(menuTitle);
+//     // Add menu title:
+//     const menuTitle = document.createElement("h2");
+//     menuTitle.classList = "menu-title";
+//     menuTitle.innerText = "Tables";
+//     menuWrapper.appendChild(menuTitle);
 
-    // Create menu list:
-    const menuList = document.createElement("ul");
+//     // Create menu list:
+//     const menuList = document.createElement("ul");
 
-    const usersDataBtn = createMenuBtn(usersDataName);
-    menuList.appendChild(usersDataBtn);
+//     const usersDataBtn = createMenuBtn(usersDataName);
+//     menuList.appendChild(usersDataBtn);
 
-    const customersDataBtn = createMenuBtn(customersDataName);
-    menuList.appendChild(customersDataBtn);
+//     const customersDataBtn = createMenuBtn(customersDataName);
+//     menuList.appendChild(customersDataBtn);
 
-    const cartsDataBtn = createMenuBtn(cartsDataName);
-    menuList.appendChild(cartsDataBtn);
+//     const cartsDataBtn = createMenuBtn(cartsDataName);
+//     menuList.appendChild(cartsDataBtn);
 
-    const ordersDataBtn = createMenuBtn(ordersDataName);
-    menuList.appendChild(ordersDataBtn);
+//     const ordersDataBtn = createMenuBtn(ordersDataName);
+//     menuList.appendChild(ordersDataBtn);
 
-    const productItemsBtn = createMenuBtn(productItemsName);
-    menuList.appendChild(productItemsBtn);
+//     const productItemsBtn = createMenuBtn(productItemsName);
+//     menuList.appendChild(productItemsBtn);
 
-    // Add menu to wrapper:
-    menuWrapper.appendChild(menuList);
+//     // Add menu to wrapper:
+//     menuWrapper.appendChild(menuList);
 
-    return menuWrapper;
-};
+//     return menuWrapper;
+// };
 
-const renderMenu = () => {
-    clearContainerRight();
-    const menu = createMenu();
-    containerRightNode.appendChild(menu);
-};
+// const renderMenu = () => {
+//     clearContainerRight();
+//     const menu = createMenu();
+//     containerRightNode.appendChild(menu);
+// };
 
 // FUNCTIONS: SUPPORT AND TBS
 
@@ -258,6 +274,3 @@ document.addEventListener("input", function (event) {
 // FUNCTIONS - DATABASE MANIPULATION
 
 // COMMANDS
-
-displayTables();
-renderMenu();
