@@ -33,4 +33,21 @@ export class AdminFirebase {
     checkModuleLinkage = () => {
         console.log("HELLO, AdminFirebase is connected!");
     };
+
+    get = async (collectionName) => {
+        const querySnapshot = await getDocs(collection(db, collectionName));
+        querySnapshot.forEach((doc) => {
+            console.log(`${doc.id}:`);
+            const data = doc.data();
+            for (const field in data) {
+                console.log(`${field} => ${data[field]}`);
+            }
+        });
+    };
 }
+
+// const ref = collection(db, "usersData");
+// const q = query(ref);
+
+// const usersDataDb = [];
+// const querySnapshot = await getDocs(q);
