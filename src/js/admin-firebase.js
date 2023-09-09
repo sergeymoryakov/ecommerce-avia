@@ -26,3 +26,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 console.log(app);
 console.log(db);
+
+// SET MODEL MODULE:
+export class AdminFirebase {
+    constructor() {}
+    checkModuleLinkage = () => {
+        console.log("HELLO, AdminFirebase is connected!");
+    };
+}

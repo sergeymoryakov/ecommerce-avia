@@ -1,15 +1,18 @@
 import { AdminView } from "./admin-view.js";
 import { AdminModel } from "./admin-model.js";
+import { AdminFirebase } from "./admin-firebase.js";
 
 export class AdminController {
     constructor() {
         this.adminView = new AdminView();
         this.adminModel = new AdminModel();
+        this.adminFirebase = new AdminFirebase();
     }
     initializeAppMain = () => {
         console.log("HELLO! INIT CARRIED OUT SUCCESFULLY");
         this.adminView.checkModuleLinkage();
         this.adminModel.checkModuleLinkage();
+        this.adminFirebase.checkModuleLinkage();
     };
 }
 
@@ -30,13 +33,11 @@ const cartsDataName = "cartsData";
 const containerLeftNode = document.getElementById("containerLeft");
 const containerRightNode = document.getElementById("containerRight");
 
-console.log("Module linked succesfully");
-
-// Verification proper import:
-console.log(customersData);
+// Verification proper linkage and import:
+// console.log("Module linked succesfully");
+// console.log(customersData);
 
 // FUNCTIONS: GENERAL
-
 const clearContainerLeft = () => {
     containerLeftNode.innerHTML = "";
 };
@@ -253,6 +254,8 @@ document.addEventListener("input", function (event) {
         console.log(info);
     }
 });
+
+// FUNCTIONS - DATABASE MANIPULATION
 
 // COMMANDS
 

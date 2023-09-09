@@ -38,6 +38,15 @@ html {
     }
 }
 
+.admin-btn {
+    color: #fff;
+    background-color: #000;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
 .master-container {
     margin: 0 auto;
     padding: 1em 0;
