@@ -16,7 +16,18 @@ import {
     usersDataName,
     ordersDataName,
     cartsDataName,
+    customersDataDbName,
+    productItemsDbName,
+    usersDataDbName,
+    ordersDataDbName,
+    cartsDataDbName,
 } from "./admin-constants.js";
+
+let usersDataDb = [];
+let customersDataDb = [];
+let cartsDataDb = [];
+let ordersDataDb = [];
+let productItemsDb = [];
 
 export class AdminController {
     constructor() {
@@ -24,12 +35,20 @@ export class AdminController {
         this.adminModel = new AdminModel();
         this.adminFirebase = new AdminFirebase();
     }
-    initializeAppMain = () => {
+    initializeAppMain = async () => {
         console.log("HELLO! INIT CARRIED OUT SUCCESFULLY");
         this.adminView.checkModuleLinkage();
         this.adminModel.checkModuleLinkage();
         this.adminFirebase.checkModuleLinkage();
 
+        usersDataDb = await this.adminFirebase.get(usersDataName);
+        customersDataDb = await this.adminFirebase.get(customersDataName);
+        cartsDataDb = await this.adminFirebase.get(cartsDataName);
+        ordersDataDb = await this.adminFirebase.get(ordersDataName);
+        productItemsDb = await this.adminFirebase.get(productItemsName);
+
+        console.log("usersData: ", usersData);
+        console.log("usersDataDb: ", usersDataDb);
         this.displayTables();
 
         this.adminView.renderMenu(
@@ -39,17 +58,20 @@ export class AdminController {
             ordersDataName,
             cartsDataName
         );
-
-        this.adminFirebase.get(usersDataName);
     };
 
-    displayTables = () => {
+    displayTables = async () => {
         this.adminView.clearContainerLeft();
         this.adminView.renderTable(usersData, usersDataName);
+        this.adminView.renderTable(usersDataDb, usersDataDbName);
         this.adminView.renderTable(customersData, customersDataName);
+        this.adminView.renderTable(customersDataDb, customersDataDbName);
         this.adminView.renderTable(cartsData, cartsDataName);
+        this.adminView.renderTable(cartsDataDb, cartsDataDbName);
         this.adminView.renderTable(ordersData, ordersDataName);
+        this.adminView.renderTable(ordersDataDb, ordersDataDbName);
         this.adminView.renderTable(productItems, productItemsName);
+        this.adminView.renderTable(productItemsDb, productItemsDbName);
     };
 }
 

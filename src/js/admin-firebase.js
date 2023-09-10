@@ -36,13 +36,20 @@ export class AdminFirebase {
 
     get = async (collectionName) => {
         const querySnapshot = await getDocs(collection(db, collectionName));
+        const newCollection = [];
         querySnapshot.forEach((doc) => {
-            console.log(`${doc.id}:`);
+            // console.log(`docId: "${doc.id}"`);
+            const newCollectionItem = {};
+            newCollectionItem["docId"] = doc.id;
             const data = doc.data();
             for (const field in data) {
-                console.log(`${field} => ${data[field]}`);
+                newCollectionItem[field] = data[field];
+                // console.log(`${field}: "${data[field]}",`);
             }
+            newCollection.push(newCollectionItem);
         });
+        // console.log(newCollection);
+        return newCollection;
     };
 }
 

@@ -276,20 +276,16 @@ export const productItems = [
 // itemDescription: Item Description;
 
 export const cartsData = [
-    // {
-    //     userId: "User ID",
-    //     itemsId: "Order ID",
-    // },
     {
-        userId: "1001",
-        cart: [
-            {
-                itemId: "",
-                qty: "",
+        Id: "1001",
+        cartItems: {
+            "0032-0001-000": {
+                qty: 2,
             },
-        ],
-        transDate: "20230830",
-        transId: "jkjur-tewvn-00010",
+            "0079-0002-000": {
+                qty: 5,
+            },
+        },
     },
 ];
 
