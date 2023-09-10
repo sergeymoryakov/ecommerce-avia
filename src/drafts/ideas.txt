@@ -1,0 +1,58 @@
+Aviation Parts Marketplace
+Front-End Training Project
+
+Screens:
+1. Main Screen
+- Products List (Each Item Card includes: small image, name, PN, price, and "add to cart" button);
+- List of items in Cart (in a form of small image-buttons);
+- "Go-to-cart" button;
+- List of previous orders.
+
+2. Product Card Screen
+Detailed Product (Item) Card includes:
+- Item image;
+- Item name;
+- Item PN;
+- Item Price;
+- Item Condition;
+- Item Certification;
+- Item Lead Time;
+- "Add to cart" button.
+
+3. Cart Screen
+- List of items in cart. Each Item Card includes:
+    - - Item image;
+    - - Item name;
+    - - Item PN;
+    - - Item Condition;
+    - - Item Certification;
+    - - Item Lead Time;
+    - - Item Price;
+    - - "Add/Remove Qty" buttons.
+- Total Price Information.
+- "Checkout" button.
+
+4. Cart Checkout Screen
+- Bill-to-address and "Update" button.
+- Payment Method information and "Update" button.
+- List of items in cart.
+- Order Price Summary (items, handling, total).
+- "Place order" button.
+
+5. Order Details Screen
+- Order number.
+- Bill-to-address and "Update" button.
+- Payment Method information and "Update" button.
+- List of items in cart.
+- Order Price Summary (items, handling, total).
+
+Technology to use:
+html, css, javascript, Parcel, Firestore
+
+Hosting:
+GitHub Pages
+
+Back-End / DB:
+Google Firebase
+
+
