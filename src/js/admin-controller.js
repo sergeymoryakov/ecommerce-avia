@@ -33,6 +33,23 @@ let ordersDataDb = [];
 let orderItemsDataDb = [];
 let productItemsDb = [];
 
+// FOR TEST-TBS - REMOVE BEFORE PROD
+// Link arrays and names:
+// const arrayMap = {
+//     [customersDataName]: customersData,
+//     [productItemsName]: productItems,
+//     [usersDataName]: usersData,
+//     [ordersDataName]: ordersData,
+//     [orderItemsDataName]: orderItemsData,
+//     [cartsDataName]: cartsData,
+//     [customersDataDbName]: customersDataDb,
+//     [productItemsDbName]: productItemsDb,
+//     [usersDataDbName]: usersDataDb,
+//     [ordersDataDbName]: orderItemsDataDb,
+//     [orderItemsDataDbName]: orderItemsDataDb,
+//     [cartsDataDbName]: cartsDataDb,
+// };
+
 export class AdminController {
     constructor() {
         this.adminView = new AdminView();
@@ -54,9 +71,11 @@ export class AdminController {
         productItemsDb = await this.adminFirebase.get(productItemsDbName);
 
         // For TEST only:
-        console.log("usersData: ", usersData);
-        console.log("usersDataDb: ", usersDataDb);
-        console.log("usersDataDb: ", usersDataDb[0]);
+        // console.log("usersData: ", usersData);
+        // console.log("usersDataDb: ", usersDataDb);
+        // console.log("usersDataDb: ", usersDataDb[0]);
+        // console.log("usersDataDb: ", usersDataDb[1]);
+
         this.displayTables();
 
         this.adminView.renderMenu(
@@ -93,7 +112,7 @@ export class AdminController {
         return idSting.split("_")[0];
     };
 
-    // Get Document ID - [1]-st element
+    // Get Document ID (object) - [1]-st element
     getDocFromId = (idSting) => {
         return idSting.split("_")[1];
     };
@@ -103,36 +122,101 @@ export class AdminController {
         return idSting.split("_")[2];
     };
 
-    handleAddBtnClick = (event) => {
-        const button = event.target;
+    // SUPPORT FUNCTION: GET ARRAY BY IT'S NAME:
+    getArrayByName(arrayName) {
+        if (arrayName === "usersData") return usersData;
+        if (arrayName === "usersDataDb") return usersDataDb;
+        if (arrayName === "customersData") return customersData;
+        if (arrayName === "customersDataDb") return customersDataDb;
+        if (arrayName === "cartsData") return cartsData;
+        if (arrayName === "cartsDataDb") return cartsDataDb;
+        if (arrayName === "ordersData") return ordersData;
+        if (arrayName === "ordersDataDb") return ordersDataDb;
+        if (arrayName === "orderItemsData") return orderItemsData;
+        if (arrayName === "orderItemsDataDb") return orderItemsDataDb;
+        if (arrayName === "productItems") return productItems;
+        if (arrayName === "productItemsDb") return productItemsDb;
+        return null;
+    }
+
+    // Add duplicate document (element/object)
+    duplicateDocument(array, objectId) {
+        // FOR TEST- TBS ONLY - REMOVE IN PROD:
+        // console.log(array[0]);
+        // console.log(array[1]);
+
+        // Find the object by ID
+        const originalObject = array.find((item) => item.docId === objectId);
+        if (!originalObject) {
+            console.log("Object with provided ID is not located.");
+            return;
+        }
+
+        //  Clone object
+        const clonedObject = JSON.parse(JSON.stringify(originalObject));
+
+        // Modify / create unique ID
+        clonedObject.docId = this.adminModel.generateNewId(12);
+
+        // return cloned objc
+        return clonedObject;
+    }
+
+    handleAddBtnClick = (button) => {
         const elementCollection = this.getCollectionFromId(button.id);
         const elementId = this.getDocFromId(button.id);
         console.log(
             `clicked element in ${elementCollection}, docId: ${elementId}.`
         );
+        console.log("elementCollection =", elementCollection);
+        const affectedArray = this.getArrayByName(elementCollection);
+
+        console.log("affectedArray =", affectedArray);
+        const clonedObject = this.duplicateDocument(affectedArray, elementId);
+        console.log("clonedObject: ", clonedObject);
+
+        // Add cloned object/document to array/collection:
+        affectedArray.push(clonedObject);
+        this.displayTables();
+        return;
+    };
+
+    handleButtonsClick = (event) => {
+        const target = event.target;
+
+        if (target.classList.contains("add-btn")) {
+            this.handleAddBtnClick(target);
+        }
     };
 
     attachEventListeners() {
-        console.log("this.adminView:", this.adminView);
-        console.log("this.adminView.docAddBtn:", this.adminView.docAddBtnNode);
+        this.adminView.containerLeftNode.addEventListener(
+            "click",
+            this.handleButtonsClick
+        );
 
-        this.adminView.docAddBtnNode.forEach((button) => {
-            button.addEventListener("click", (event) =>
-                this.handleAddBtnClick(event)
-            );
-        });
+        // FOR TEST- TBS ONLY - REMOVE IN PROD:
+        // console.log("this.adminView:", this.adminView);
+        // console.log("this.adminView.docAddBtn:", this.adminView.docAddBtnNode);
 
-        this.adminView.docUpdateBtnNode.forEach((button) => {
-            button.addEventListener("click", (event) =>
-                this.handleAddBtnClick(event)
-            );
-        });
+        // REPLACED BELOW ITEMS BY COMMON PARRENT LISTENER
+        // this.adminView.docAddBtnNode.forEach((button) => {
+        //     button.addEventListener("click", (event) =>
+        //         this.handleAddBtnClick(event)
+        //     );
+        // });
 
-        this.adminView.docDeleteBtnNode.forEach((button) => {
-            button.addEventListener("click", (event) =>
-                this.handleAddBtnClick(event)
-            );
-        });
+        // this.adminView.docUpdateBtnNode.forEach((button) => {
+        //     button.addEventListener("click", (event) =>
+        //         this.handleAddBtnClick(event)
+        //     );
+        // });
+
+        // this.adminView.docDeleteBtnNode.forEach((button) => {
+        //     button.addEventListener("click", (event) =>
+        //         this.handleAddBtnClick(event)
+        //     );
+        // });
 
         // FOR TEST-TBS ONLY - REMOVE IN PROD:
         this.adminView.testBtnNode.addEventListener("click", () => {

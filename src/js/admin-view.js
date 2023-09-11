@@ -4,6 +4,11 @@ export class AdminView {
         this.containerLeftNode = document.getElementById("containerLeft");
         this.containerRightNode = document.getElementById("containerRight");
 
+        // CHECK - WHERE IT HAS TO BE:
+        // this.docAddBtnNode = document.querySelectorAll(".add-btn");
+        // this.docUpdateBtnNode = document.querySelectorAll(".updt-btn");
+        // this.docDeleteBtnNode = document.querySelectorAll(".del-btn");
+
         // For Test - TBS only:
         this.testBtnNode = document.getElementById("testBtn");
     }
@@ -49,8 +54,8 @@ export class AdminView {
 
     createDataRow = (object, arrayName) => {
         // FOR TBS ONLY:
-        console.log("object.id: ", object.id);
-        console.log("object.docId: ", object.docId);
+        // console.log("object.id: ", object.id);
+        // console.log("object.docId: ", object.docId);
 
         const newDataRow = document.createElement("tr");
 
@@ -135,9 +140,10 @@ export class AdminView {
 
         this.containerLeftNode.appendChild(tableWrapper);
 
-        this.docAddBtnNode = document.querySelectorAll(".add-btn");
-        this.docUpdateBtnNode = document.querySelectorAll(".updt-btn");
-        this.docDeleteBtnNode = document.querySelectorAll(".del-btn");
+        // REPLACED BELOW BY PARENT ELEMENT LISTENER
+        // this.docAddBtnNode = document.querySelectorAll(".add-btn");
+        // this.docUpdateBtnNode = document.querySelectorAll(".updt-btn");
+        // this.docDeleteBtnNode = document.querySelectorAll(".del-btn");
     };
 
     createMenuBtn = (arrayName) => {
