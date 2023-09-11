@@ -4,4 +4,15 @@ export class AdminModel {
     checkModuleLinkage = () => {
         console.log("HELLO, AdminModel is connected!");
     };
+
+    // New ID Generator:
+    generateNewId(length) {
+        return [...Array(length)]
+            .map(() =>
+                Math.floor(Math.random() * 36)
+                    .toString(36)
+                    .toUpperCase()
+            )
+            .join("");
+    }
 }

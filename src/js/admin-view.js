@@ -3,6 +3,9 @@ export class AdminView {
     constructor() {
         this.containerLeftNode = document.getElementById("containerLeft");
         this.containerRightNode = document.getElementById("containerRight");
+
+        // For Test - TBS only:
+        this.testBtnNode = document.getElementById("testBtn");
     }
     checkModuleLinkage = () => {
         console.log("HELLO, AdminView is connected!");

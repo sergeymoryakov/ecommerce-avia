@@ -87,10 +87,26 @@ export class AdminController {
         this.adminView.renderTable(productItemsDb, productItemsDbName);
     };
 
+    // Functions to split elemnt ID (${arrayName}_${object.docId}_${key})
+    // Get Collection (array name) - [0]-th element
+    getCollectionFromId = (idSting) => {
+        return idSting.split("_")[0];
+    };
+
+    // Get Document ID - [1]-st element
+    getDocFromId = (idSting) => {
+        return idSting.split("_")[1];
+    };
+
+    // Get Field (key name) - [2]-nd element
+    getKeyFromId = (idSting) => {
+        return idSting.split("_")[2];
+    };
+
     handleAddBtnClick = (event) => {
         const button = event.target;
-        const elementCollection = button.id.split("_")[0];
-        const elementId = button.id.split("_")[1];
+        const elementCollection = this.getCollectionFromId(button.id);
+        const elementId = this.getDocFromId(button.id);
         console.log(
             `clicked element in ${elementCollection}, docId: ${elementId}.`
         );
@@ -116,6 +132,12 @@ export class AdminController {
             button.addEventListener("click", (event) =>
                 this.handleAddBtnClick(event)
             );
+        });
+
+        // FOR TEST-TBS ONLY - REMOVE IN PROD:
+        this.adminView.testBtnNode.addEventListener("click", () => {
+            const newId = this.adminModel.generateNewId(12);
+            console.log("New randome id(12) =", newId);
         });
     }
 }
