@@ -45,13 +45,18 @@ export class AdminView {
     };
 
     createDataRow = (object, arrayName) => {
+        // FOR TBS ONLY:
+        console.log("object.id: ", object.id);
+        console.log("object.docId: ", object.docId);
+
         const newDataRow = document.createElement("tr");
 
         // create two button elements and add as first child:
         const newButtonElement1 = document.createElement("td");
         newButtonElement1.classList = "db-section__table_cell";
         const newButton1 = document.createElement("button");
-        newButton1.classList = "db-section__table_button";
+        newButton1.classList = "db-section__table_btn add-btn";
+        newButton1.id = `${arrayName}_${object.docId}_addBtn`;
         newButton1.innerText = "+";
         newButtonElement1.appendChild(newButton1);
         newDataRow.appendChild(newButtonElement1);
@@ -59,7 +64,8 @@ export class AdminView {
         const newButtonElement2 = document.createElement("td");
         newButtonElement2.classList = "db-section__table_cell";
         const newButton2 = document.createElement("button");
-        newButton2.classList = "db-section__table_button";
+        newButton2.classList = "db-section__table_btn updt-btn";
+        newButton2.id = `${arrayName}_${object.docId}_updtBtn`;
         newButton2.innerText = "u";
         newButtonElement2.appendChild(newButton2);
         newDataRow.appendChild(newButtonElement2);
@@ -68,11 +74,11 @@ export class AdminView {
             // Add table cell element, class and ID:
             const newDataElement = document.createElement("td");
             newDataElement.classList = "db-section__table_cell";
-            newDataElement.id = `${arrayName}_${object.id}_${key}`;
+            newDataElement.id = `${arrayName}_${object.docId}_${key}`;
 
             const newInput = document.createElement("input");
             newInput.type = "text";
-            newInput.id = `${arrayName}_${object.id}_${key}_input`;
+            newInput.id = `${arrayName}_${object.docId}_${key}_input`;
             newInput.value = `${value}`;
 
             newDataElement.appendChild(newInput);
@@ -83,7 +89,8 @@ export class AdminView {
         const newButtonElement3 = document.createElement("td");
         newButtonElement3.classList = "db-section__table_cell";
         const newButton3 = document.createElement("button");
-        newButton3.classList = "db-section__table_button";
+        newButton3.classList = "db-section__table_btn del-btn";
+        newButton3.id = `${arrayName}_${object.docId}_delBtn`;
         newButton3.innerText = "-";
         newButtonElement3.appendChild(newButton3);
         newDataRow.appendChild(newButtonElement3);
@@ -124,6 +131,10 @@ export class AdminView {
         console.log(tableWrapper);
 
         this.containerLeftNode.appendChild(tableWrapper);
+
+        this.docAddBtnNode = document.querySelectorAll(".add-btn");
+        this.docUpdateBtnNode = document.querySelectorAll(".updt-btn");
+        this.docDeleteBtnNode = document.querySelectorAll(".del-btn");
     };
 
     createMenuBtn = (arrayName) => {

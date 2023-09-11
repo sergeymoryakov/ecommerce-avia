@@ -7,6 +7,7 @@ import {
     customersData,
     cartsData,
     ordersData,
+    orderItemsData,
     productItems,
 } from "./admin-data.js";
 
@@ -15,11 +16,13 @@ import {
     productItemsName,
     usersDataName,
     ordersDataName,
+    orderItemsDataName,
     cartsDataName,
     customersDataDbName,
     productItemsDbName,
     usersDataDbName,
     ordersDataDbName,
+    orderItemsDataDbName,
     cartsDataDbName,
 } from "./admin-constants.js";
 
@@ -27,6 +30,7 @@ let usersDataDb = [];
 let customersDataDb = [];
 let cartsDataDb = [];
 let ordersDataDb = [];
+let orderItemsDataDb = [];
 let productItemsDb = [];
 
 export class AdminController {
@@ -35,20 +39,24 @@ export class AdminController {
         this.adminModel = new AdminModel();
         this.adminFirebase = new AdminFirebase();
     }
+
     initializeAppMain = async () => {
         console.log("HELLO! INIT CARRIED OUT SUCCESFULLY");
         this.adminView.checkModuleLinkage();
         this.adminModel.checkModuleLinkage();
         this.adminFirebase.checkModuleLinkage();
 
-        usersDataDb = await this.adminFirebase.get(usersDataName);
-        customersDataDb = await this.adminFirebase.get(customersDataName);
-        cartsDataDb = await this.adminFirebase.get(cartsDataName);
-        ordersDataDb = await this.adminFirebase.get(ordersDataName);
-        productItemsDb = await this.adminFirebase.get(productItemsName);
+        usersDataDb = await this.adminFirebase.get(usersDataDbName);
+        customersDataDb = await this.adminFirebase.get(customersDataDbName);
+        cartsDataDb = await this.adminFirebase.get(cartsDataDbName);
+        ordersDataDb = await this.adminFirebase.get(ordersDataDbName);
+        orderItemsDataDb = await this.adminFirebase.get(orderItemsDataDbName);
+        productItemsDb = await this.adminFirebase.get(productItemsDbName);
 
+        // For TEST only:
         console.log("usersData: ", usersData);
         console.log("usersDataDb: ", usersDataDb);
+        console.log("usersDataDb: ", usersDataDb[0]);
         this.displayTables();
 
         this.adminView.renderMenu(
@@ -56,8 +64,11 @@ export class AdminController {
             productItemsName,
             usersDataName,
             ordersDataName,
+            orderItemsDataName,
             cartsDataName
         );
+
+        this.attachEventListeners();
     };
 
     displayTables = async () => {
@@ -70,39 +81,73 @@ export class AdminController {
         this.adminView.renderTable(cartsDataDb, cartsDataDbName);
         this.adminView.renderTable(ordersData, ordersDataName);
         this.adminView.renderTable(ordersDataDb, ordersDataDbName);
+        this.adminView.renderTable(orderItemsData, orderItemsDataName);
+        this.adminView.renderTable(orderItemsDataDb, orderItemsDataDbName);
         this.adminView.renderTable(productItems, productItemsName);
         this.adminView.renderTable(productItemsDb, productItemsDbName);
     };
+
+    handleAddBtnClick = (event) => {
+        const button = event.target;
+        const elementCollection = button.id.split("_")[0];
+        const elementId = button.id.split("_")[1];
+        console.log(
+            `clicked element in ${elementCollection}, docId: ${elementId}.`
+        );
+    };
+
+    attachEventListeners() {
+        console.log("this.adminView:", this.adminView);
+        console.log("this.adminView.docAddBtn:", this.adminView.docAddBtnNode);
+
+        this.adminView.docAddBtnNode.forEach((button) => {
+            button.addEventListener("click", (event) =>
+                this.handleAddBtnClick(event)
+            );
+        });
+
+        this.adminView.docUpdateBtnNode.forEach((button) => {
+            button.addEventListener("click", (event) =>
+                this.handleAddBtnClick(event)
+            );
+        });
+
+        this.adminView.docDeleteBtnNode.forEach((button) => {
+            button.addEventListener("click", (event) =>
+                this.handleAddBtnClick(event)
+            );
+        });
+    }
 }
 
-// FUNCTIONS: SUPPORT AND TBS
+// // FUNCTIONS: SUPPORT AND TBS
 
-// Function gets ID and Value of Input element and returns in
-// mini-object format:
-const extractInfoFromId = (fullId, inputValue) => {
-    idParts = fullId.split("_");
-    // For reference, elemment ID:
-    // "DataElement.id = `${arrayName}_${object.id}_${key}`;"
-    const arrayName = idParts[0];
-    const objectId = idParts[2];
-    const key = idParts[3];
-    const value = inputValue;
+// // Function gets ID and Value of Input element and returns in
+// // mini-object format:
+// const extractInfoFromId = (fullId, inputValue) => {
+//     idParts = fullId.split("_");
+//     // For reference, elemment ID:
+//     // "DataElement.id = `${arrayName}_${object.id}_${key}`;"
+//     const arrayName = idParts[0];
+//     const objectId = idParts[2];
+//     const key = idParts[3];
+//     const value = inputValue;
 
-    return {
-        arrayName: arrayName,
-        objectId: objectId,
-        key: key,
-        value: value,
-    };
-};
+//     return {
+//         arrayName: arrayName,
+//         objectId: objectId,
+//         key: key,
+//         value: value,
+//     };
+// };
 
-// Function monitors input changes and displays details in console:
-document.addEventListener("input", function (event) {
-    if (event.target.tagName === "INPUT") {
-        const fullId = event.target.id;
-        const inputValue = event.target.value;
+// // Function monitors input changes and displays details in console:
+// document.addEventListener("input", function (event) {
+//     if (event.target.tagName === "INPUT") {
+//         const fullId = event.target.id;
+//         const inputValue = event.target.value;
 
-        const info = extractInfoFromId(fullId, inputValue);
-        console.log(info);
-    }
-});
+//         const info = extractInfoFromId(fullId, inputValue);
+//         console.log(info);
+//     }
+// });

@@ -19,6 +19,7 @@ export const usersData = [
     //     userAdmin: "User Admin",
     // },
     {
+        docId: "EOFDVDSDXC5Z",
         id: "1001",
         custId: "c001",
         userName: "Mattew Yampolski",
@@ -74,6 +75,7 @@ export const customersData = [
     //     custOrders: "Customer Orders",
     // },
     {
+        docId: "VP40CNM026NU",
         id: "c001",
         custCode: "aespl",
         custLegalName: "AeroSupplyPlus LLC",
@@ -132,6 +134,7 @@ export const productItems = [
     //     itemDescription: "Description",
     // },
     {
+        docId: "PVU9AO4BUQ7Y",
         id: "0032-0001-000",
         itemName: "Wheel Main Assy",
         itemCat: "component",
@@ -150,6 +153,7 @@ export const productItems = [
         transId: "jkjur-tewvn-00003",
     },
     {
+        docId: "BIQM1WV0SQQ4",
         id: "0032-0002-000",
         itemName: "Wheel Nose Assy",
         itemCat: "component",
@@ -168,6 +172,7 @@ export const productItems = [
         transId: "jkjur-tewvn-00004",
     },
     {
+        docId: "89A1JPR1ND4E",
         id: "0032-0001-100",
         itemName: "Wheel Main Assy",
         itemCat: "component",
@@ -186,6 +191,7 @@ export const productItems = [
         transId: "jkjur-tewvn-00005",
     },
     {
+        docId: "GKC5O2J40K4U",
         id: "0079-0001-000",
         itemName: "Filter Assy Oil",
         itemCat: "component",
@@ -204,6 +210,7 @@ export const productItems = [
         transId: "jkjur-tewvn-00006",
     },
     {
+        docId: "ZL5XAK95CY4R",
         id: "0079-0002-000",
         itemName: "Filter Element",
         itemCat: "part",
@@ -222,6 +229,7 @@ export const productItems = [
         transId: "jkjur-tewvn-00007",
     },
     {
+        docId: "XP8TC8LW39BE",
         id: "0025-0001-000",
         itemName: "Seat Block Assy",
         itemCat: "component",
@@ -240,6 +248,7 @@ export const productItems = [
         transId: "jkjur-tewvn-00008",
     },
     {
+        docId: "II96WJEU04JK",
         id: "1000-0001-000",
         itemName: "Handbook, Aviation Maintenance Technician - General",
         itemCat: "manual",
@@ -277,15 +286,28 @@ export const productItems = [
 
 export const cartsData = [
     {
-        Id: "1001",
-        cartItems: {
-            "0032-0001-000": {
-                qty: 2,
-            },
-            "0079-0002-000": {
-                qty: 5,
-            },
-        },
+        docId: "E8QWSKY5CVCA",
+        id: "1001",
+        itemId: "0032-0001-000",
+        qty: 2,
+    },
+    {
+        docId: "ZJ4TKGWEHR2D",
+        id: "1001",
+        itemId: "0079-0002-000",
+        qty: 3,
+    },
+    {
+        docId: "5UXYDBI2OD2D",
+        id: "1001",
+        itemId: "BS30-737NG-3254",
+        qty: 2,
+    },
+    {
+        docId: "5FKYXA6LWWOU",
+        id: "1001",
+        itemId: "GY30-737NG-9001",
+        qty: 4,
     },
 ];
 
@@ -309,29 +331,16 @@ export const ordersData = [
     //     orderCurrency: "Currency",
     // },
     {
+        docId: "44BI5T2JM2Q1",
         id: "100001",
         orderCustId: "c001",
         orderUserId: "1001",
         orderDatePlaced: "20230828",
         orderDateReady: "20230828",
         orderDateCompleted: "20230829",
-        orderBillTo: {
-            custLegalName: "AeroSupplyPlus LLC",
-            custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
-            custContactName: "Mattew Yampolski",
-            custPhone: "+1 898 9289289",
-            custEmail: "supply@aerosupplyplus.aero",
-        },
         orderPaymentMethod: "card",
         orderPaymentDeadline: "20230829",
         orderPaymentDone: "20230828",
-        orderCart: [
-            {
-                itemId: "",
-                itemPrice: "",
-                qty: "",
-            },
-        ],
         orderPriceItems: 1374982.0,
         orderPriceHandling: 378.0,
         orderPriceTotal: 1375360.0,
@@ -340,29 +349,16 @@ export const ordersData = [
         transId: "jkjur-tewvn-00011",
     },
     {
+        docId: "T1V6FN5IAU41",
         id: "100002",
         orderCustId: "c001",
         orderUserId: "1001",
         orderDatePlaced: "20230828",
         orderDateReady: "20230828",
         orderDateCompleted: "20230829",
-        orderBillTo: {
-            custLegalName: "AeroSupplyPlus LLC",
-            custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
-            custContactName: "Mattew Yampolski",
-            custPhone: "+1 898 9289289",
-            custEmail: "supply@aerosupplyplus.aero",
-        },
         orderPaymentMethod: "card",
         orderPaymentDeadline: "20230829",
         orderPaymentDone: "20230828",
-        orderCart: [
-            {
-                itemId: "",
-                itemPrice: "",
-                qty: "",
-            },
-        ],
         orderPriceItems: 1374982.0,
         orderPriceHandling: 378.0,
         orderPriceTotal: 1375360.0,
@@ -371,29 +367,16 @@ export const ordersData = [
         transId: "jkjur-tewvn-00012",
     },
     {
+        docId: "CZ193PBP4206",
         id: "100003",
         orderCustId: "c001",
         orderUserId: "1001",
         orderDatePlaced: "20230828",
         orderDateReady: "20230828",
         orderDateCompleted: "20230829",
-        orderBillTo: {
-            custLegalName: "AeroSupplyPlus LLC",
-            custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
-            custContactName: "Mattew Yampolski",
-            custPhone: "+1 898 9289289",
-            custEmail: "supply@aerosupplyplus.aero",
-        },
         orderPaymentMethod: "card",
         orderPaymentDeadline: "20230829",
         orderPaymentDone: "20230828",
-        orderCart: [
-            {
-                itemId: "",
-                itemPrice: "",
-                qty: "",
-            },
-        ],
         orderPriceItems: 1374982.0,
         orderPriceHandling: 378.0,
         orderPriceTotal: 1375360.0,
@@ -419,3 +402,27 @@ export const ordersData = [
 // orderPriceItems: Order Items Price, set automatically at time of placement (number/accounting);
 // orderPriceHandling: Order Handling Fee Price, set automatically at time of placement (number/accounting);
 // orderPriceTotal: Order Total Price, set automatically at time of placement (number/accounting);
+
+export const orderItemsData = [
+    {
+        docId: "9CGGAEA9Z6Z6",
+        id: "100001",
+        orderId: "100001",
+        itemId: "0032-0001-000",
+        qty: 2,
+    },
+    {
+        docId: "412KMYERYTGG",
+        id: "100001",
+        orderId: "100001",
+        itemId: "0079-0002-000",
+        qty: 5,
+    },
+    {
+        docId: "ZYIF4ZAYRZLI",
+        id: "100001",
+        orderId: "100001",
+        itemId: "0079-0002-000",
+        qty: 5,
+    },
+];

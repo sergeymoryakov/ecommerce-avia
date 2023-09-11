@@ -923,7 +923,7 @@ html {
 
 /* .add-btn,
 .admin-update-btn, */
-.db-section__table_button {
+.db-section__table_btn {
     background-color: var(--clr-black);
     color: var(--clr-white);
     font-weight: 700;
@@ -931,7 +931,7 @@ html {
     cursor: pointer;
 }
 
-.db-section__table_button:hover {
+.db-section__table_btn:hover {
     color: var(--clr-black);
     background-color: var(--clr-white);
 }
