@@ -231,6 +231,30 @@ export class AdminController {
                 docToUpdate[keyName] = value;
             }
         });
+
+        console.log("docToUpdate: ", docToUpdate);
+
+        // Verify if need to update in Firestore collection
+        if (
+            [
+                customersDataDbName,
+                productItemsDbName,
+                usersDataDbName,
+                ordersDataDbName,
+                orderItemsDataDbName,
+                cartsDataDbName,
+            ].includes(elementCollection)
+        ) {
+            console.log(
+                `trying to update element/doc with docId: ${elementId} in Collection ${elementCollection}`
+            );
+            // try to update doc with elementId (docId) in Firestore collection:
+            this.adminFirebase.updateDocInFirestore(
+                elementCollection,
+                docToUpdate
+            );
+        }
+
         this.displayTables();
     };
 

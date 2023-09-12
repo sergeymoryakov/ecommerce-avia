@@ -5,10 +5,11 @@ import {
     getFirestore,
     collection,
     getDocs,
-    // updateDoc,
+    updateDoc,
     doc,
     setDoc,
     deleteDoc,
+    updateDoc,
     // query,
     // orderBy,
 } from "firebase/firestore";
@@ -65,10 +66,16 @@ export class AdminFirebase {
         }
     };
 
-    updateDocInFirestore = async () => {
+    updateDocInFirestore = async (collectionName, item) => {
         try {
+            const docRef = doc(db, collectionName, item.docId);
+            await updateDoc(docRef, item);
+            console.log(
+                "Item/document succesfully updated in Firestore, docId: ",
+                item.docId
+            );
         } catch (error) {
-            console.error("Error updating document: ", error);
+            console.error("Error updating document in Firestore: ", error);
         }
     };
 
