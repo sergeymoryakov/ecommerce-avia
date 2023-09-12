@@ -136,14 +136,8 @@ export class AdminView {
 
         tableWrapper.appendChild(tableTitle);
         tableWrapper.appendChild(table);
-        console.log(tableWrapper);
 
         this.containerLeftNode.appendChild(tableWrapper);
-
-        // REPLACED BELOW BY PARENT ELEMENT LISTENER
-        // this.docAddBtnNode = document.querySelectorAll(".add-btn");
-        // this.docUpdateBtnNode = document.querySelectorAll(".updt-btn");
-        // this.docDeleteBtnNode = document.querySelectorAll(".del-btn");
     };
 
     createMenuBtn = (arrayName) => {

@@ -166,7 +166,7 @@ export class AdminController {
         const elementCollection = this.getCollectionFromId(button.id);
         const elementId = this.getDocFromId(button.id);
         console.log(
-            `clicked element in ${elementCollection}, docId: ${elementId}.`
+            `Request to clone element in ${elementCollection}, docId: ${elementId}.`
         );
         console.log("elementCollection =", elementCollection);
         const affectedArray = this.getArrayByName(elementCollection);
@@ -181,11 +181,71 @@ export class AdminController {
         return;
     };
 
+    handleUpdateBtnClick = (button) => {
+        const elementCollection = this.getCollectionFromId(button.id);
+        const elementId = this.getDocFromId(button.id);
+        console.log(
+            `Request to update element in ${elementCollection}, docId: ${elementId}.`
+        );
+        const affectedArray = this.getArrayByName(elementCollection);
+
+        // Locate the object/document to update:
+        const docToUpdate = affectedArray.find(
+            (doc) => doc.docId === elementId
+        );
+
+        if (!docToUpdate) {
+            console.log("Not found element/document with docId = ", elementId);
+            return;
+        }
+
+        // Locate table row with clicked button
+        const tableRow = button.closest("tr");
+        const cells = tableRow.querySelectorAll("td");
+
+        // Locate all input fields
+        cells.forEach((cell) => {
+            const inputField = cell.querySelector("input");
+            if (inputField) {
+                const keyName = this.getKeyFromId(inputField.id);
+                const value = inputField.value;
+                docToUpdate[keyName] = value;
+            }
+        });
+        this.displayTables();
+    };
+
+    handleDeleteBtnClick = (button) => {
+        const elementCollection = this.getCollectionFromId(button.id);
+        const elementId = this.getDocFromId(button.id);
+        console.log(
+            `Request to delete element in ${elementCollection}, docId: ${elementId}.`
+        );
+        let affectedArray = this.getArrayByName(elementCollection);
+        const index = affectedArray.findIndex((doc) => doc.docId === elementId);
+
+        if (index !== -1) {
+            affectedArray.splice(index, 1);
+            console.log("Deleted element/document with docId = ", elementId);
+        } else {
+            console.log("Not found element/document with docId = ", elementId);
+        }
+        this.displayTables();
+    };
+
     handleButtonsClick = (event) => {
         const target = event.target;
 
         if (target.classList.contains("add-btn")) {
             this.handleAddBtnClick(target);
+        }
+
+        if (target.classList.contains("updt-btn")) {
+            this.handleUpdateBtnClick(target);
+        }
+
+        if (target.classList.contains("del-btn")) {
+            this.handleDeleteBtnClick(target);
         }
     };
 
