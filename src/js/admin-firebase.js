@@ -6,9 +6,9 @@ import {
     collection,
     getDocs,
     // updateDoc,
-    // doc,
-    // setDoc,
-    // deleteDoc,
+    doc,
+    setDoc,
+    deleteDoc,
     // query,
     // orderBy,
 } from "firebase/firestore";
@@ -51,10 +51,32 @@ export class AdminFirebase {
         // console.log(newCollection);
         return newCollection;
     };
+
+    addDocToFirestore = async (collectionName, item) => {
+        try {
+            const docRef = doc(db, collectionName, item.docId);
+            await setDoc(docRef, item);
+            console.log(
+                "Item/document succesfully added with docId: ",
+                item.docId
+            );
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+    };
+
+    updateDocInFirestore = async () => {
+        try {
+        } catch (error) {
+            console.error("Error updating document: ", error);
+        }
+    };
+
+    deleteDocFromFirestore = async (collectionName, itemId) => {
+        try {
+            await deleteDoc(doc(db, collectionName, itemId));
+        } catch (error) {
+            console.error("Error deleting document: ", error);
+        }
+    };
 }
-
-// const ref = collection(db, "usersData");
-// const q = query(ref);
-
-// const usersDataDb = [];
-// const querySnapshot = await getDocs(q);

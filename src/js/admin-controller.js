@@ -168,15 +168,34 @@ export class AdminController {
         console.log(
             `Request to clone element in ${elementCollection}, docId: ${elementId}.`
         );
-        console.log("elementCollection =", elementCollection);
         const affectedArray = this.getArrayByName(elementCollection);
 
-        console.log("affectedArray =", affectedArray);
         const clonedObject = this.duplicateDocument(affectedArray, elementId);
         console.log("clonedObject: ", clonedObject);
 
+        // Verify if need to add to Firestore collection
+        if (
+            [
+                customersDataDbName,
+                productItemsDbName,
+                usersDataDbName,
+                ordersDataDbName,
+                orderItemsDataDbName,
+                cartsDataDbName,
+            ].includes(elementCollection)
+        ) {
+            console.log(
+                `trying to include clonedObject: ${clonedObject} into Collection ${elementCollection}`
+            );
+            // try to add new doc (clonedObject) to Firestore (elementCollection):
+            this.adminFirebase.addDocToFirestore(
+                elementCollection,
+                clonedObject
+            );
+        }
         // Add cloned object/document to array/collection:
         affectedArray.push(clonedObject);
+
         this.displayTables();
         return;
     };
@@ -221,6 +240,30 @@ export class AdminController {
         console.log(
             `Request to delete element in ${elementCollection}, docId: ${elementId}.`
         );
+
+        // Verify if need to add to Firestore collection
+        if (
+            [
+                customersDataDbName,
+                productItemsDbName,
+                usersDataDbName,
+                ordersDataDbName,
+                orderItemsDataDbName,
+                cartsDataDbName,
+            ].includes(elementCollection)
+        ) {
+            console.log(
+                `trying to delete element/doc with docId: ${elementId} from Collection ${elementCollection}`
+            );
+            // try to delete doc with elementId (docId) from Firestore collection:
+            this.adminFirebase.deleteDocFromFirestore(
+                elementCollection,
+                elementId
+            );
+        }
+
+        // Remove element/doc from affected array/collection using .splice() method
+
         let affectedArray = this.getArrayByName(elementCollection);
         const index = affectedArray.findIndex((doc) => doc.docId === elementId);
 
