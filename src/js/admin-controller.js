@@ -138,9 +138,29 @@ export class AdminController {
         if (arrayName === "productItemsDb") return productItemsDb;
         return null;
     }
+    // SUPPORT FUNCTION: GET SISTER ARRAY BY NAME:
+    getSisterArrayByName(arrayName) {
+        if (arrayName === "usersData") return usersDataDb;
+        if (arrayName === "customersData") return customersDataDb;
+        if (arrayName === "cartsData") return cartsDataDb;
+        if (arrayName === "ordersData") return ordersDataDb;
+        if (arrayName === "orderItemsData") return orderItemsDataDb;
+        if (arrayName === "productItems") return productItemsDb;
+        return null;
+    }
+    // SUPPORT FUNCTION: GET SISTER ARRAY BY NAME:
+    getSisterArrayNameByName(arrayName) {
+        if (arrayName === "usersData") return "usersDataDb";
+        if (arrayName === "customersData") return "customersDataDb";
+        if (arrayName === "cartsData") return "cartsDataDb";
+        if (arrayName === "ordersData") return "ordersDataDb";
+        if (arrayName === "orderItemsData") return "orderItemsDataDb";
+        if (arrayName === "productItems") return "productItemsDb";
+        return null;
+    }
 
     // Add duplicate document (element/object)
-    duplicateDocument(array, objectId) {
+    cloneDocument(array, objectId) {
         // FOR TEST- TBS ONLY - REMOVE IN PROD:
         // console.log(array[0]);
         // console.log(array[1]);
@@ -170,7 +190,7 @@ export class AdminController {
         );
         const affectedArray = this.getArrayByName(elementCollection);
 
-        const clonedObject = this.duplicateDocument(affectedArray, elementId);
+        const clonedObject = this.cloneDocument(affectedArray, elementId);
         console.log("clonedObject: ", clonedObject);
 
         // Verify if need to add to Firestore collection
@@ -192,6 +212,15 @@ export class AdminController {
                 elementCollection,
                 clonedObject
             );
+        } else {
+            // Identify Sister Array Name, Sister Array
+            const sisterArray = this.getSisterArrayByName(elementCollection);
+            const sisterArrayName =
+                this.getSisterArrayNameByName(elementCollection);
+            // try to add new doc (clonedObject) to sister Firestore array/collection:
+            this.adminFirebase.addDocToFirestore(sisterArrayName, clonedObject);
+            // add cloned object/document to local copy of the Firestore array/collection
+            sisterArray.push(clonedObject);
         }
         // Add cloned object/document to array/collection:
         affectedArray.push(clonedObject);
