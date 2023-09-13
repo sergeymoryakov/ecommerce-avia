@@ -376,13 +376,37 @@ export class AdminController {
 
         // FOR TEST-TBS ONLY - REMOVE IN PROD:
         this.adminView.testBtnNode.addEventListener("click", () => {
-            const newId = this.adminModel.generateNewId(12);
-            console.log("New randome id(12) =", newId);
+            console.log("call backupData function");
+            return backupData(usersData);
         });
     }
 }
 
 // // FUNCTIONS: SUPPORT AND TBS
+
+function backupData(array) {
+    // convert array to JSON format
+    const jsonString = JSON.stringify(array, null, 2);
+
+    //  Create a blob object
+    const blob = new Blob([jsonString], { type: "application/json" });
+
+    // Create URL for blob
+    const url = URL.createObjectURL(blob);
+
+    // Create an ancor element
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "data-backup.json";
+
+    // Trigger the download
+    document.body.appendChild(a);
+    a.click();
+
+    // clean up
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+}
 
 // // Function gets ID and Value of Input element and returns in
 // // mini-object format:
