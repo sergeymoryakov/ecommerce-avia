@@ -2,7 +2,7 @@ import { AdminView } from "./admin-view.js";
 import { AdminModel } from "./admin-model.js";
 import { AdminFirebase } from "./admin-firebase.js";
 
-// TEST Usage of Data objects:
+import { v4 as uuidv4 } from "uuid";
 
 const dbCollectionNames = [
     "usersData",
@@ -13,56 +13,9 @@ const dbCollectionNames = [
     "productItems",
 ];
 
-// const dbCollectionNames2 = [
-//     "usersDataDb",
-//     "customersDataDb",
-//     "cartsDataDb",
-//     "ordersDataDb",
-//     "orderItemsDataDb",
-//     "productItemsDb",
-// ];
-
 let isViewBackup = false;
 let dataInstance = {};
 import { backupInstance } from "../data/backup.js";
-
-// TEST AND TBS:
-// console.log("backupInstance: ", backupInstance);
-// dbCollectionNames.forEach((array) => {
-//     console.log(`backupInstance.${array}: `);
-//     console.log(backupInstance[array]);
-// });
-
-// import {
-//     usersData,
-//     customersData,
-//     cartsData,
-//     ordersData,
-//     orderItemsData,
-//     productItems,
-// } from "./admin-data.js";
-
-// import {
-//     customersDataName,
-//     productItemsName,
-//     usersDataName,
-//     ordersDataName,
-//     orderItemsDataName,
-//     cartsDataName,
-//     customersDataDbName,
-//     productItemsDbName,
-//     usersDataDbName,
-//     ordersDataDbName,
-//     orderItemsDataDbName,
-//     cartsDataDbName,
-// } from "./admin-constants.js";
-
-// let usersDataDb = [];
-// let customersDataDb = [];
-// let cartsDataDb = [];
-// let ordersDataDb = [];
-// let orderItemsDataDb = [];
-// let productItemsDb = [];
 
 export class AdminController {
     constructor() {
@@ -83,44 +36,17 @@ export class AdminController {
                 collectionName
             );
         }
-        // console.log("dataInstance: ", dataInstance);
-        // dbCollectionNames.forEach((array) => {
-        //     console.log(`dataInstance.${array}:`);
-        //     console.log(dataInstance[array]);
-        // });
-
-        // usersDataDb = await this.adminFirebase.get(usersDataDbName);
-        // customersDataDb = await this.adminFirebase.get(customersDataDbName);
-        // cartsDataDb = await this.adminFirebase.get(cartsDataDbName);
-        // ordersDataDb = await this.adminFirebase.get(ordersDataDbName);
-        // orderItemsDataDb = await this.adminFirebase.get(orderItemsDataDbName);
-        // productItemsDb = await this.adminFirebase.get(productItemsDbName);
-
-        // console.log("usersDataDb: ", usersDataDb);
-        // console.log("productItemsDb: ", productItemsDb);
-
-        // For TEST only:
-        // console.log("usersData: ", usersData);
-        // console.log("usersDataDb: ", usersDataDb);
-        // console.log("usersDataDb: ", usersDataDb[0]);
-        // console.log("usersDataDb: ", usersDataDb[1]);
 
         this.displayDataInstanceTables();
-        // this.displayTables();
-
-        // this.adminView.renderMenu(
-        //     customersDataName,
-        //     productItemsName,
-        //     usersDataName,
-        //     ordersDataName,
-        //     orderItemsDataName,
-        //     cartsDataName
-        // );
 
         this.adminView.renderMenu(dbCollectionNames);
 
         this.attachEventListeners();
     };
+
+    generateUniqueId() {
+        return uuidv4();
+    }
 
     // NOTE: isBackup - a backupInstancevalidator:
     // 0 - dataInstance
@@ -152,22 +78,6 @@ export class AdminController {
         }
     };
 
-    // displayTables = async () => {
-    //     this.adminView.clearContainerLeft();
-    //     this.adminView.renderTable(usersData, usersDataName);
-    //     this.adminView.renderTable(usersDataDb, usersDataDbName);
-    //     this.adminView.renderTable(customersData, customersDataName);
-    //     this.adminView.renderTable(customersDataDb, customersDataDbName);
-    //     this.adminView.renderTable(cartsData, cartsDataName);
-    //     this.adminView.renderTable(cartsDataDb, cartsDataDbName);
-    //     this.adminView.renderTable(ordersData, ordersDataName);
-    //     this.adminView.renderTable(ordersDataDb, ordersDataDbName);
-    //     this.adminView.renderTable(orderItemsData, orderItemsDataName);
-    //     this.adminView.renderTable(orderItemsDataDb, orderItemsDataDbName);
-    //     this.adminView.renderTable(productItems, productItemsName);
-    //     this.adminView.renderTable(productItemsDb, productItemsDbName);
-    // };
-
     // Functions to split elemnt ID (${isBackup}_${arrayName}_${doc.docId}_${key})
     // Get Collection (array name) - [0]-th element
     getInstanceFromId = (idSting) => {
@@ -189,49 +99,8 @@ export class AdminController {
         return idSting.split("_")[3];
     };
 
-    // SUPPORT FUNCTION: GET ARRAY BY IT'S NAME:
-    getArrayByName(arrayName) {
-        if (arrayName === "usersData") return usersData;
-        if (arrayName === "usersDataDb") return usersDataDb;
-        if (arrayName === "customersData") return customersData;
-        if (arrayName === "customersDataDb") return customersDataDb;
-        if (arrayName === "cartsData") return cartsData;
-        if (arrayName === "cartsDataDb") return cartsDataDb;
-        if (arrayName === "ordersData") return ordersData;
-        if (arrayName === "ordersDataDb") return ordersDataDb;
-        if (arrayName === "orderItemsData") return orderItemsData;
-        if (arrayName === "orderItemsDataDb") return orderItemsDataDb;
-        if (arrayName === "productItems") return productItems;
-        if (arrayName === "productItemsDb") return productItemsDb;
-        return null;
-    }
-    // SUPPORT FUNCTION: GET SISTER ARRAY BY NAME:
-    getSisterArrayByName(arrayName) {
-        if (arrayName === "usersData") return usersDataDb;
-        if (arrayName === "customersData") return customersDataDb;
-        if (arrayName === "cartsData") return cartsDataDb;
-        if (arrayName === "ordersData") return ordersDataDb;
-        if (arrayName === "orderItemsData") return orderItemsDataDb;
-        if (arrayName === "productItems") return productItemsDb;
-        return null;
-    }
-    // SUPPORT FUNCTION: GET SISTER ARRAY BY NAME:
-    getSisterArrayNameByName(arrayName) {
-        if (arrayName === "usersData") return "usersDataDb";
-        if (arrayName === "customersData") return "customersDataDb";
-        if (arrayName === "cartsData") return "cartsDataDb";
-        if (arrayName === "ordersData") return "ordersDataDb";
-        if (arrayName === "orderItemsData") return "orderItemsDataDb";
-        if (arrayName === "productItems") return "productItemsDb";
-        return null;
-    }
-
     // Add duplicate document (element/object)
     cloneDocument(array, objectId) {
-        // FOR TEST- TBS ONLY - REMOVE IN PROD:
-        // console.log(array[0]);
-        // console.log(array[1]);
-
         // Find the object by ID
         const originalObject = array.find((item) => item.docId === objectId);
         if (!originalObject) {
@@ -243,7 +112,8 @@ export class AdminController {
         const clonedObject = JSON.parse(JSON.stringify(originalObject));
 
         // Modify / create unique ID
-        clonedObject.docId = this.adminModel.generateNewId(12);
+        // clonedObject.docId = this.adminModel.generateNewId(12);
+        clonedObject.docId = this.generateUniqueId();
 
         // return cloned objc
         return clonedObject;

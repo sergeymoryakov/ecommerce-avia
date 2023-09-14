@@ -4,11 +4,6 @@ export class AdminView {
         this.containerLeftNode = document.getElementById("containerLeft");
         this.containerRightNode = document.getElementById("containerRight");
 
-        // CHECK - WHERE IT HAS TO BE:
-        // this.docAddBtnNode = document.querySelectorAll(".add-btn");
-        // this.docUpdateBtnNode = document.querySelectorAll(".updt-btn");
-        // this.docDeleteBtnNode = document.querySelectorAll(".del-btn");
-
         // For Test - TBS only:
         this.testBtnNode = document.getElementById("testBtn");
         this.backupBtnNode = document.getElementById("backupBtn");
@@ -159,47 +154,6 @@ export class AdminView {
         return menuBtnWrapper;
     };
 
-    // createMenu = (
-    //     customersDataName,
-    //     productItemsName,
-    //     usersDataName,
-    //     ordersDataName,
-    //     cartsDataName
-    // ) => {
-    //     // Init menu wrapper:
-    //     const menuWrapper = document.createElement("div");
-    //     menuWrapper.classList = "menu-section";
-
-    //     // Add menu title:
-    //     const menuTitle = document.createElement("h2");
-    //     menuTitle.classList = "menu-title";
-    //     menuTitle.innerText = "Tables";
-    //     menuWrapper.appendChild(menuTitle);
-
-    //     // Create menu list:
-    //     const menuList = document.createElement("ul");
-
-    //     const usersDataBtn = this.createMenuBtn(usersDataName);
-    //     menuList.appendChild(usersDataBtn);
-
-    //     const customersDataBtn = this.createMenuBtn(customersDataName);
-    //     menuList.appendChild(customersDataBtn);
-
-    //     const cartsDataBtn = this.createMenuBtn(cartsDataName);
-    //     menuList.appendChild(cartsDataBtn);
-
-    //     const ordersDataBtn = this.createMenuBtn(ordersDataName);
-    //     menuList.appendChild(ordersDataBtn);
-
-    //     const productItemsBtn = this.createMenuBtn(productItemsName);
-    //     menuList.appendChild(productItemsBtn);
-
-    //     // Add menu to wrapper:
-    //     menuWrapper.appendChild(menuList);
-
-    //     return menuWrapper;
-    // };
-
     createMenu = (collectionNames) => {
         // Init menu wrapper:
         const menuWrapper = document.createElement("div");
@@ -224,24 +178,6 @@ export class AdminView {
 
         return menuWrapper;
     };
-
-    // renderMenu = (
-    //     customersDataName,
-    //     productItemsName,
-    //     usersDataName,
-    //     ordersDataName,
-    //     cartsDataName
-    // ) => {
-    //     this.clearContainerRight();
-    //     const menu = this.createMenu(
-    //         customersDataName,
-    //         productItemsName,
-    //         usersDataName,
-    //         ordersDataName,
-    //         cartsDataName
-    //     );
-    //     this.containerRightNode.appendChild(menu);
-    // };
 
     renderMenu = (collectionNames) => {
         this.clearContainerRight();
