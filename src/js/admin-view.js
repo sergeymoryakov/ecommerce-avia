@@ -27,7 +27,7 @@ export class AdminView {
         this.containerRightNode.innerHTML = "";
     };
 
-    createHeaderRow = (object) => {
+    createHeaderRow = (doc) => {
         const newHeaderRow = document.createElement("tr");
 
         // create two empty elements and add as first child:
@@ -39,7 +39,7 @@ export class AdminView {
         newHeaderRow.appendChild(newEmptyElement2);
 
         // create header cells in loop
-        for (const [key, value] of Object.entries(object)) {
+        for (const [key, value] of Object.entries(doc)) {
             const newHeaderElement = document.createElement("th");
             newHeaderElement.classList = "db-section__table_cell";
             newHeaderElement.innerText = `${key}`;
@@ -55,10 +55,13 @@ export class AdminView {
         return newHeaderRow;
     };
 
-    createDataRow = (object, arrayName) => {
+    // NOTE: isBackup - a backupInstancevalidator:
+    // 0 - dataInstance
+    // 1 - backupInstance
+    createDataRow = (doc, arrayName, isBackup) => {
         // FOR TBS ONLY:
-        // console.log("object.id: ", object.id);
-        // console.log("object.docId: ", object.docId);
+        // console.log("doc.id: ", doc.id);
+        // console.log("doc.docId: ", doc.docId);
 
         const newDataRow = document.createElement("tr");
 
@@ -67,7 +70,7 @@ export class AdminView {
         newButtonElement1.classList = "db-section__table_cell";
         const newButton1 = document.createElement("button");
         newButton1.classList = "db-section__table_btn add-btn";
-        newButton1.id = `${arrayName}_${object.docId}_addBtn`;
+        newButton1.id = `${isBackup}_${arrayName}_${doc.docId}_addBtn`;
         newButton1.innerText = "+";
         newButtonElement1.appendChild(newButton1);
         newDataRow.appendChild(newButtonElement1);
@@ -76,20 +79,20 @@ export class AdminView {
         newButtonElement2.classList = "db-section__table_cell";
         const newButton2 = document.createElement("button");
         newButton2.classList = "db-section__table_btn updt-btn";
-        newButton2.id = `${arrayName}_${object.docId}_updtBtn`;
+        newButton2.id = `${isBackup}_${arrayName}_${doc.docId}_updtBtn`;
         newButton2.innerText = "u";
         newButtonElement2.appendChild(newButton2);
         newDataRow.appendChild(newButtonElement2);
 
-        for (const [key, value] of Object.entries(object)) {
+        for (const [key, value] of Object.entries(doc)) {
             // Add table cell element, class and ID:
             const newDataElement = document.createElement("td");
             newDataElement.classList = "db-section__table_cell";
-            newDataElement.id = `${arrayName}_${object.docId}_${key}`;
+            newDataElement.id = `${isBackup}_${arrayName}_${doc.docId}_${key}`;
 
             const newInput = document.createElement("input");
             newInput.type = "text";
-            newInput.id = `${arrayName}_${object.docId}_${key}_input`;
+            newInput.id = `${isBackup}_${arrayName}_${doc.docId}_${key}_input`;
             newInput.value = `${value}`;
 
             newDataElement.appendChild(newInput);
@@ -101,7 +104,7 @@ export class AdminView {
         newButtonElement3.classList = "db-section__table_cell";
         const newButton3 = document.createElement("button");
         newButton3.classList = "db-section__table_btn del-btn";
-        newButton3.id = `${arrayName}_${object.docId}_delBtn`;
+        newButton3.id = `${isBackup}_${arrayName}_${doc.docId}_delBtn`;
         newButton3.innerText = "-";
         newButtonElement3.appendChild(newButton3);
         newDataRow.appendChild(newButtonElement3);
@@ -109,7 +112,7 @@ export class AdminView {
         return newDataRow;
     };
 
-    createTable = (array, arrayName) => {
+    createTable = (array, arrayName, isBackup) => {
         // Create new Table
         const newTable = document.createElement("table");
 
@@ -118,23 +121,23 @@ export class AdminView {
         newTable.appendChild(headerRow);
 
         // create Data Rows and add to Table
-        for (const object of array) {
-            const dataRow = this.createDataRow(object, arrayName);
+        for (const doc of array) {
+            const dataRow = this.createDataRow(doc, arrayName, isBackup);
             newTable.appendChild(dataRow);
         }
         return newTable;
     };
 
-    renderTable = (array, arrayName) => {
+    renderTable = (array, arrayName, isBackup) => {
         const tableWrapper = document.createElement("div");
         tableWrapper.classList = "db-section";
 
         const tableTitle = document.createElement("h2");
         tableTitle.classList = "db-section__title";
-        tableTitle.id = `${arrayName}`;
+        tableTitle.id = `${isBackup}_${arrayName}`;
         tableTitle.innerText = arrayName;
 
-        const table = this.createTable(array, arrayName);
+        const table = this.createTable(array, arrayName, isBackup);
         table.classList = "db-section__table";
 
         tableWrapper.appendChild(tableTitle);
