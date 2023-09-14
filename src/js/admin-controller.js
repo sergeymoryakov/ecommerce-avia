@@ -2,53 +2,66 @@ import { AdminView } from "./admin-view.js";
 import { AdminModel } from "./admin-model.js";
 import { AdminFirebase } from "./admin-firebase.js";
 
-import {
-    usersData,
-    customersData,
-    cartsData,
-    ordersData,
-    orderItemsData,
-    productItems,
-} from "./admin-data.js";
+// TEST Usage of Data objects:
 
-import {
-    customersDataName,
-    productItemsName,
-    usersDataName,
-    ordersDataName,
-    orderItemsDataName,
-    cartsDataName,
-    customersDataDbName,
-    productItemsDbName,
-    usersDataDbName,
-    ordersDataDbName,
-    orderItemsDataDbName,
-    cartsDataDbName,
-} from "./admin-constants.js";
+const dbCollectionNames = [
+    "usersData",
+    "customersData",
+    "cartsData",
+    "ordersData",
+    "orderItemsData",
+    "productItems",
+];
 
-let usersDataDb = [];
-let customersDataDb = [];
-let cartsDataDb = [];
-let ordersDataDb = [];
-let orderItemsDataDb = [];
-let productItemsDb = [];
+// const dbCollectionNames2 = [
+//     "usersDataDb",
+//     "customersDataDb",
+//     "cartsDataDb",
+//     "ordersDataDb",
+//     "orderItemsDataDb",
+//     "productItemsDb",
+// ];
 
-// FOR TEST-TBS - REMOVE BEFORE PROD
-// Link arrays and names:
-// const arrayMap = {
-//     [customersDataName]: customersData,
-//     [productItemsName]: productItems,
-//     [usersDataName]: usersData,
-//     [ordersDataName]: ordersData,
-//     [orderItemsDataName]: orderItemsData,
-//     [cartsDataName]: cartsData,
-//     [customersDataDbName]: customersDataDb,
-//     [productItemsDbName]: productItemsDb,
-//     [usersDataDbName]: usersDataDb,
-//     [ordersDataDbName]: orderItemsDataDb,
-//     [orderItemsDataDbName]: orderItemsDataDb,
-//     [cartsDataDbName]: cartsDataDb,
-// };
+let dataInstance = {};
+import { backupInstance } from "../data/backup.js";
+
+// TEST AND TBS:
+console.log("backupInstance: ", backupInstance);
+dbCollectionNames.forEach((array) => {
+    console.log(`backupInstance.${array}: `);
+    console.log(backupInstance[array]);
+});
+
+// import {
+//     usersData,
+//     customersData,
+//     cartsData,
+//     ordersData,
+//     orderItemsData,
+//     productItems,
+// } from "./admin-data.js";
+
+// import {
+//     customersDataName,
+//     productItemsName,
+//     usersDataName,
+//     ordersDataName,
+//     orderItemsDataName,
+//     cartsDataName,
+//     customersDataDbName,
+//     productItemsDbName,
+//     usersDataDbName,
+//     ordersDataDbName,
+//     orderItemsDataDbName,
+//     cartsDataDbName,
+// } from "./admin-constants.js";
+
+// let usersDataDb = [];
+// let customersDataDb = [];
+// let cartsDataDb = [];
+// let ordersDataDb = [];
+// let orderItemsDataDb = [];
+// let productItemsDb = [];
 
 export class AdminController {
     constructor() {
@@ -63,12 +76,28 @@ export class AdminController {
         this.adminModel.checkModuleLinkage();
         this.adminFirebase.checkModuleLinkage();
 
-        usersDataDb = await this.adminFirebase.get(usersDataDbName);
-        customersDataDb = await this.adminFirebase.get(customersDataDbName);
-        cartsDataDb = await this.adminFirebase.get(cartsDataDbName);
-        ordersDataDb = await this.adminFirebase.get(ordersDataDbName);
-        orderItemsDataDb = await this.adminFirebase.get(orderItemsDataDbName);
-        productItemsDb = await this.adminFirebase.get(productItemsDbName);
+        // TEST Usage of Data objects:
+        console.log("testing import from Firestore to dataInstance:");
+        for (const collectionName of dbCollectionNames) {
+            dataInstance[collectionName] = await this.adminFirebase.get(
+                collectionName
+            );
+        }
+        console.log("dataInstance: ", dataInstance);
+        dbCollectionNames.forEach((array) => {
+            console.log(`dataInstance.${array}:`);
+            console.log(dataInstance[array]);
+        });
+
+        // usersDataDb = await this.adminFirebase.get(usersDataDbName);
+        // customersDataDb = await this.adminFirebase.get(customersDataDbName);
+        // cartsDataDb = await this.adminFirebase.get(cartsDataDbName);
+        // ordersDataDb = await this.adminFirebase.get(ordersDataDbName);
+        // orderItemsDataDb = await this.adminFirebase.get(orderItemsDataDbName);
+        // productItemsDb = await this.adminFirebase.get(productItemsDbName);
+
+        // console.log("usersDataDb: ", usersDataDb);
+        // console.log("productItemsDb: ", productItemsDb);
 
         // For TEST only:
         // console.log("usersData: ", usersData);
@@ -76,18 +105,45 @@ export class AdminController {
         // console.log("usersDataDb: ", usersDataDb[0]);
         // console.log("usersDataDb: ", usersDataDb[1]);
 
-        this.displayTables();
+        this.displayDataInstanceTables();
+        // this.displayTables();
 
-        this.adminView.renderMenu(
-            customersDataName,
-            productItemsName,
-            usersDataName,
-            ordersDataName,
-            orderItemsDataName,
-            cartsDataName
-        );
+        // this.adminView.renderMenu(
+        //     customersDataName,
+        //     productItemsName,
+        //     usersDataName,
+        //     ordersDataName,
+        //     orderItemsDataName,
+        //     cartsDataName
+        // );
+
+        this.adminView.renderMenu(dbCollectionNames);
 
         this.attachEventListeners();
+    };
+
+    displayDataInstanceTables = () => {
+        this.adminView.clearContainerLeft();
+        for (const collectionName of dbCollectionNames) {
+            this.adminView.renderTable(
+                dataInstance[collectionName],
+                collectionName
+            );
+        }
+    };
+
+    displayBackupAndInstanceTables = () => {
+        this.adminView.clearContainerLeft();
+        for (const collectionName of dbCollectionNames) {
+            this.adminView.renderTable(
+                backupInstance[collectionName],
+                collectionName
+            );
+            this.adminView.renderTable(
+                dataInstance[collectionName],
+                collectionName
+            );
+        }
     };
 
     displayTables = async () => {
@@ -351,33 +407,26 @@ export class AdminController {
             this.handleButtonsClick
         );
 
-        // FOR TEST- TBS ONLY - REMOVE IN PROD:
-        // console.log("this.adminView:", this.adminView);
-        // console.log("this.adminView.docAddBtn:", this.adminView.docAddBtnNode);
-
-        // REPLACED BELOW ITEMS BY COMMON PARRENT LISTENER
-        // this.adminView.docAddBtnNode.forEach((button) => {
-        //     button.addEventListener("click", (event) =>
-        //         this.handleAddBtnClick(event)
-        //     );
-        // });
-
-        // this.adminView.docUpdateBtnNode.forEach((button) => {
-        //     button.addEventListener("click", (event) =>
-        //         this.handleAddBtnClick(event)
-        //     );
-        // });
-
-        // this.adminView.docDeleteBtnNode.forEach((button) => {
-        //     button.addEventListener("click", (event) =>
-        //         this.handleAddBtnClick(event)
-        //     );
-        // });
-
-        // FOR TEST-TBS ONLY - REMOVE IN PROD:
-        this.adminView.testBtnNode.addEventListener("click", () => {
+        this.adminView.backupBtnNode.addEventListener("click", async () => {
             console.log("call backupData function");
-            return backupData(usersData);
+
+            backupData(dataInstance);
+
+            // THIS TEST FOR FETCHING BACKUP DATA WAS NOT PASSED - ERROR - TBD
+            // const fetchedBackupData = await fetchBackupData();
+            // console.log("fetchedBackupData: ", fetchedBackupData);
+        });
+
+        this.adminView.getLocalBtnNode.addEventListener("click", async () => {
+            console.log("Action called: render backup and server data tables.");
+
+            this.displayBackupAndInstanceTables();
+        });
+
+        this.adminView.getServerBtnNode.addEventListener("click", async () => {
+            console.log("Action called: render server data tables.");
+
+            this.displayDataInstanceTables();
         });
     }
 }
@@ -394,10 +443,16 @@ function backupData(array) {
     // Create URL for blob
     const url = URL.createObjectURL(blob);
 
+    // Set timing
+    const t = Date.now();
+
     // Create an ancor element
     const a = document.createElement("a");
     a.href = url;
-    a.download = "data-backup.json";
+    a.download = `backup-${t}.json`;
+
+    // display backup file name
+    console.log(`data saved to file 'backup-${t}.json'`);
 
     // Trigger the download
     document.body.appendChild(a);
@@ -408,32 +463,21 @@ function backupData(array) {
     document.body.removeChild(a);
 }
 
-// // Function gets ID and Value of Input element and returns in
-// // mini-object format:
-// const extractInfoFromId = (fullId, inputValue) => {
-//     idParts = fullId.split("_");
-//     // For reference, elemment ID:
-//     // "DataElement.id = `${arrayName}_${object.id}_${key}`;"
-//     const arrayName = idParts[0];
-//     const objectId = idParts[2];
-//     const key = idParts[3];
-//     const value = inputValue;
+// THIS TEST FOR FETCHING BACKUP DATA WAS NOT PASSED - ERROR - TBD
+async function fetchBackupData() {
+    try {
+        const response = await fetch("../js/backup.json");
 
-//     return {
-//         arrayName: arrayName,
-//         objectId: objectId,
-//         key: key,
-//         value: value,
-//     };
-// };
+        // Log response object
+        console.log("Fetch response: ", response);
 
-// // Function monitors input changes and displays details in console:
-// document.addEventListener("input", function (event) {
-//     if (event.target.tagName === "INPUT") {
-//         const fullId = event.target.id;
-//         const inputValue = event.target.value;
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-//         const info = extractInfoFromId(fullId, inputValue);
-//         console.log(info);
-//     }
-// });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching data: ", error);
+    }
+}

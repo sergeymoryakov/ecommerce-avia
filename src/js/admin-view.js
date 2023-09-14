@@ -11,6 +11,9 @@ export class AdminView {
 
         // For Test - TBS only:
         this.testBtnNode = document.getElementById("testBtn");
+        this.backupBtnNode = document.getElementById("backupBtn");
+        this.getServerBtnNode = document.getElementById("getServerBtn");
+        this.getLocalBtnNode = document.getElementById("getLocalBtn");
     }
     checkModuleLinkage = () => {
         console.log("HELLO, AdminView is connected!");
@@ -153,13 +156,48 @@ export class AdminView {
         return menuBtnWrapper;
     };
 
-    createMenu = (
-        customersDataName,
-        productItemsName,
-        usersDataName,
-        ordersDataName,
-        cartsDataName
-    ) => {
+    // createMenu = (
+    //     customersDataName,
+    //     productItemsName,
+    //     usersDataName,
+    //     ordersDataName,
+    //     cartsDataName
+    // ) => {
+    //     // Init menu wrapper:
+    //     const menuWrapper = document.createElement("div");
+    //     menuWrapper.classList = "menu-section";
+
+    //     // Add menu title:
+    //     const menuTitle = document.createElement("h2");
+    //     menuTitle.classList = "menu-title";
+    //     menuTitle.innerText = "Tables";
+    //     menuWrapper.appendChild(menuTitle);
+
+    //     // Create menu list:
+    //     const menuList = document.createElement("ul");
+
+    //     const usersDataBtn = this.createMenuBtn(usersDataName);
+    //     menuList.appendChild(usersDataBtn);
+
+    //     const customersDataBtn = this.createMenuBtn(customersDataName);
+    //     menuList.appendChild(customersDataBtn);
+
+    //     const cartsDataBtn = this.createMenuBtn(cartsDataName);
+    //     menuList.appendChild(cartsDataBtn);
+
+    //     const ordersDataBtn = this.createMenuBtn(ordersDataName);
+    //     menuList.appendChild(ordersDataBtn);
+
+    //     const productItemsBtn = this.createMenuBtn(productItemsName);
+    //     menuList.appendChild(productItemsBtn);
+
+    //     // Add menu to wrapper:
+    //     menuWrapper.appendChild(menuList);
+
+    //     return menuWrapper;
+    // };
+
+    createMenu = (collectionNames) => {
         // Init menu wrapper:
         const menuWrapper = document.createElement("div");
         menuWrapper.classList = "menu-section";
@@ -173,20 +211,10 @@ export class AdminView {
         // Create menu list:
         const menuList = document.createElement("ul");
 
-        const usersDataBtn = this.createMenuBtn(usersDataName);
-        menuList.appendChild(usersDataBtn);
-
-        const customersDataBtn = this.createMenuBtn(customersDataName);
-        menuList.appendChild(customersDataBtn);
-
-        const cartsDataBtn = this.createMenuBtn(cartsDataName);
-        menuList.appendChild(cartsDataBtn);
-
-        const ordersDataBtn = this.createMenuBtn(ordersDataName);
-        menuList.appendChild(ordersDataBtn);
-
-        const productItemsBtn = this.createMenuBtn(productItemsName);
-        menuList.appendChild(productItemsBtn);
+        for (const arrayName of collectionNames) {
+            const newBtn = this.createMenuBtn(arrayName);
+            menuList.appendChild(newBtn);
+        }
 
         // Add menu to wrapper:
         menuWrapper.appendChild(menuList);
@@ -194,21 +222,27 @@ export class AdminView {
         return menuWrapper;
     };
 
-    renderMenu = (
-        customersDataName,
-        productItemsName,
-        usersDataName,
-        ordersDataName,
-        cartsDataName
-    ) => {
+    // renderMenu = (
+    //     customersDataName,
+    //     productItemsName,
+    //     usersDataName,
+    //     ordersDataName,
+    //     cartsDataName
+    // ) => {
+    //     this.clearContainerRight();
+    //     const menu = this.createMenu(
+    //         customersDataName,
+    //         productItemsName,
+    //         usersDataName,
+    //         ordersDataName,
+    //         cartsDataName
+    //     );
+    //     this.containerRightNode.appendChild(menu);
+    // };
+
+    renderMenu = (collectionNames) => {
         this.clearContainerRight();
-        const menu = this.createMenu(
-            customersDataName,
-            productItemsName,
-            usersDataName,
-            ordersDataName,
-            cartsDataName
-        );
+        const menu = this.createMenu(collectionNames);
         this.containerRightNode.appendChild(menu);
     };
 }

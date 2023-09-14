@@ -1,0 +1,153 @@
+{
+  "usersDataDb": [
+    {
+      "docId": "55EGDL6GNBL2",
+      "userPhone": "+1 898 9289289",
+      "userActive": true,
+      "userAddress": "2023, Cactus Road, Springdale, FL, 33761 USA",
+      "transId": "jkjur-tewvn-00001",
+      "custId": "c001",
+      "userAdmin": true,
+      "userEmail": "matt.y@aerosupplyplus.aero",
+      "userName": "Mattew Yampolski",
+      "id": "1001",
+      "transDate": "20230815"
+    },
+    {
+      "docId": "76OFRV7ULWVW",
+      "custId": "c001",
+      "transDate": "20230815",
+      "userAdmin": true,
+      "transId": "jkjur-tewvn-00001",
+      "userActive": true,
+      "userAddress": "2023, Cactus Road, Springdale, FL, 33761 USA",
+      "userPhone": "+1 898 9289289",
+      "userName": "Mattew Yampolski",
+      "id": "1001",
+      "userEmail": "matt.y@aerosupplyplus.aero"
+    }
+  ],
+  "customersDataDb": [
+    {
+      "docId": "2X9D9SC4VWA1",
+      "custOrders": [
+        "100001",
+        "100002",
+        "100003"
+      ],
+      "custPaymentTerms": [
+        "wire",
+        "card",
+        "net30"
+      ],
+      "custLegalName": "AeroSupplyPlus LLC",
+      "custAddress": "2023, Cactus Road, Springdale, FL, 33761 USA",
+      "custHandlingFee": 0.015,
+      "custActive": true,
+      "custPhone": "+1 898 9289289",
+      "custKycDate": "20230812",
+      "custCode": "aespl",
+      "transDate": "20230812",
+      "custContactId": "1001",
+      "transId": "jkjur-tewvn-00002",
+      "id": "c001",
+      "custKycChecked": true,
+      "custEmail": "supply@aerosupplyplus.aero",
+      "custBillToAddress": "2023, Cactus Road, Springdale, FL, 33761 USA",
+      "custPaymentMethod": "card"
+    }
+  ],
+  "cartsDataDb": [
+    {
+      "docId": "M1EADW9GPWLS",
+      "qty": 2,
+      "itemId": "0032-0001-000",
+      "id": "1001"
+    }
+  ],
+  "ordersDataDb": [
+    {
+      "docId": "9UG3WA03ALRD",
+      "transDate": "20230828",
+      "id": "100003",
+      "orderDateCompleted": "20230829",
+      "orderCurrency": "$",
+      "transId": "jkjur-tewvn-00013",
+      "orderCustId": "c001",
+      "orderPaymentDone": "20230828",
+      "orderPaymentMethod": "card",
+      "orderPriceTotal": 1375360,
+      "orderPaymentDeadline": "20230829",
+      "orderDatePlaced": "20230828",
+      "orderPriceHandling": 378,
+      "orderDateReady": "20230828",
+      "orderPriceItems": 1374982,
+      "orderUserId": "1001"
+    }
+  ],
+  "orderItemsDataDb": [
+    {
+      "docId": "6OIZH5BEOT1N",
+      "orderId": "100001",
+      "itemId": "0032-0001-000",
+      "qty": 2,
+      "id": "100001"
+    }
+  ],
+  "productItemsDb": [
+    {
+      "docId": "4JNHU091B3U4",
+      "itemQty": "50",
+      "itemPN": "BS30-737NG-3254",
+      "itemSN": "various",
+      "itemCat": "component",
+      "itemCertification": "EASA, FAA, CAAC",
+      "transDate": "20230812",
+      "itemPrice": "18130",
+      "itemDescription": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
+      "itemCondition": "New",
+      "id": "0032-0001-000",
+      "itemImg": "",
+      "itemCurrency": "$",
+      "itemLeadTime": "on stock",
+      "transId": "jkjur-tewvn-00003",
+      "itemName": "Wheel Main Assy"
+    },
+    {
+      "docId": "DIF5CWS50TES",
+      "itemCurrency": "$",
+      "itemDescription": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
+      "itemCat": "component",
+      "id": "0032-0001-000",
+      "itemCertification": "EASA, FAA, CAAC",
+      "itemPrice": "18130",
+      "itemPN": "BS30-737NG-3254",
+      "itemImg": "",
+      "itemCondition": "New",
+      "itemQty": "50",
+      "itemName": "Wheel Main Assy",
+      "transId": "jkjur-tewvn-00003",
+      "itemLeadTime": "on stock",
+      "itemSN": "various",
+      "transDate": "20230812"
+    },
+    {
+      "docId": "QLKOPTEJJMBX",
+      "itemName": "Wheel Main Assy",
+      "itemCertification": "EASA, FAA, CAAC",
+      "itemQty": "50",
+      "itemSN": "various",
+      "itemDescription": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti ab debitis quos autem? Soluta ut aut ab debitis nulla vel voluptates molestias at. Porro recusandae impedit inventore quo sunt delectus cumque, repellat similique mollitia, officiis, esse saepe? Praesentium dolores corporis sapiente cupiditate, aliquid nulla? Nisi, doloremque cum inventore exercitationem nulla quasi labore recusandae rem sed ipsam magnam quos est accusantium sint adipisci voluptas reiciendis natus ut dicta.",
+      "itemPrice": "18130",
+      "transDate": "20230812",
+      "itemCat": "component",
+      "itemCondition": "New",
+      "id": "0032-0001-000",
+      "itemCurrency": "$",
+      "transId": "jkjur-tewvn-00003",
+      "itemLeadTime": "on stock",
+      "itemPN": "BS30-737NG-3254",
+      "itemImg": ""
+    }
+  ]
+}
