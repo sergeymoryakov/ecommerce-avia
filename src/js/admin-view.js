@@ -147,7 +147,7 @@ export class AdminView {
 
         const menuBtn = document.createElement("a");
         menuBtn.classList = "menu-btn";
-        menuBtn.href = `#${arrayName}`;
+        menuBtn.href = `#0_${arrayName}`;
         menuBtn.innerText = `${arrayName}`;
 
         menuBtnWrapper.appendChild(menuBtn);
