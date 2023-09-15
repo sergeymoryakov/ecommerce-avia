@@ -33,12 +33,14 @@ export class AdminView {
         newEmptyElement2.classList = "db-section__table_cell";
         newHeaderRow.appendChild(newEmptyElement2);
 
+        // Sort keys:
+        const keys = Object.keys(doc).sort();
+
         // create header cells in loop
-        for (const [key, value] of Object.entries(doc)) {
+        for (const key of keys) {
             const newHeaderElement = document.createElement("th");
             newHeaderElement.classList = "db-section__table_cell";
             newHeaderElement.innerText = `${key}`;
-
             newHeaderRow.appendChild(newHeaderElement);
         }
 
@@ -79,7 +81,11 @@ export class AdminView {
         newButtonElement2.appendChild(newButton2);
         newDataRow.appendChild(newButtonElement2);
 
-        for (const [key, value] of Object.entries(doc)) {
+        // Sort keys
+        const keys = Object.keys(doc).sort();
+        for (const key of keys) {
+            const value = doc[key];
+
             // Add table cell element, class and ID:
             const newDataElement = document.createElement("td");
             newDataElement.classList = "db-section__table_cell";
