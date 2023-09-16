@@ -1,6 +1,6 @@
 import { AdminView } from "./admin-view.js";
 import { AdminModel } from "./admin-model.js";
-import { AdminFirebase } from "../common/firebase-exchange.js";
+import { AdminFirebase } from "./admin-firebase.js";
 
 import { v4 as uuidv4 } from "uuid";
 

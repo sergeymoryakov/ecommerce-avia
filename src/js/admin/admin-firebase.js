@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
+import { firebaseConfig } from "../common/constants";
 import { initializeApp } from "firebase/app";
-
 import {
     getFirestore,
     collection,
@@ -14,16 +14,9 @@ import {
     // orderBy,
 } from "firebase/firestore";
 
-import { firebaseConfig } from "./constants";
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// TEST AND TBS:
-// console.log(app);
-// console.log(db);
-
-// SET MODEL MODULE:
 export class AdminFirebase {
     constructor() {}
     checkModuleLinkage = () => {
