@@ -14,8 +14,14 @@ import {
     // orderBy,
 } from "firebase/firestore";
 
+// FOR TEST AND TBS - IMAGES
+// import { getStorage } from "firebase/storage";
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// FOR TEST AND TBS - IMAGES
+// const storage = getStorage(app);
 
 export class ModelFirebase {
     constructor() {}
@@ -73,5 +79,32 @@ export class ModelFirebase {
         } catch (error) {
             console.error("Error deleting document: ", error);
         }
+    };
+
+    checkImageUrls = () => {
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+        const imagesRef = storageRef.child("images"); // assuming 'images' is the folder name
+
+        // List all elements (files and folders) under the folder
+        imagesRef
+            .listAll()
+            .then((result) => {
+                result.items.forEach((imageRef) => {
+                    // For each item, get its download URL and then you can do something with it
+                    imageRef
+                        .getDownloadURL()
+                        .then((url) => {
+                            // Create a mapping or array here to associate the name with its URL
+                            console.log(`Name: ${imageRef.name}, URL: ${url}`);
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     };
 }

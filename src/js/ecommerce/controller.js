@@ -57,7 +57,11 @@ export class Controller {
         // FOR TEST AND TBS - REMOVE IN PROD:
         console.log("dataBase{}: ", dataBase);
 
+        // Check Image URLs - TEST for Images
+        // this.modelFirebase.checkImageUrls();
+
         // Left Container - Render product items
+        this.viewProducts.renderProductItems(dataBase.productItems);
 
         // Right Container - Render Cart Title
 
