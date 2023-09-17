@@ -1,5 +1,6 @@
 export class ViewProducts {
-    constructor() {
+    constructor(controller) {
+        this.controller = controller;
         this.containerLeftNode = document.getElementById("containerLeft");
         this.containerRightNode = document.getElementById("containerRight");
     }
@@ -21,9 +22,7 @@ export class ViewProducts {
 
         const image = document.createElement("img");
         image.classList = "product-item__img";
-        image.src = productObject.itemImg;
-        // image.src = "../images/img_book_01.jpeg";
-        // image.src = "https://ecommerce-c2b5f.appspot.com/images/img_cockpit_altimeter_1.jpeg";
+        image.src = this.controller.getUrlByNameLocal(productObject.itemImg);
 
         const contentDiv = document.createElement("div");
         contentDiv.classList = "product-item__content";

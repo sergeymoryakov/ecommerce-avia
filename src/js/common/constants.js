@@ -7,6 +7,7 @@ export const dbCollectionNames = [
     "productItems",
 ];
 
+// IMPORT TO MODEL-FIREBASE.JS REMOVED FOR TEST-TBS // FOR PROD RE-ACTIVATE
 export const firebaseConfig = {
     apiKey: "AIzaSyAaafzn29XLZBor7sXmsi3PMDsg_cxcakk",
     authDomain: "ecommerce-c2b5f.firebaseapp.com",

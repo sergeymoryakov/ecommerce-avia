@@ -3,7 +3,7 @@ import { ViewCart } from "./view-cart.js";
 import { ViewOrders } from "./view-orders.js";
 import { ViewAdmin } from "./view-admin.js";
 import { ViewSuperadmin } from "./view-superadmin.js";
-import { ModelFirebase } from "./model-firebase.js";
+import { ModelFirebase } from "../common/model-firebase.js";
 import { ModelProducts } from "./model-products.js";
 import { ModelCart } from "./model-cart.js";
 import { ModelOrders } from "./model-orders.js";
@@ -18,9 +18,11 @@ import { dbCollectionNames } from "../common/constants.js";
 // Initiate database instance (dataBase):
 let dataBase = {};
 
+const imageLinksMap = new Map();
+
 export class Controller {
     constructor() {
-        this.viewProducts = new ViewProducts();
+        this.viewProducts = new ViewProducts(this);
         this.viewCart = new ViewCart();
         this.viewOrders = new ViewOrders();
         this.viewAdmin = new ViewAdmin();
@@ -49,13 +51,36 @@ export class Controller {
         console.log(
             "Action: Getdata from database (Firebase) and keep in dataBase{}."
         );
+
         for (const collectionName of dbCollectionNames) {
             dataBase[collectionName] = await this.modelFirebase.get(
                 collectionName
             );
         }
+
         // FOR TEST AND TBS - REMOVE IN PROD:
         console.log("dataBase{}: ", dataBase);
+
+        // Create Image Links Map:
+        console.log("Action: Create Image Links Map imageLinksMap{}:");
+
+        for (const docName of dataBase.productItems) {
+            const imageURL = await this.modelFirebase
+                .getLinkToImage(docName.itemImg)
+                .then((url) => {
+                    // console.log("The download URL is: ", url);
+                    return url;
+                })
+                .catch((error) => {
+                    console.log("Error getting download URL: ", error);
+                });
+            console.log("imageURL: ", imageURL);
+
+            imageLinksMap.set(docName.itemImg, imageURL);
+        }
+
+        // FOR TEST AND TBS - REMOVE IN PROD:
+        console.log("imageLinksMap: ", imageLinksMap);
 
         // Check Image URLs - TEST for Images
         // this.modelFirebase.checkImageUrls();
@@ -78,6 +103,29 @@ export class Controller {
         // Attach Event Listeners (Order Links)
 
         // Alert - Popup inform the test name usage
+
+        // TEST & TBS ITEMS
+        const testURL = await this.getUrlByNameLocal(
+            dataBase.productItems[0].itemImg
+        );
+        console.log("testURL: ", testURL);
+    };
+
+    askForImageUrlFromStorage = async (imageName) => {
+        const imageURL = await this.modelFirebase
+            .getLinkToImage(imageName)
+            .then((url) => {
+                // console.log("The download URL is: ", url);
+                return url;
+            })
+            .catch((error) => {
+                console.log("Error getting download URL: ", error);
+            });
+        console.log("imageURL: ", imageURL);
+    };
+
+    getUrlByNameLocal = (imageName) => {
+        return imageLinksMap.get(imageName);
     };
 
     // Left Container - Render product items

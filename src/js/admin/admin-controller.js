@@ -1,6 +1,6 @@
 import { AdminView } from "./admin-view.js";
 import { AdminModel } from "./admin-model.js";
-import { AdminFirebase } from "./admin-firebase.js";
+import { ModelFirebase } from "../common/model-firebase.js";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,7 +14,7 @@ export class AdminController {
     constructor() {
         this.adminView = new AdminView();
         this.adminModel = new AdminModel();
-        this.adminFirebase = new AdminFirebase();
+        this.adminFirebase = new ModelFirebase();
     }
 
     initializeAppMain = async () => {
