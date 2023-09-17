@@ -1,3 +1,8 @@
+import iconAddOrder from "../../other_assets/icon-add-order.png";
+import iconCart from "../../other_assets/icon-cart.png";
+import iconCc from "../../other_assets/icon-cc.png";
+import iconOrder from "../../other_assets/icon-order.png";
+
 export class ViewProducts {
     constructor(controller) {
         this.controller = controller;
@@ -47,7 +52,7 @@ export class ViewProducts {
 
         const priceBtnImg = document.createElement("img");
         priceBtnImg.classList = "product-item__content_price-btn-img";
-        priceBtnImg.src = "../other_assets/Icon-cart.png";
+        priceBtnImg.src = iconCart;
         priceBtnImg.alt = "Select";
 
         // Append elemens to respective parents
