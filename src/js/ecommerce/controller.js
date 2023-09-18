@@ -19,7 +19,9 @@ import { dbCollectionNames } from "../common/constants.js";
 let dataBase = {};
 
 // Init current session personal variables:
-const myId = [];
+let sessionId = "";
+let sessionIdCart = {};
+let sessionIdOrders = {};
 
 // Init cross-ref Map: image - url
 const imageLinksMap = new Map();
@@ -27,7 +29,7 @@ const imageLinksMap = new Map();
 export class Controller {
     constructor() {
         this.viewProducts = new ViewProducts(this);
-        this.viewCart = new ViewCart();
+        this.viewCart = new ViewCart(this);
         this.viewOrders = new ViewOrders();
         this.viewAdmin = new ViewAdmin();
         this.viewSuperadmin = new ViewSuperadmin();
@@ -87,11 +89,34 @@ export class Controller {
         // FOR TEST AND TBS - REMOVE IN PROD:
         // console.log("imageLinksMap: ", imageLinksMap);
 
-        // Check Image URLs - TEST for Images
-        // this.modelFirebase.checkImageUrls();
+        // Assign to sessionId a first ID from DB
+        sessionId = dataBase.usersData[0].userId;
+        console.log("Assigned to sessionId: ", sessionId);
+
+        // Alert - Popup inform the test name usage
+        confirm(
+            `Hi there, this application was set for demonstration purpose, therefore a User ID ${sessionId} was assigned for this session. A fake name Name, Lastname, and other user properties will are generated for practice purpose only. Should you wish to use this application and/or customize it fo the purpose of your business please reach out to the developer at seppo.gigital@gmail.com.`
+        );
 
         // Left Container - Render product items
         this.viewProducts.renderProductItems(dataBase.productItems);
+
+        // Get cart items by sesstion user ID:
+        sessionIdCart = this.getCartItemsByUserID(sessionId);
+        console.log(
+            `Cart items (sessionIdCart) for User ID ${sessionId}: `,
+            sessionIdCart
+        );
+
+        // Get orders list by user ID:
+        sessionIdOrders = this.getOrdersByUserID(sessionId);
+        console.log(
+            `Orders History (sesstionOrders) for User ID ${sessionId}: `,
+            sessionIdOrders
+        );
+
+        // Right Container - Render Cart Summary
+        await this.viewCart.renderCartSummaryNoTotal(sessionIdCart);
 
         // Right Container - Render Cart Title
 
@@ -106,8 +131,6 @@ export class Controller {
         // Attach Event Listeners (Products)
         // Attach Event Listeners (Cart Icons)
         // Attach Event Listeners (Order Links)
-
-        // Alert - Popup inform the test name usage
 
         // TEST & TBS ITEMS
     };
@@ -127,6 +150,25 @@ export class Controller {
 
     getUrlByNameLocal = (imageName) => {
         return imageLinksMap.get(imageName);
+    };
+
+    getCartItemsByUserID = (sessionId) => {
+        return dataBase.cartsData.filter((order) => order.userId === sessionId);
+    };
+
+    getOrdersByUserID = (sessionId) => {
+        return dataBase.ordersData.filter(
+            (order) => order.userId === sessionId
+        );
+    };
+
+    getImageByProductId = (productId) => {
+        const productObject = dataBase.productItems.filter(
+            (product) => product.id === productId
+        );
+        console.log("productObject: ", productObject);
+        console.log("productObject[0].itemImg: ", productObject[0].itemImg);
+        return productObject[0].itemImg;
     };
 
     // Left Container - Render product items

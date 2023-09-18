@@ -17,8 +17,8 @@ export let backupInstance = {
     customersData: [
         {
             docId: "IX7AV62H0X1O",
-            PaymentTerms: "wire,card,net30",
-            PaymentMethod: "card",
+            paymentTerms: "wire,card,net30",
+            paymentMethod: "card",
             transId: "jkjur-tewvn-00002",
             custContactId: "1001",
             custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
@@ -48,8 +48,8 @@ export let backupInstance = {
         {
             docId: "2c0de620-0c03-4387-9a3a-c633f6547d8b",
             orderId: "100001",
-            orderUserId: "1001",
-            CustId: "c001",
+            userId: "1001",
+            custId: "c001",
             orderCurrency: "$",
             orderPriceItems: 1374982,
             orderPriceHandling: 378,

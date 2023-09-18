@@ -1,13 +1,13 @@
-import iconAddOrder from "../../other_assets/icon-add-order.png";
+// import iconAddOrder from "../../other_assets/icon-add-order.png";
 import iconCart from "../../other_assets/icon-cart.png";
-import iconCc from "../../other_assets/icon-cc.png";
-import iconOrder from "../../other_assets/icon-order.png";
+// import iconCc from "../../other_assets/icon-cc.png";
+// import iconOrder from "../../other_assets/icon-order.png";
 
 export class ViewProducts {
     constructor(controller) {
         this.controller = controller;
         this.containerLeftNode = document.getElementById("containerLeft");
-        this.containerRightNode = document.getElementById("containerRight");
+        // this.containerRightNode = document.getElementById("containerRight");
     }
     // FOR TEST AND TBS - REMOVE FOR PROD
     checkModuleLinkage = () => {
