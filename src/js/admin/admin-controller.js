@@ -10,6 +10,8 @@ let isViewBackup = false;
 let dataInstance = {};
 import { backupInstance } from "../../data/backup.js";
 
+// TEST AND TBS - REMOVE IN PRODUCTION
+
 export class AdminController {
     constructor() {
         this.adminView = new AdminView();
@@ -294,6 +296,12 @@ export class AdminController {
 
             this.displayDataInstanceTables();
             isViewBackup = false;
+        });
+
+        // TEST AND TBS - REMOVE IN PRODUCTION
+        this.adminView.testBtnNode.addEventListener("click", async () => {
+            console.log("Action called: TEST COMMAND");
+            console.log("Imported backupInstance: ", backupInstance);
         });
     }
 }

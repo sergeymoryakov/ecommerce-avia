@@ -27,7 +27,7 @@ export let backupInstance = {
             custEmail: "supply@aerosupplyplus.aero",
             custId: "c001",
             custAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
-            custOrders: ,
+            custOrders: "",
             custKycDate: "20230812",
             custCode: "aespl",
             custHandlingFee: "0.015",
@@ -70,7 +70,7 @@ export let backupInstance = {
             orderId: "100001",
             itemId: "0032-0001-000",
             qty: 2,
-            reserved: ,
+            reserved: "",
         },
     ],
     productItems: [

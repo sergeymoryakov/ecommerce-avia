@@ -1,0 +1,36 @@
+!function(){function e(e,t,n,o){Object.defineProperty(e,t,{get:n,set:o,enumerable:!0,configurable:!0})}var t="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof self?self:"undefined"!=typeof window?window:"undefined"!=typeof global?global:{},n={},o={},c=t.parcelRequire5d32;null==c&&((c=function(e){if(e in n)return n[e].exports;if(e in o){var t=o[e];delete o[e];var c={id:e,exports:{}};return n[e]=c,t.call(c.exports,c,c.exports),c.exports}var i=Error("Cannot find module '"+e+"'");throw i.code="MODULE_NOT_FOUND",i}).register=function(e,t){o[e]=t},t.parcelRequire5d32=c),c.register("4G3qk",function(t,n){e(t.exports,"register",function(){return o},function(e){return o=e}),e(t.exports,"resolve",function(){return c},function(e){return c=e});var o,c,i={};o=function(e){for(var t=Object.keys(e),n=0;n<t.length;n++)i[t[n]]=e[t[n]]},c=function(e){var t=i[e];if(null==t)throw Error("Could not resolve bundle with id "+e);return t}}),c.register("260Jh",function(t,n){e(t.exports,"getBundleURL",function(){return o},function(e){return o=e});var o,c={};o=function(e){var t=c[e];return t||(t=function(){try{throw Error()}catch(t){var e=(""+t.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);if(e)// Use the 3rd one, which will be a runtime in the original bundle.
+return(""+e[2]).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/,"$1")+"/"}return"/"}(),c[e]=t),t}}),c("4G3qk").register(JSON.parse('{"ceDhw":"index.0b411cb6.js","4M8Gf":"icon-add-order.d5dcde0a.png","kSZwU":"icon-cart.dd455062.png","1x8jM":"icon-cc.1b9dfae0.png","8HtV0":"icon-order.5ea58f4f.png","hqDsN":"admin.d7a2e0f8.js"}')),c("260Jh").getBundleURL("ceDhw"),c("4G3qk").resolve("4M8Gf");var i={};i=c("260Jh").getBundleURL("ceDhw")+c("4G3qk").resolve("kSZwU"),c("260Jh").getBundleURL("ceDhw"),c("4G3qk").resolve("1x8jM"),c("260Jh").getBundleURL("ceDhw"),c("4G3qk").resolve("8HtV0");class r{constructor(e){this.controller=e,this.containerLeftNode=document.getElementById("containerLeft"),this.containerRightNode=document.getElementById("containerRight")}// FOR TEST AND TBS - REMOVE FOR PROD
+checkModuleLinkage=()=>{console.log("HELLO, ViewProducts is connected!")};// Clear container
+clearContainerLeft=()=>{this.containerLeftNode.innerHTML=""};createProductItemCard=e=>{var t;// Create elements
+let n=document.createElement("div");n.classList="product-item",n.id=e.docId;let o=document.createElement("img");o.classList="product-item__img",o.src=this.controller.getUrlByNameLocal(e.itemImg);let c=document.createElement("div");c.classList="product-item__content";let r=document.createElement("h3");r.classList="product-item__content_desc",r.textContent=e.itemName;let l=document.createElement("p");l.classList="product-item__content_part-number",l.textContent=e.itemPN;let s=document.createElement("div");s.classList="product-item__content_price-block";let a=document.createElement("h3");a.classList="product-item__content_price",a.textContent=`$${e.itemPrice}`;let d=document.createElement("button");d.classList="product-item__content_price-btn";let u=document.createElement("img");return u.classList="product-item__content_price-btn-img",u.src=(t=i)&&t.__esModule?t.default:t,u.alt="Select",// Append elemens to respective parents
+d.appendChild(u),s.appendChild(a),s.appendChild(d),c.appendChild(r),c.appendChild(l),c.appendChild(s),n.appendChild(o),n.appendChild(c),n};// Left Container - Render product items
+renderProductItems=e=>{// Clear container
+this.clearContainerLeft();// Create product list container
+let t=document.createElement("div");// Look through array to create item cards and add to products list
+for(let n of(t.classList="product-list",e)){let e=this.createProductItemCard(n);t.appendChild(e)}// Render product list container
+this.containerLeftNode.appendChild(t)}}class l{constructor(){}checkModuleLinkage=()=>{console.log("HELLO, ViewCart is connected!")}}class s{constructor(){}checkModuleLinkage=()=>{console.log("HELLO, ViewOrders is connected!")}}class a{constructor(){}checkModuleLinkage=()=>{console.log("HELLO, ViewAdmin is connected!")}}class d{constructor(){}checkModuleLinkage=()=>{console.log("HELLO, ViewSuperadmin is connected!")}}var u=c("9zRuU");class h{constructor(){}checkModuleLinkage=()=>{console.log("HELLO, ModelProducts is connected!")}}class m{constructor(){}checkModuleLinkage=()=>{console.log("HELLO, ModelCart is connected!")}}class g{constructor(){}checkModuleLinkage=()=>{console.log("HELLO, ModelOrders is connected!")}}class p{constructor(){}checkModuleLinkage=()=>{console.log("HELLO, ModelAdmin is connected!")}}var L=c("ljOiA");// Init database instance (dataBase):
+let f={},k=new Map,w=new class{constructor(){this.viewProducts=new r(this),this.viewCart=new l,this.viewOrders=new s,this.viewAdmin=new a,this.viewSuperadmin=new d,this.modelFirebase=new u.ModelFirebase,this.modelProducts=new h,this.modelCart=new m,this.modelOrders=new g,this.modelAdmin=new p}initializeAppMain=async()=>{for(let e of(// TEST AND TBS - REMOVE IN PRODUCTION
+console.log("HELLO! INIT CARRIED OUT SUCCESFULLY"),this.viewProducts.checkModuleLinkage(),this.viewCart.checkModuleLinkage(),this.viewOrders.checkModuleLinkage(),this.viewAdmin.checkModuleLinkage(),this.viewSuperadmin.checkModuleLinkage(),this.modelFirebase.checkModuleLinkage(),this.modelProducts.checkModuleLinkage(),this.modelCart.checkModuleLinkage(),this.modelOrders.checkModuleLinkage(),this.modelAdmin.checkModuleLinkage(),// Get data from database (Firebase) and keep in dataBase{}
+console.log("Action: Getdata from database (Firebase) and keep in dataBase{}."),L.dbCollectionNames))f[e]=await this.modelFirebase.get(e);for(let e of(// FOR TEST AND TBS - REMOVE IN PROD:
+// console.log("dataBase{}: ", dataBase);
+// Create Image Links Map:
+console.log("Action: Create Image Links Map imageLinksMap{}:"),f.productItems)){let t=await this.modelFirebase.getLinkToImage(e.itemImg).then(e=>e).catch(e=>{console.log("Error getting download URL: ",e)});// FOR TEST AND TBS - REMOVE IN PROD:
+// console.log("imageURL: ", imageURL);
+k.set(e.itemImg,t)}// FOR TEST AND TBS - REMOVE IN PROD:
+// console.log("imageLinksMap: ", imageLinksMap);
+// Check Image URLs - TEST for Images
+// this.modelFirebase.checkImageUrls();
+// Left Container - Render product items
+this.viewProducts.renderProductItems(f.productItems);// Right Container - Render Cart Title
+// Right Container - Render Cart Icons
+// Right Container - Render Go-To-Cart Button
+// Right Container - Render Orders Title
+// Right Container - Render Order Links
+// Attach Event Listeners (Products)
+// Attach Event Listeners (Cart Icons)
+// Attach Event Listeners (Order Links)
+// Alert - Popup inform the test name usage
+// TEST & TBS ITEMS
+};askForImageUrlFromStorage=async e=>{let t=await this.modelFirebase.getLinkToImage(e).then(e=>e).catch(e=>{console.log("Error getting download URL: ",e)});console.log("imageURL: ",t)};getUrlByNameLocal=e=>k.get(e)};try{w.initializeAppMain()}catch(e){console.error("An error occured duting app initialization:",e),alert("Something went wrong. Please contact the app admin or try again later.")}}();//# sourceMappingURL=index.0b411cb6.js.map
+
+//# sourceMappingURL=index.0b411cb6.js.map
