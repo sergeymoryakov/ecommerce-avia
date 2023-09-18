@@ -94,6 +94,7 @@ export class Controller {
         console.log("Assigned to sessionId: ", sessionId);
 
         // Alert - Popup inform the test name usage
+        // This section was updated during last commit but failed to deploy
         confirm(
             `Hi there, this application was set for demonstration purpose, therefore a User ID ${sessionId} was assigned for this session. Fake Name, Lastname, and other user properties are generated for practice purpose only. Should you wish to use this application and/or customize it fo the purpose of your business please reach out to the developer at seppo.gigital@gmail.com.`
         );
