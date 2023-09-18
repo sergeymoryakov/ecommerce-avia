@@ -15,9 +15,13 @@ import { v4 as uuidv4 } from "uuid";
 // Get DB collection names (dbCollectionNames) from constants.js
 import { dbCollectionNames } from "../common/constants.js";
 
-// Initiate database instance (dataBase):
+// Init database instance (dataBase):
 let dataBase = {};
 
+// Init current session personal variables:
+const myId = [];
+
+// Init cross-ref Map: image - url
 const imageLinksMap = new Map();
 
 export class Controller {
@@ -59,7 +63,7 @@ export class Controller {
         }
 
         // FOR TEST AND TBS - REMOVE IN PROD:
-        console.log("dataBase{}: ", dataBase);
+        // console.log("dataBase{}: ", dataBase);
 
         // Create Image Links Map:
         console.log("Action: Create Image Links Map imageLinksMap{}:");
@@ -74,13 +78,14 @@ export class Controller {
                 .catch((error) => {
                     console.log("Error getting download URL: ", error);
                 });
-            console.log("imageURL: ", imageURL);
+            // FOR TEST AND TBS - REMOVE IN PROD:
+            // console.log("imageURL: ", imageURL);
 
             imageLinksMap.set(docName.itemImg, imageURL);
         }
 
         // FOR TEST AND TBS - REMOVE IN PROD:
-        console.log("imageLinksMap: ", imageLinksMap);
+        // console.log("imageLinksMap: ", imageLinksMap);
 
         // Check Image URLs - TEST for Images
         // this.modelFirebase.checkImageUrls();
@@ -105,10 +110,6 @@ export class Controller {
         // Alert - Popup inform the test name usage
 
         // TEST & TBS ITEMS
-        const testURL = await this.getUrlByNameLocal(
-            dataBase.productItems[0].itemImg
-        );
-        console.log("testURL: ", testURL);
     };
 
     askForImageUrlFromStorage = async (imageName) => {
