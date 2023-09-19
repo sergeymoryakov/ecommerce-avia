@@ -1,7 +1,6 @@
 // import iconAddOrder from "../../other_assets/icon-add-order.png";
 // import iconCart from "../../other_assets/icon-cart.png";
 // import iconCc from "../../other_assets/icon-cc.png";
-import { increment } from "firebase/firestore";
 import iconOrder from "../../other_assets/icon-order.png";
 
 export class ViewCart {
@@ -52,8 +51,8 @@ export class ViewCart {
     };
 
     // Right Container - Render Cart Summaary
-    renderCartSummaryNoTotal = (sessionIdCart) => {
-        this.controller.clearContainerRight();
+    createNewCartSummaryNoTotal = (sessionIdCart) => {
+        // this.controller.clearContainerRight();
 
         // Right Container - Render Cart Title
         const cartSummaryBlock = this.createCartSummaryTitle();
@@ -89,6 +88,11 @@ export class ViewCart {
         const button = this.createGoToCartButton();
         cartSummaryBlock.appendChild(button);
 
-        this.controller.containerRightNode.appendChild(cartSummaryBlock);
+        // TEST-TBS - REMOVE FO PROD
+        // console.log("cartSummaryBlock: ", cartSummaryBlock);
+
+        return cartSummaryBlock;
+
+        // this.controller.containerRightNode.appendChild(cartSummaryBlock);
     };
 }

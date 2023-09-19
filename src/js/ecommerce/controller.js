@@ -23,6 +23,10 @@ let sessionId = "";
 let sessionIdCart = {};
 let sessionIdOrders = {};
 
+// Init HTML variables:
+let cartSummaryNoTotal = "";
+let ordersHistorySummary = "";
+
 // Init cross-ref Map: image - url
 const imageLinksMap = new Map();
 
@@ -30,7 +34,7 @@ export class Controller {
     constructor() {
         this.viewProducts = new ViewProducts(this);
         this.viewCart = new ViewCart(this);
-        this.viewOrders = new ViewOrders();
+        this.viewOrders = new ViewOrders(this);
         this.viewAdmin = new ViewAdmin();
         this.viewSuperadmin = new ViewSuperadmin();
         this.modelFirebase = new ModelFirebase();
@@ -95,9 +99,10 @@ export class Controller {
 
         // Alert - Popup inform the test name usage
         // This section was updated during last commit but failed to deploy
-        confirm(
-            `Hi there, this application was set for demonstration purpose, therefore a User ID ${sessionId} was assigned for this session. Fake Name, Lastname, and other user properties are generated for practice purpose only. Should you wish to use this application and/or customize it fo the purpose of your business please reach out to the developer at seppo.gigital@gmail.com.`
-        );
+        // ACTION NEEDED: UNCOMMENT BELOW FOR PRODUCTION:
+        // confirm(
+        //     `Hi there, this application was set for demonstration purpose, therefore a User ID ${sessionId} was assigned for this session. Fake Name, Lastname, and other user properties are generated for practice purpose only. Should you wish to use this application and/or customize it fo the purpose of your business please reach out to the developer at seppo.gigital@gmail.com.`
+        // );
 
         // Left Container - Render product items
         this.viewProducts.renderProductItems(dataBase.productItems);
@@ -113,12 +118,12 @@ export class Controller {
         // 2. Get orders list by user ID:
         sessionIdOrders = this.getOrdersByUserID(sessionId);
         console.log(
-            `Orders History (sesstionOrders) for User ID ${sessionId}: `,
+            `Orders History (sessionIdOrders) for User ID ${sessionId}: `,
             sessionIdOrders
         );
 
         // Right Container - Render Cart Summary
-        await this.viewCart.renderCartSummaryNoTotal(sessionIdCart);
+        this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
 
         // Right Container - Render Cart Title
 
@@ -135,6 +140,28 @@ export class Controller {
         // Attach Event Listeners (Order Links)
 
         // TEST & TBS ITEMS
+    };
+
+    // NEED VERIFY
+    renderCartAndOrdersSummary = (sessionIdCart, sessionIdOrders) => {
+        const cartAndOrdersSummary = document.createElement("span");
+        cartAndOrdersSummary.innerHTML = "";
+
+        cartSummaryNoTotal =
+            this.viewCart.createNewCartSummaryNoTotal(sessionIdCart);
+
+        ordersHistorySummary =
+            this.viewOrders.createOrdersHistorySummary(sessionIdOrders);
+
+        // TEST-TBS - REMOVE FO PROD
+        console.log("cartSummaryNoTotal: ", cartSummaryNoTotal);
+        console.log("ordersHistorySummary: ", ordersHistorySummary);
+
+        this.clearContainerRight();
+        cartAndOrdersSummary.appendChild(cartSummaryNoTotal);
+        cartAndOrdersSummary.appendChild(ordersHistorySummary);
+
+        this.containerRightNode.appendChild(cartAndOrdersSummary);
     };
 
     // Clear container
