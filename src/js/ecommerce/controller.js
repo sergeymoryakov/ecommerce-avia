@@ -38,6 +38,9 @@ export class Controller {
         this.modelCart = new ModelCart();
         this.modelOrders = new ModelOrders();
         this.modelAdmin = new ModelAdmin();
+
+        this.containerLeftNode = document.getElementById("containerLeft");
+        this.containerRightNode = document.getElementById("containerRight");
     }
     initializeAppMain = async () => {
         // TEST AND TBS - REMOVE IN PRODUCTION
@@ -63,9 +66,6 @@ export class Controller {
                 collectionName
             );
         }
-
-        // FOR TEST AND TBS - REMOVE IN PROD:
-        // console.log("dataBase{}: ", dataBase);
 
         // Create Image Links Map:
         console.log("Action: Create Image Links Map imageLinksMap{}:");
@@ -102,14 +102,15 @@ export class Controller {
         // Left Container - Render product items
         this.viewProducts.renderProductItems(dataBase.productItems);
 
-        // Get cart items by sesstion user ID:
+        // Get values to Sesstion Variables: 1-2
+        // 1. Get cart items by sesstion user ID:
         sessionIdCart = this.getCartItemsByUserID(sessionId);
         console.log(
             `Cart items (sessionIdCart) for User ID ${sessionId}: `,
             sessionIdCart
         );
 
-        // Get orders list by user ID:
+        // 2. Get orders list by user ID:
         sessionIdOrders = this.getOrdersByUserID(sessionId);
         console.log(
             `Orders History (sesstionOrders) for User ID ${sessionId}: `,
@@ -134,6 +135,15 @@ export class Controller {
         // Attach Event Listeners (Order Links)
 
         // TEST & TBS ITEMS
+    };
+
+    // Clear container
+    clearContainerLeft = () => {
+        this.containerLeftNode.innerHTML = "";
+    };
+
+    clearContainerRight = () => {
+        this.containerRightNode.innerHTML = "";
     };
 
     askForImageUrlFromStorage = async (imageName) => {

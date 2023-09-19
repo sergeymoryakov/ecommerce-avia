@@ -7,15 +7,9 @@ import iconOrder from "../../other_assets/icon-order.png";
 export class ViewCart {
     constructor(controller) {
         this.controller = controller;
-        this.containerRightNode = document.getElementById("containerRight");
     }
     checkModuleLinkage = () => {
         console.log("HELLO, ViewCart is connected!");
-    };
-
-    // Clear container
-    clearContainerRight = () => {
-        this.containerRightNode.innerHTML = "";
     };
 
     // Right Container - Create Cart Title
@@ -42,9 +36,6 @@ export class ViewCart {
         const button = document.createElement("button");
         button.classList = "cart-goto-btn";
 
-        // TEST-TBS :
-        // console.log("iconOrder: ", iconOrder);
-
         const image = document.createElement("img");
         image.src = iconOrder;
         image.alt = "Select";
@@ -62,7 +53,7 @@ export class ViewCart {
 
     // Right Container - Render Cart Summaary
     renderCartSummaryNoTotal = (sessionIdCart) => {
-        this.clearContainerRight();
+        this.controller.clearContainerRight();
 
         // Right Container - Render Cart Title
         const cartSummaryBlock = this.createCartSummaryTitle();
@@ -98,6 +89,6 @@ export class ViewCart {
         const button = this.createGoToCartButton();
         cartSummaryBlock.appendChild(button);
 
-        this.containerRightNode.appendChild(cartSummaryBlock);
+        this.controller.containerRightNode.appendChild(cartSummaryBlock);
     };
 }

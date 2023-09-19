@@ -6,17 +6,10 @@ import iconCart from "../../other_assets/icon-cart.png";
 export class ViewProducts {
     constructor(controller) {
         this.controller = controller;
-        this.containerLeftNode = document.getElementById("containerLeft");
-        // this.containerRightNode = document.getElementById("containerRight");
     }
     // FOR TEST AND TBS - REMOVE FOR PROD
     checkModuleLinkage = () => {
         console.log("HELLO, ViewProducts is connected!");
-    };
-
-    // Clear container
-    clearContainerLeft = () => {
-        this.containerLeftNode.innerHTML = "";
     };
 
     createProductItemCard = (productObject) => {
@@ -73,7 +66,7 @@ export class ViewProducts {
     // Left Container - Render product items
     renderProductItems = (arrayProducts) => {
         // Clear container
-        this.clearContainerLeft();
+        this.controller.clearContainerLeft();
 
         // Create product list container
         const productList = document.createElement("div");
@@ -87,6 +80,6 @@ export class ViewProducts {
         }
 
         // Render product list container
-        this.containerLeftNode.appendChild(productList);
+        this.controller.containerLeftNode.appendChild(productList);
     };
 }
