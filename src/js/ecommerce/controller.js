@@ -73,6 +73,10 @@ export class Controller {
             dataBase[collectionName] = await this.modelFirebase.get(
                 collectionName
             );
+            console.log(
+                `dataBase.${collectionName}: `,
+                dataBase[collectionName]
+            );
         }
 
         // Create Image Links Map:
@@ -144,6 +148,8 @@ export class Controller {
         // Attach Event Listeners (Order Links)
 
         // TEST & TBS ITEMS
+
+        this.attachEventListenrs();
     };
 
     // Clear container
@@ -193,6 +199,19 @@ export class Controller {
         return productObject[0].itemImg;
     };
 
+    getProdIdFromElementId = (idString) => {
+        return idString.split("_")[1];
+    };
+
+    getProductObjectById = (productId) => {
+        // Filter product array => single object array
+        const filteredArray = dataBase.productItems.filter(
+            (product) => product.docId === productId
+        );
+        // return object
+        return filteredArray[0];
+    };
+
     // Left Container - Render product items
     renderProductItemsList = (arrayProducts) => {
         const productItemsList = document.createElement("div");
@@ -201,10 +220,27 @@ export class Controller {
         productItemsList.appendChild(
             this.viewProducts.createProductItemsList(arrayProducts)
         );
+        // TEST-TBS - REMOVE FOR PROD
+        // Reset global variable:
+        // productsList.innerHTML = "";
+        // productsList.appendChild(productItemsList);
+
+        // TEST-TBS - REMOVE FOR PROD
+        // console.log("productsList: ", productsList);
+        // console.log("productsList: ", productsList.innerHTML);
 
         this.clearContainerLeft();
         this.containerLeftNode.appendChild(productItemsList);
     };
+
+    // TEST-TBS - REMOVE FOR PROD
+    // Left Container - Re-Render product Items
+    // returnRenderProductsList = () => {
+    //     // TEST-TBS - REMOVE FOR PROD
+    //     console.log("productsList: ", productsList.innerHTML);
+    //     this.clearContainerLeft();
+    //     this.containerLeftNode.appendChild(productsList);
+    // };
 
     // Right Container - Render Cart (no price) and Orders Summaries
 
@@ -229,5 +265,91 @@ export class Controller {
 
         this.clearContainerRight();
         this.containerRightNode.appendChild(cartAndOrdersSummary);
+    };
+
+    renderProductCard = (productObject) => {
+        const detailedCardHTML =
+            this.viewProducts.createDetailedProductCard(productObject);
+        this.clearContainerLeft();
+        this.containerLeftNode.appendChild(detailedCardHTML);
+    };
+
+    handleButtonsClick = (event) => {
+        const target = event.target;
+
+        // RETURN back to Products list BTN:
+        if (target.classList.contains("goto-products-btn")) {
+            this.renderProductItemsList(dataBase.productItems);
+        }
+
+        // Initialize add to cart button (inside of detailed card form)
+        // Get the closest parent with specific class name
+        const addToCartBtn = target.closest(".product-card__add-to-cart-btn");
+        // If checked:
+        if (addToCartBtn) {
+            console.log("TO-DO: Add product to cart.");
+        }
+
+        // Check if require to add product to cart:
+        // Check if the clicked element or any of its parent elements
+        // have the class "product-item__content_price-btn"
+        let currentElement = target;
+        while (
+            currentElement !== null &&
+            !currentElement.classList.contains(
+                "product-item__content_price-btn"
+            )
+        ) {
+            currentElement = currentElement.parentElement;
+        }
+
+        if (currentElement !== null) {
+            console.log("Button clicked");
+            console.log("Button id: ", currentElement.id);
+            // Identify Product to put add to cart
+            const productIdToCart = this.getProdIdFromElementId(
+                currentElement.id
+            );
+            // TO-DO:
+            console.log(
+                `TO-DO: Add product with ID ${productIdToCart} to cart.`
+            );
+            return;
+        }
+
+        // Render if product card clicked:
+        // Check if the clicked element or any of its parent elements have the class "product-item"
+        currentElement = target;
+        while (
+            currentElement !== null &&
+            !currentElement.classList.contains("product-item")
+        ) {
+            currentElement = currentElement.parentElement;
+        }
+
+        if (currentElement !== null) {
+            console.log("Clicked inside product item");
+            console.log("currentElement class: ", currentElement.classList);
+            // Identify Product to display / render card
+            const productIdToDisplay = this.getProdIdFromElementId(
+                currentElement.id
+            );
+            console.log("Product ID to display: ", productIdToDisplay);
+            const productToDisplay =
+                this.getProductObjectById(productIdToDisplay);
+            this.renderProductCard(productToDisplay);
+        }
+    };
+
+    attachEventListenrs = () => {
+        this.containerLeftNode.addEventListener(
+            "click",
+            this.handleButtonsClick
+        );
+
+        this.containerRightNode.addEventListener(
+            "click",
+            this.handleButtonsClick
+        );
     };
 }
