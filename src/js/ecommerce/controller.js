@@ -24,8 +24,12 @@ let sessionIdCart = {};
 let sessionIdOrders = {};
 
 // Init HTML variables:
-let cartSummaryNoTotal = "";
-let ordersHistorySummary = "";
+const productsList = document.createElement("div");
+productsList.innerHTML = "";
+const cartSummaryNoTotal = document.createElement("div");
+productsList.innerHTML = "";
+const ordersHistorySummary = document.createElement("div");
+productsList.innerHTML = "";
 
 // Init cross-ref Map: image - url
 const imageLinksMap = new Map();
@@ -144,23 +148,25 @@ export class Controller {
 
     // NEED VERIFY
     renderCartAndOrdersSummary = (sessionIdCart, sessionIdOrders) => {
-        const cartAndOrdersSummary = document.createElement("span");
+        const cartAndOrdersSummary = document.createElement("div");
         cartAndOrdersSummary.innerHTML = "";
 
-        cartSummaryNoTotal =
-            this.viewCart.createNewCartSummaryNoTotal(sessionIdCart);
+        cartSummaryNoTotal.appendChild(
+            this.viewCart.createNewCartSummaryNoTotal(sessionIdCart)
+        );
 
-        ordersHistorySummary =
-            this.viewOrders.createOrdersHistorySummary(sessionIdOrders);
+        ordersHistorySummary.appendChild(
+            this.viewOrders.createOrdersHistorySummary(sessionIdOrders)
+        );
 
         // TEST-TBS - REMOVE FO PROD
         console.log("cartSummaryNoTotal: ", cartSummaryNoTotal);
         console.log("ordersHistorySummary: ", ordersHistorySummary);
 
-        this.clearContainerRight();
         cartAndOrdersSummary.appendChild(cartSummaryNoTotal);
         cartAndOrdersSummary.appendChild(ordersHistorySummary);
 
+        this.clearContainerRight();
         this.containerRightNode.appendChild(cartAndOrdersSummary);
     };
 
