@@ -64,9 +64,9 @@ export class ViewProducts {
     };
 
     // Left Container - Render product items
-    renderProductItems = (arrayProducts) => {
+    createProductItemsList = (arrayProducts) => {
         // Clear container
-        this.controller.clearContainerLeft();
+        // this.controller.clearContainerLeft();
 
         // Create product list container
         const productList = document.createElement("div");
@@ -80,6 +80,9 @@ export class ViewProducts {
         }
 
         // Render product list container
-        this.controller.containerLeftNode.appendChild(productList);
+        // this.controller.containerLeftNode.appendChild(productList);
+
+        console.log("productList: ", productList);
+        return productList;
     };
 }

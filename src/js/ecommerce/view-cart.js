@@ -63,8 +63,9 @@ export class ViewCart {
         // Right Container - Render Cart Icons
         console.log("Action: Right Container - Render Cart Icons");
         for (const productObject of sessionIdCart) {
-            console.log("productObject: ", productObject);
-            console.log("productObject.itemId: ", productObject.itemId);
+            // TEST-TBS - REMOVE IN PROD
+            // console.log("productObject: ", productObject);
+            // console.log("productObject.itemId: ", productObject.itemId);
 
             const productImage = this.controller.getImageByProductId(
                 productObject.itemId
@@ -76,7 +77,7 @@ export class ViewCart {
             const imageURL = this.controller.getUrlByNameLocal(productImage);
 
             // FOR TEST-TBS
-            console.log("imageURL: ", imageURL);
+            // console.log("imageURL: ", imageURL);
 
             const cartItem = this.createCartItemButton(imageURL);
             wrapper.appendChild(cartItem);

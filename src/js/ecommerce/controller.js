@@ -27,9 +27,9 @@ let sessionIdOrders = {};
 const productsList = document.createElement("div");
 productsList.innerHTML = "";
 const cartSummaryNoTotal = document.createElement("div");
-productsList.innerHTML = "";
+cartSummaryNoTotal.innerHTML = "";
 const ordersHistorySummary = document.createElement("div");
-productsList.innerHTML = "";
+ordersHistorySummary.innerHTML = "";
 
 // Init cross-ref Map: image - url
 const imageLinksMap = new Map();
@@ -109,7 +109,7 @@ export class Controller {
         // );
 
         // Left Container - Render product items
-        this.viewProducts.renderProductItems(dataBase.productItems);
+        this.renderProductItemsList(dataBase.productItems);
 
         // Get values to Sesstion Variables: 1-2
         // 1. Get cart items by sesstion user ID:
@@ -144,30 +144,6 @@ export class Controller {
         // Attach Event Listeners (Order Links)
 
         // TEST & TBS ITEMS
-    };
-
-    // NEED VERIFY
-    renderCartAndOrdersSummary = (sessionIdCart, sessionIdOrders) => {
-        const cartAndOrdersSummary = document.createElement("div");
-        cartAndOrdersSummary.innerHTML = "";
-
-        cartSummaryNoTotal.appendChild(
-            this.viewCart.createNewCartSummaryNoTotal(sessionIdCart)
-        );
-
-        ordersHistorySummary.appendChild(
-            this.viewOrders.createOrdersHistorySummary(sessionIdOrders)
-        );
-
-        // TEST-TBS - REMOVE FO PROD
-        console.log("cartSummaryNoTotal: ", cartSummaryNoTotal);
-        console.log("ordersHistorySummary: ", ordersHistorySummary);
-
-        cartAndOrdersSummary.appendChild(cartSummaryNoTotal);
-        cartAndOrdersSummary.appendChild(ordersHistorySummary);
-
-        this.clearContainerRight();
-        this.containerRightNode.appendChild(cartAndOrdersSummary);
     };
 
     // Clear container
@@ -210,20 +186,48 @@ export class Controller {
         const productObject = dataBase.productItems.filter(
             (product) => product.id === productId
         );
-        console.log("productObject: ", productObject);
-        console.log("productObject[0].itemImg: ", productObject[0].itemImg);
+
+        // TEST-TBS - REMOVE IN PROD
+        // console.log("productObject: ", productObject);
+        // console.log("productObject[0].itemImg: ", productObject[0].itemImg);
         return productObject[0].itemImg;
     };
 
     // Left Container - Render product items
+    renderProductItemsList = (arrayProducts) => {
+        const productItemsList = document.createElement("div");
+        productItemsList.innerHTML = "";
 
-    // Right Container - Render Cart Title
+        productItemsList.appendChild(
+            this.viewProducts.createProductItemsList(arrayProducts)
+        );
 
-    // Right Container - Render Cart Icons
+        this.clearContainerLeft();
+        this.containerLeftNode.appendChild(productItemsList);
+    };
 
-    // Right Container - Render Go-To-Cart Button
+    // Right Container - Render Cart (no price) and Orders Summaries
 
-    // Right Container - Render Orders Title
+    renderCartAndOrdersSummary = (sessionIdCart, sessionIdOrders) => {
+        const cartAndOrdersSummary = document.createElement("div");
+        cartAndOrdersSummary.innerHTML = "";
 
-    // Right Container - Render Order Links
+        cartSummaryNoTotal.appendChild(
+            this.viewCart.createNewCartSummaryNoTotal(sessionIdCart)
+        );
+
+        ordersHistorySummary.appendChild(
+            this.viewOrders.createOrdersHistorySummary(sessionIdOrders)
+        );
+
+        // TEST-TBS - REMOVE IN PROD
+        console.log("cartSummaryNoTotal: ", cartSummaryNoTotal);
+        console.log("ordersHistorySummary: ", ordersHistorySummary);
+
+        cartAndOrdersSummary.appendChild(cartSummaryNoTotal);
+        cartAndOrdersSummary.appendChild(ordersHistorySummary);
+
+        this.clearContainerRight();
+        this.containerRightNode.appendChild(cartAndOrdersSummary);
+    };
 }
