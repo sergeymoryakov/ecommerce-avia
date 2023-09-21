@@ -194,8 +194,8 @@ export class Controller {
         );
 
         // TEST-TBS - REMOVE IN PROD
-        console.log("productObject: ", productObject);
-        console.log("productObject[0].itemImg: ", productObject[0].itemImg);
+        // console.log("productObject: ", productObject);
+        // console.log("productObject[0].itemImg: ", productObject[0].itemImg);
         return productObject[0].itemImg;
     };
 
@@ -231,6 +231,14 @@ export class Controller {
 
         this.clearContainerLeft();
         this.containerLeftNode.appendChild(productItemsList);
+    };
+
+    // Left Container - Render Order CART
+    renderCartSummary = (productObject) => {
+        const productCardForCartHTML =
+            this.viewCart.createProductCardForCart(productObject);
+        this.clearContainerLeft();
+        this.containerLeftNode.appendChild(productCardForCartHTML);
     };
 
     // TEST-TBS - REMOVE FOR PROD
@@ -370,6 +378,7 @@ export class Controller {
         // If checked:
         if (addToCartBtn) {
             console.log("Received command to display CART.");
+            this.renderCartSummary(dataBase.productItems[0]);
         }
 
         // if (target.classList.contains("")) {
