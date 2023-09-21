@@ -20,9 +20,10 @@ export class ViewCart {
     };
 
     // Right Container - Create Cart Item Button
-    createCartItemButton = (imageURL) => {
+    createCartItemButton = (imageURL, productId) => {
         const button = document.createElement("button");
         button.classList = "cart-link-btn";
+        button.id = `cart-link-btn_${productId}`;
         button.style = `background-image: url(${imageURL});`;
         return button;
     };
@@ -64,8 +65,8 @@ export class ViewCart {
         console.log("Action: Right Container - Render Cart Icons");
         for (const productObject of sessionIdCart) {
             // TEST-TBS - REMOVE IN PROD
-            // console.log("productObject: ", productObject);
-            // console.log("productObject.itemId: ", productObject.itemId);
+            console.log("productObject: ", productObject);
+            console.log("productObject.itemId: ", productObject.itemId);
 
             const productImage = this.controller.getImageByProductId(
                 productObject.itemId
@@ -79,7 +80,10 @@ export class ViewCart {
             // FOR TEST-TBS
             // console.log("imageURL: ", imageURL);
 
-            const cartItem = this.createCartItemButton(imageURL);
+            const cartItem = this.createCartItemButton(
+                imageURL,
+                productObject.docId
+            );
             wrapper.appendChild(cartItem);
         }
 

@@ -274,15 +274,16 @@ export class Controller {
         this.containerLeftNode.appendChild(detailedCardHTML);
     };
 
-    handleButtonsClick = (event) => {
+    handleButtonsClickLeft = (event) => {
         const target = event.target;
 
+        // Detailed Product Card Page:
         // RETURN back to Products list BTN:
         if (target.classList.contains("goto-products-btn")) {
             this.renderProductItemsList(dataBase.productItems);
         }
 
-        // Initialize add to cart button (inside of detailed card form)
+        // Add to cart button (from inside the detailed card)
         // Get the closest parent with specific class name
         const addToCartBtn = target.closest(".product-card__add-to-cart-btn");
         // If checked:
@@ -290,9 +291,10 @@ export class Controller {
             console.log("TO-DO: Add product to cart.");
         }
 
-        // Check if require to add product to cart:
-        // Check if the clicked element or any of its parent elements
-        // have the class "product-item__content_price-btn"
+        // MAIN PAGE - Product Items Cards
+        // Check if require to add product to cart
+        // (if the clicked element or any of its parent elements
+        // have the class "product-item__content_price-btn")
         let currentElement = target;
         while (
             currentElement !== null &&
@@ -317,8 +319,9 @@ export class Controller {
             return;
         }
 
-        // Render if product card clicked:
-        // Check if the clicked element or any of its parent elements have the class "product-item"
+        // MAIN PAGE - Product Items Cards
+        // Action call: Render if product card clicked
+        // (Check if the clicked element or any of its parent elements have the class "product-item")
         currentElement = target;
         while (
             currentElement !== null &&
@@ -341,15 +344,48 @@ export class Controller {
         }
     };
 
+    handleButtonsClickRight = (event) => {
+        const target = event.target;
+        // console.log("clicked element with class: ", target.classList);
+        // console.log("clicked element with ID: ", target.id);
+
+        if (target.classList.contains("cart-link-btn")) {
+            console.log(
+                "Received command to display PRODUCT CARD with ID: ",
+                target.id
+            );
+        }
+
+        if (target.classList.contains("order-number-btn")) {
+            console.log(
+                "Received command to display ORDER with ID: ",
+                target.id
+            );
+        }
+
+        // TO-DO
+        // Display CART button (from right panel)
+        // Get the closest parent with specific class name
+        const addToCartBtn = target.closest(".cart-goto-btn");
+        // If checked:
+        if (addToCartBtn) {
+            console.log("Received command to display CART.");
+        }
+
+        // if (target.classList.contains("")) {
+        //     console.log("clicked element with class: ", target.classList)
+        // }
+    };
+
     attachEventListenrs = () => {
         this.containerLeftNode.addEventListener(
             "click",
-            this.handleButtonsClick
+            this.handleButtonsClickLeft
         );
 
         this.containerRightNode.addEventListener(
             "click",
-            this.handleButtonsClick
+            this.handleButtonsClickRight
         );
     };
 }
