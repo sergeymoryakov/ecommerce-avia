@@ -235,5 +235,19 @@ export class ViewCart {
         console.log("productCardMain: ", productCardMain);
 
         return productCardMain;
+
+        // To-DO items:
+        createCartPage = () => {
+            const CartWrapper = document.createElement("div");
+            CartWrapper.classList = "product-card";
+            // CartWrapper.id = `prodCard_${productObject.docId}`;
+
+            const goBackBtn = document.createElement("button");
+            goBackBtn.classList = "goto-products-btn";
+            goBackBtn.innerText = "< Back to Products";
+
+            const cartTitle = document.createElement("h2");
+            cartTitle.innerText = "Cart";
+        };
     };
 }
