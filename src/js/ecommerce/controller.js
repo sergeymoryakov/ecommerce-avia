@@ -190,12 +190,12 @@ export class Controller {
 
     getImageByProductId = (productId) => {
         const productObject = dataBase.productItems.filter(
-            (product) => product.id === productId
+            (product) => product.itemId === productId
         );
 
         // TEST-TBS - REMOVE IN PROD
-        // console.log("productObject: ", productObject);
-        // console.log("productObject[0].itemImg: ", productObject[0].itemImg);
+        console.log("productObject: ", productObject);
+        console.log("productObject[0].itemImg: ", productObject[0].itemImg);
         return productObject[0].itemImg;
     };
 
