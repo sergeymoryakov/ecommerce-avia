@@ -28,36 +28,8 @@ export class ViewCart {
         return button;
     };
 
-    // Right Container - Create Go-To-Cart Button
-    createGoToCartButton = () => {
-        const wrapper = document.createElement("div");
-        wrapper.classList = "cart-goto-btn-wrapper";
-
-        const button = document.createElement("button");
-        button.classList = "cart-goto-btn";
-
-        const image = document.createElement("img");
-        image.src = iconOrder;
-        image.alt = "Select";
-
-        const textSpan = document.createElement("span");
-        textSpan.innerText = " Cart";
-
-        // Append elemens to respective parents
-        button.appendChild(image);
-        button.appendChild(textSpan);
-        wrapper.appendChild(button);
-
-        return wrapper;
-    };
-
-    // Right Container - Render Cart Summaary
-    createNewCartSummaryNoTotal = (sessionIdCart) => {
-        // this.controller.clearContainerRight();
-
-        // Right Container - Render Cart Title
-        const cartSummaryBlock = this.createCartSummaryTitle();
-
+    // Right Container - Create Cart Products Icons Block
+    createCartProductItemsBlock = (sessionIdCart) => {
         const wrapper = document.createElement("div");
         wrapper.classList = "cart-links-wrapper";
 
@@ -82,14 +54,85 @@ export class ViewCart {
 
             const cartItem = this.createCartItemButton(
                 imageURL,
-                productObject.docId
+                productObject.itemId
             );
             wrapper.appendChild(cartItem);
         }
+        return wrapper;
+    };
 
-        cartSummaryBlock.appendChild(wrapper);
+    // Right Container - Create Go-To-Cart Button
+    createGoToCartButton = () => {
+        const wrapper = document.createElement("div");
+        wrapper.classList = "cart-goto-btn-wrapper";
 
-        // Right Container - Render Go-To-Cart Button
+        const button = document.createElement("button");
+        button.classList = "cart-goto-btn";
+
+        const image = document.createElement("img");
+        image.src = iconOrder;
+        image.alt = "Select";
+
+        const textSpan = document.createElement("span");
+        textSpan.innerText = " Cart";
+
+        // Append elemens to respective parents
+        button.appendChild(image);
+        button.appendChild(textSpan);
+        wrapper.appendChild(button);
+
+        return wrapper;
+    };
+
+    // Right Container - Create "Proceed To Checkout" button
+    createProceedToCheckoutBtn = () => {
+        const wrapper = document.createElement("div");
+        wrapper.classList = "cart-checkout-btn-wrapper";
+
+        const button = document.createElement("button");
+        button.classList = "cart-checkout-btn";
+
+        const image = document.createElement("img");
+        image.src = iconOrder;
+        image.alt = "Checkout";
+
+        const textSpan = document.createElement("span");
+        textSpan.innerText = " Checkout";
+
+        // Append elemens to respective parents
+        button.appendChild(image);
+        button.appendChild(textSpan);
+        wrapper.appendChild(button);
+
+        return wrapper;
+    };
+
+    // Right Container - create total amount block
+    createTotalAmountBlock = (sessionIdCartPrice) => {
+        const wrapper = document.createElement("div");
+        wrapper.classList = "cart-total-amount-wrapper";
+
+        const totalAmount = document.createElement("p");
+        totalAmount.classList = "cart-total-amount";
+        totalAmount.innerText = `Total: $${sessionIdCartPrice.total}`;
+
+        wrapper.appendChild(totalAmount);
+
+        return wrapper;
+    };
+
+    // Right Container - Render Cart Summaary
+    createNewCartSummaryNoTotal = (sessionIdCart) => {
+        // Create "Cart" title
+        const cartSummaryBlock = this.createCartSummaryTitle();
+
+        // Create product item "buttons" block
+        const cartProductItemsBlock =
+            this.createCartProductItemsBlock(sessionIdCart);
+
+        cartSummaryBlock.appendChild(cartProductItemsBlock);
+
+        // Create "Go To Cart" button
         const button = this.createGoToCartButton();
         cartSummaryBlock.appendChild(button);
 
@@ -97,8 +140,31 @@ export class ViewCart {
         // console.log("cartSummaryBlock: ", cartSummaryBlock);
 
         return cartSummaryBlock;
+    };
 
-        // this.controller.containerRightNode.appendChild(cartSummaryBlock);
+    // Right Container - Render Cart Summaary
+    createNewCartSummaryWithPrice = (sessionIdCart, sessionIdCartPrice) => {
+        // Create "Cart" title
+        const cartSummaryBlock = this.createCartSummaryTitle();
+
+        // Create product item "buttons" block
+        const cartProductItemsBlock =
+            this.createCartProductItemsBlock(sessionIdCart);
+
+        // Create total amount block
+        const cartTotalAmount = this.createTotalAmountBlock(sessionIdCartPrice);
+
+        // Create "Proceed to Checkout" button
+        const button = this.createProceedToCheckoutBtn();
+
+        cartSummaryBlock.appendChild(cartProductItemsBlock);
+        cartSummaryBlock.appendChild(cartTotalAmount);
+        cartSummaryBlock.appendChild(button);
+
+        // TEST-TBS - REMOVE FO PROD
+        // console.log("cartSummaryBlock: ", cartSummaryBlock);
+
+        return cartSummaryBlock;
     };
 
     // Left Container - Create Product Item Card block
@@ -252,15 +318,15 @@ export class ViewCart {
         cartItemsWrapper.classList = "cart-items-wrapper";
 
         for (const productItem of sessionCart) {
-            console.log(
-                "productItem to pass to getProductObjectById() function: ",
-                productItem
-            );
-            console.log("productItem.itemID: ", productItem.itemId);
+            // console.log(
+            //     "productItem to pass to getProductObjectById() function: ",
+            //     productItem
+            // );
+            // console.log("productItem.itemID: ", productItem.itemId);
             const productData = this.controller.getProductObjectById(
                 productItem.itemId
             );
-            console.log("productData: ", productData);
+            // console.log("productData: ", productData);
             cartItemsWrapper.appendChild(
                 this.createProductCardForCart(productData)
             );

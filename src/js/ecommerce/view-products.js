@@ -212,7 +212,8 @@ export class ViewProducts {
         productCardMain.appendChild(cardTopWrapper);
         productCardMain.appendChild(cardBottomWrapper);
 
-        console.log("productCardMain: ", productCardMain);
+        // TEST-TBS REMOVE FOR PROD
+        // console.log("productCardMain: ", productCardMain);
 
         return productCardMain;
     };

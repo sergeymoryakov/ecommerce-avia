@@ -21,6 +21,11 @@ let dataBase = {};
 // Init current session personal variables:
 let sessionId = "";
 let sessionIdCart = {};
+let sessionIdCartPrice = {
+    items: 800000,
+    handling: 8000,
+    total: 808000,
+};
 let sessionIdOrders = {};
 
 // Init HTML variables:
@@ -251,28 +256,44 @@ export class Controller {
     // };
 
     // Right Container - Render Cart (no price) and Orders Summaries
-
     renderCartAndOrdersSummary = (sessionIdCart, sessionIdOrders) => {
         const cartAndOrdersSummary = document.createElement("div");
         cartAndOrdersSummary.innerHTML = "";
 
-        cartSummaryNoTotal.appendChild(
-            this.viewCart.createNewCartSummaryNoTotal(sessionIdCart)
-        );
+        const cartItems =
+            this.viewCart.createNewCartSummaryNoTotal(sessionIdCart);
 
-        ordersHistorySummary.appendChild(
-            this.viewOrders.createOrdersHistorySummary(sessionIdOrders)
-        );
+        const ordersHistory =
+            this.viewOrders.createOrdersHistorySummary(sessionIdOrders);
 
         // TEST-TBS - REMOVE IN PROD
-        console.log("cartSummaryNoTotal: ", cartSummaryNoTotal);
-        console.log("ordersHistorySummary: ", ordersHistorySummary);
+        console.log("cartSummaryNoTotal: ", cartItems);
+        console.log("ordersHistorySummary: ", ordersHistory);
 
-        cartAndOrdersSummary.appendChild(cartSummaryNoTotal);
-        cartAndOrdersSummary.appendChild(ordersHistorySummary);
+        cartAndOrdersSummary.appendChild(cartItems);
+        cartAndOrdersSummary.appendChild(ordersHistory);
 
         this.clearContainerRight();
         this.containerRightNode.appendChild(cartAndOrdersSummary);
+    };
+
+    // Right Container - Render Cart (with price)
+    renderCartSummaryWithPrice = (sessionIdCart, sessionIdCartPrice) => {
+        const cartSummaryWrapper = document.createElement("div");
+        cartSummaryWrapper.innerHTML = "";
+
+        const cartSummary = this.viewCart.createNewCartSummaryWithPrice(
+            sessionIdCart,
+            sessionIdCartPrice
+        );
+
+        cartSummaryWrapper.appendChild(cartSummary);
+
+        // TEST-TBS - REMOVE IN PROD
+        console.log("cart Summary with Total: ", cartSummaryWrapper);
+
+        this.clearContainerRight();
+        this.containerRightNode.appendChild(cartSummaryWrapper);
     };
 
     renderProductCard = (productObject) => {
@@ -282,73 +303,103 @@ export class Controller {
         this.containerLeftNode.appendChild(detailedCardHTML);
     };
 
+    // Support funtions for buttons handler:
+
+    // Handle click of complex element by picking it's parent element class
+    findAncestorByClass = (element, className) => {
+        let currentElement = element;
+        while (
+            currentElement &&
+            !currentElement.classList.contains(className)
+        ) {
+            currentElement = currentElement.parentElement;
+        }
+        return currentElement;
+    };
+
+    // "< Back to Products" button
+    handleGotoProductsBtn = () => {
+        this.renderProductItemsList(dataBase.productItems);
+        this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
+    };
+
+    // "Add to Cart" button at detailed product card (page)
+    handleAddToCartBtn = () => {
+        console.log("TO-DO: Add product to cart.");
+    };
+
+    // "Go to Cart" button at right panel
+    handleGotoCartBtn = () => {
+        console.log("Received command to display CART.");
+        this.renderCartSummary(sessionIdCart);
+        this.renderCartSummaryWithPrice(sessionIdCart, sessionIdCartPrice);
+    };
+
+    // "Proceed to checkout" button at right panel
+    handleProceedToCheckoutBtn = () => {
+        console.log("Received command PROCEED TO CHECKOUT");
+    };
+
+    // "Add to Cart" button at short product card (main page)
+    handlePriceBtn = (element) => {
+        console.log("Button clicked");
+        console.log("Button id: ", element.id);
+        const productIdToCart = this.getProdIdFromElementId(element.id);
+        console.log(`TO-DO: Add product with ID ${productIdToCart} to cart.`);
+    };
+
+    // Product card as "button" at main page
+    handleProductItem = (element) => {
+        // TEST-TBS REMOVE IN PROD
+        console.log(
+            "Received command to display PRODUCT CARD with ID: ",
+            element.id
+        );
+
+        console.log("Clicked inside product item");
+        const productIdToDisplay = this.getProdIdFromElementId(element.id);
+        const productToDisplay = this.getProductObjectById(productIdToDisplay);
+        this.renderProductCard(productToDisplay);
+        this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
+    };
+
+    handleDisplayHistoricalOrder = (element) => {
+        console.log("Received command to display ORDER with ID: ", element.id);
+    };
+
     handleButtonsClickLeft = (event) => {
         const target = event.target;
 
-        // Detailed Product Card Page:
-        // RETURN back to Products list BTN:
+        // "< Back to Products" button
         if (target.classList.contains("goto-products-btn")) {
-            this.renderProductItemsList(dataBase.productItems);
-        }
-
-        // Add to cart button (from inside the detailed card)
-        // Get the closest parent with specific class name
-        const addToCartBtn = target.closest(".product-card__add-to-cart-btn");
-        // If checked:
-        if (addToCartBtn) {
-            console.log("TO-DO: Add product to cart.");
-        }
-
-        // MAIN PAGE - Product Items Cards
-        // Check if require to add product to cart
-        // (if the clicked element or any of its parent elements
-        // have the class "product-item__content_price-btn")
-        let currentElement = target;
-        while (
-            currentElement !== null &&
-            !currentElement.classList.contains(
-                "product-item__content_price-btn"
-            )
-        ) {
-            currentElement = currentElement.parentElement;
-        }
-
-        if (currentElement !== null) {
-            console.log("Button clicked");
-            console.log("Button id: ", currentElement.id);
-            // Identify Product to put add to cart
-            const productIdToCart = this.getProdIdFromElementId(
-                currentElement.id
-            );
-            // TO-DO:
-            console.log(
-                `TO-DO: Add product with ID ${productIdToCart} to cart.`
-            );
+            this.handleGotoProductsBtn();
             return;
         }
 
-        // MAIN PAGE - Product Items Cards
-        // Action call: Render if product card clicked
-        // (Check if the clicked element or any of its parent elements have the class "product-item")
-        currentElement = target;
-        while (
-            currentElement !== null &&
-            !currentElement.classList.contains("product-item")
-        ) {
-            currentElement = currentElement.parentElement;
+        // "Add to Cart" button at detailed product card (page)
+        const addToCartBtn = target.closest(".product-card__add-to-cart-btn");
+        if (addToCartBtn) {
+            this.handleAddToCartBtn();
+            return;
         }
 
-        if (currentElement !== null) {
-            console.log("Clicked inside product item");
-            console.log("currentElement class: ", currentElement.classList);
-            // Identify Product to display / render card
-            const productIdToDisplay = this.getProdIdFromElementId(
-                currentElement.id
-            );
-            console.log("Product ID to display: ", productIdToDisplay);
-            const productToDisplay =
-                this.getProductObjectById(productIdToDisplay);
-            this.renderProductCard(productToDisplay);
+        // "Add to Cart" button at short product card (main page)
+        const priceBtnElement = this.findAncestorByClass(
+            target,
+            "product-item__content_price-btn"
+        );
+        if (priceBtnElement) {
+            this.handlePriceBtn(priceBtnElement);
+            return;
+        }
+
+        // Product card as "button" at main page
+        const productItemElement = this.findAncestorByClass(
+            target,
+            "product-item"
+        );
+        if (productItemElement) {
+            this.handleProductItem(productItemElement);
         }
     };
 
@@ -357,33 +408,33 @@ export class Controller {
         // console.log("clicked element with class: ", target.classList);
         // console.log("clicked element with ID: ", target.id);
 
+        // Product card as "button" at right panel
         if (target.classList.contains("cart-link-btn")) {
-            console.log(
-                "Received command to display PRODUCT CARD with ID: ",
-                target.id
-            );
+            this.handleProductItem(target);
         }
 
+        // History order number as "button" at right panel
         if (target.classList.contains("order-number-btn")) {
-            console.log(
-                "Received command to display ORDER with ID: ",
-                target.id
-            );
+            this.handleDisplayHistoricalOrder(target);
         }
 
-        // TO-DO
-        // Display CART button (from right panel)
-        // Get the closest parent with specific class name
-        const addToCartBtn = target.closest(".cart-goto-btn");
-        // If checked:
-        if (addToCartBtn) {
-            console.log("Received command to display CART.");
-            this.renderCartSummary(sessionIdCart);
+        // "Go to cart" button at right panel
+        const goToCartBtn = this.findAncestorByClass(target, "cart-goto-btn");
+        // Alternative command:
+        // const goToCartBtn = target.closest(".cart-goto-btn");
+        if (goToCartBtn) {
+            this.handleGotoCartBtn(sessionIdCart);
         }
 
-        // if (target.classList.contains("")) {
-        //     console.log("clicked element with class: ", target.classList)
-        // }
+        // "Proceed to checkout" button at right panel
+        const proceedToCheckoutBtn = this.findAncestorByClass(
+            target,
+            "cart-checkout-btn"
+        );
+        if (proceedToCheckoutBtn) {
+            // TO-DO
+            this.handleProceedToCheckoutBtn();
+        }
     };
 
     attachEventListenrs = () => {
