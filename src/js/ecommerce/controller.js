@@ -206,7 +206,7 @@ export class Controller {
     getProductObjectById = (productId) => {
         // Filter product array => single object array
         const filteredArray = dataBase.productItems.filter(
-            (product) => product.docId === productId
+            (product) => product.itemId === productId
         );
         // return object
         return filteredArray[0];
@@ -234,9 +234,9 @@ export class Controller {
     };
 
     // Left Container - Render Order CART
-    renderCartSummary = (productObject) => {
+    renderCartSummary = (sessionIdCart) => {
         const productCardForCartHTML =
-            this.viewCart.createProductCardForCart(productObject);
+            this.viewCart.createCartPage(sessionIdCart);
         this.clearContainerLeft();
         this.containerLeftNode.appendChild(productCardForCartHTML);
     };
@@ -378,7 +378,7 @@ export class Controller {
         // If checked:
         if (addToCartBtn) {
             console.log("Received command to display CART.");
-            this.renderCartSummary(dataBase.productItems[0]);
+            this.renderCartSummary(sessionIdCart);
         }
 
         // if (target.classList.contains("")) {

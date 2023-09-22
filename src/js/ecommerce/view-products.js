@@ -16,7 +16,7 @@ export class ViewProducts {
         // Create elements
         const productItemDiv = document.createElement("div");
         productItemDiv.classList = "product-item";
-        productItemDiv.id = `product-card_${productObject.docId}`;
+        productItemDiv.id = `product-card_${productObject.itemId}`;
 
         const image = document.createElement("img");
         image.classList = "product-item__img";
@@ -42,7 +42,7 @@ export class ViewProducts {
 
         const priceBtn = document.createElement("button");
         priceBtn.classList = "product-item__content_price-btn";
-        priceBtn.id = `product-btn_${productObject.docId}`;
+        priceBtn.id = `product-btn_${productObject.itemId}`;
 
         const priceBtnImg = document.createElement("img");
         priceBtnImg.classList = "product-item__content_price-btn-img";
@@ -88,10 +88,12 @@ export class ViewProducts {
     };
 
     createDetailedProductCard = (productObject) => {
+        console.log("productObject: ", productObject);
+
         // Create elements
         const productCardMain = document.createElement("div");
         productCardMain.classList = "product-card";
-        productCardMain.id = `prodCard_${productObject.docId}`;
+        productCardMain.id = `prodCard_${productObject.itemId}`;
 
         const goBackBtn = document.createElement("button");
         goBackBtn.classList = "goto-products-btn";

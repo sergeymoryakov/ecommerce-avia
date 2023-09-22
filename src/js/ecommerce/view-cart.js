@@ -108,7 +108,7 @@ export class ViewCart {
         const productCardMain = document.createElement("div");
         productCardMain.classList = "cart-item";
         // TO-DO : verify if "itemId" is better to use instead of "docId" here:
-        productCardMain.id = `cart-item_${productObject.docId}`;
+        productCardMain.id = `cart-item_${productObject.itemId}`;
 
         const cardImageWrapper = document.createElement("div");
         cardImageWrapper.classList = "cart-item__img-wrapper";
@@ -235,19 +235,41 @@ export class ViewCart {
         console.log("productCardMain: ", productCardMain);
 
         return productCardMain;
+    };
+    // To-DO items:
+    createCartPage = (sessionCart) => {
+        const cartWrapper = document.createElement("div");
+        cartWrapper.classList = "product-card";
 
-        // To-DO items:
-        createCartPage = () => {
-            const CartWrapper = document.createElement("div");
-            CartWrapper.classList = "product-card";
-            // CartWrapper.id = `prodCard_${productObject.docId}`;
+        const goBackBtn = document.createElement("button");
+        goBackBtn.classList = "goto-products-btn";
+        goBackBtn.innerText = "< Back to Products";
 
-            const goBackBtn = document.createElement("button");
-            goBackBtn.classList = "goto-products-btn";
-            goBackBtn.innerText = "< Back to Products";
+        const cartTitle = document.createElement("h2");
+        cartTitle.innerText = "Cart";
 
-            const cartTitle = document.createElement("h2");
-            cartTitle.innerText = "Cart";
-        };
+        const cartItemsWrapper = document.createElement("div");
+        cartItemsWrapper.classList = "cart-items-wrapper";
+
+        for (const productItem of sessionCart) {
+            console.log(
+                "productItem to pass to getProductObjectById() function: ",
+                productItem
+            );
+            console.log("productItem.itemID: ", productItem.itemId);
+            const productData = this.controller.getProductObjectById(
+                productItem.itemId
+            );
+            console.log("productData: ", productData);
+            cartItemsWrapper.appendChild(
+                this.createProductCardForCart(productData)
+            );
+        }
+
+        cartWrapper.appendChild(goBackBtn);
+        cartWrapper.appendChild(cartTitle);
+        cartWrapper.appendChild(cartItemsWrapper);
+
+        return cartWrapper;
     };
 }
