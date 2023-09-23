@@ -7,7 +7,7 @@ import { ModelFirebase } from "../common/model-firebase.js";
 import { ModelProducts } from "./model-products.js";
 import { ModelCart } from "./model-cart.js";
 import { ModelOrders } from "./model-orders.js";
-import { ModelAdmin } from "./model-admin.js";
+import { ModelUser } from "./model-user.js";
 
 // Import random ID generator
 import { v4 as uuidv4 } from "uuid";
@@ -19,14 +19,16 @@ import { dbCollectionNames } from "../common/constants.js";
 let dataBase = {};
 
 // Init current session personal variables:
-let sessionId = "";
+let sessionIdNumber = "";
+let sessionIdUser = {};
+let sessionIdCustomer = {};
+let sessionIdOrders = {};
 let sessionIdCart = {};
 let sessionIdCartPrice = {
     items: 800000,
     handling: 8000,
     total: 808000,
 };
-let sessionIdOrders = {};
 
 // Init HTML variables:
 const productsList = document.createElement("div");
@@ -50,7 +52,7 @@ export class Controller {
         this.modelProducts = new ModelProducts();
         this.modelCart = new ModelCart();
         this.modelOrders = new ModelOrders();
-        this.modelAdmin = new ModelAdmin();
+        this.modelUser = new ModelUser();
 
         this.containerLeftNode = document.getElementById("containerLeft");
         this.containerRightNode = document.getElementById("containerRight");
@@ -67,7 +69,7 @@ export class Controller {
         this.modelProducts.checkModuleLinkage();
         this.modelCart.checkModuleLinkage();
         this.modelOrders.checkModuleLinkage();
-        this.modelAdmin.checkModuleLinkage();
+        this.modelUser.checkModuleLinkage();
 
         // Get data from database (Firebase) and keep in dataBase{}
         console.log(
@@ -79,7 +81,7 @@ export class Controller {
                 collectionName
             );
             console.log(
-                `dataBase.${collectionName}: `,
+                `[*** dataBase.${collectionName} ***] :`,
                 dataBase[collectionName]
             );
         }
@@ -106,15 +108,26 @@ export class Controller {
         // FOR TEST AND TBS - REMOVE IN PROD:
         // console.log("imageLinksMap: ", imageLinksMap);
 
-        // Assign to sessionId a first ID from DB
-        sessionId = dataBase.usersData[0].userId;
-        console.log("Assigned to sessionId: ", sessionId);
+        // Assign to sessionIdNumber a first ID from DB (usersData[0])
+        sessionIdNumber = dataBase.usersData[0].userId;
+        console.log("Assigned to [*** sessionIdNumber ***]: ", sessionIdNumber);
+
+        // Assign to sessionIdUser a first element of the usersData[0]
+        sessionIdUser = dataBase.usersData[0];
+        console.log("[*** sessionIdUser ***] initiated: ", sessionIdUser);
+
+        // Get sessionIdCustomer data by customer's ID
+        this.getSessionIdCustomerData();
+        console.log(
+            "[*** sessionIdCustomer ***] initiated: ",
+            sessionIdCustomer
+        );
 
         // Alert - Popup inform the test name usage
         // This section was updated during last commit but failed to deploy
         // ACTION NEEDED: UNCOMMENT BELOW FOR PRODUCTION:
         // confirm(
-        //     `Hi there, this application was set for demonstration purpose, therefore a User ID ${sessionId} was assigned for this session. Fake Name, Lastname, and other user properties are generated for practice purpose only. Should you wish to use this application and/or customize it fo the purpose of your business please reach out to the developer at seppo.gigital@gmail.com.`
+        //     `Hi there, this application was set for demonstration purpose, therefore a User ID ${sessionIdNumber} was assigned for this session. Fake Name, Lastname, and other user properties are generated for practice purpose only. Should you wish to use this application and/or customize it fo the purpose of your business please reach out to the developer at seppo.gigital@gmail.com.`
         // );
 
         // Left Container - Render product items
@@ -122,39 +135,31 @@ export class Controller {
 
         // Get values to Sesstion Variables: 1-2
         // 1. Get cart items by sesstion user ID:
-        sessionIdCart = this.getCartItemsByUserID(sessionId);
+        sessionIdCart = this.getCartItemsByUserID(sessionIdNumber);
         console.log(
-            `Cart items (sessionIdCart) for User ID ${sessionId}: `,
+            `Cart items [*** sessionIdCart ***] for User ID ${sessionIdNumber}: `,
             sessionIdCart
         );
 
         // 2. Get orders list by user ID:
-        sessionIdOrders = this.getOrdersByUserID(sessionId);
+        sessionIdOrders = this.getOrdersByUserID(sessionIdNumber);
         console.log(
-            `Orders History (sessionIdOrders) for User ID ${sessionId}: `,
+            `Orders History [*** sessionIdOrders ***] for User ID ${sessionIdNumber}: `,
             sessionIdOrders
         );
 
         // Right Container - Render Cart Summary
         this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
 
-        // Right Container - Render Cart Title
-
-        // Right Container - Render Cart Icons
-
-        // Right Container - Render Go-To-Cart Button
-
-        // Right Container - Render Orders Title
-
-        // Right Container - Render Order Links
-
-        // Attach Event Listeners (Products)
-        // Attach Event Listeners (Cart Icons)
-        // Attach Event Listeners (Order Links)
-
-        // TEST & TBS ITEMS
-
         this.attachEventListenrs();
+    };
+
+    // Get sessionIdCustomer data by customer's ID
+    getSessionIdCustomerData = () => {
+        sessionIdCustomer = this.modelUser.getSessionIdCustomerByCustomerId(
+            sessionIdUser.custId,
+            dataBase.customersData
+        );
     };
 
     // Clear container
@@ -183,13 +188,15 @@ export class Controller {
         return imageLinksMap.get(imageName);
     };
 
-    getCartItemsByUserID = (sessionId) => {
-        return dataBase.cartsData.filter((order) => order.userId === sessionId);
+    getCartItemsByUserID = (sessionIdNumber) => {
+        return dataBase.cartsData.filter(
+            (order) => order.userId === sessionIdNumber
+        );
     };
 
-    getOrdersByUserID = (sessionId) => {
+    getOrdersByUserID = (sessionIdNumber) => {
         return dataBase.ordersData.filter(
-            (order) => order.userId === sessionId
+            (order) => order.userId === sessionIdNumber
         );
     };
 
@@ -331,6 +338,13 @@ export class Controller {
     // "Go to Cart" button at right panel
     handleGotoCartBtn = () => {
         console.log("Received command to display CART.");
+        // TEST-TBD
+        this.modelCart.updateCartPriceVariable(
+            sessionIdCart,
+            sessionIdCartPrice,
+            dataBase.productItems,
+            sessionIdCustomer.custHandlingFee
+        );
         this.renderCartSummary(sessionIdCart);
         this.renderCartSummaryWithPrice(sessionIdCart, sessionIdCartPrice);
     };
@@ -367,7 +381,39 @@ export class Controller {
         console.log("Received command to display ORDER with ID: ", element.id);
     };
 
-    handleButtonsClickLeft = (event) => {
+    handleQtyDeductBtn = (element, sessionIdCard) => {
+        console.log(
+            "Received command to deduct qty of product with ID: ",
+            element.id
+        );
+        const itemId = this.getProdIdFromElementId(element.id);
+        console.log("itemId: ", itemId);
+        sessionIdCard = this.modelCart.changeQtyInCart(
+            sessionIdCart,
+            itemId,
+            -1
+        );
+        console.log("sessionIdCard: ", sessionIdCard);
+        this.handleGotoCartBtn();
+    };
+
+    handleQtyAddBtn = (element, sessionIdCard) => {
+        console.log(
+            "Received command to add qty of product with ID: ",
+            element.id
+        );
+        const itemId = this.getProdIdFromElementId(element.id);
+        console.log("itemId: ", itemId);
+        sessionIdCard = this.modelCart.changeQtyInCart(
+            sessionIdCart,
+            itemId,
+            1
+        );
+        console.log("sessionIdCard: ", sessionIdCard);
+        this.handleGotoCartBtn();
+    };
+
+    handleButtonsClickLeft = (event, sessionIdCard) => {
         const target = event.target;
 
         // "< Back to Products" button
@@ -400,6 +446,18 @@ export class Controller {
         );
         if (productItemElement) {
             this.handleProductItem(productItemElement);
+        }
+
+        // Qty deduct button at Cart page
+        if (target.classList.contains("cart-element__qty-mod_deduct-btn")) {
+            this.handleQtyDeductBtn(target, sessionIdCard);
+            return;
+        }
+
+        // Qty add button at Cart page
+        if (target.classList.contains("cart-element__qty-mod_add-btn")) {
+            this.handleQtyAddBtn(target, sessionIdCard);
+            return;
         }
     };
 

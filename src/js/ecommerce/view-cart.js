@@ -161,7 +161,7 @@ export class ViewCart {
         cartSummaryBlock.appendChild(cartTotalAmount);
         cartSummaryBlock.appendChild(button);
 
-        // TEST-TBS - REMOVE FO PROD
+        // TEST-TBS - REMOVE FOR PROD
         // console.log("cartSummaryBlock: ", cartSummaryBlock);
 
         return cartSummaryBlock;
@@ -169,7 +169,7 @@ export class ViewCart {
 
     // Left Container - Create Product Item Card block
 
-    createProductCardForCart = (productObject) => {
+    createProductCardForCart = (productObject, qtyInCart) => {
         // Create elements
         const productCardMain = document.createElement("div");
         productCardMain.classList = "cart-item";
@@ -245,22 +245,25 @@ export class ViewCart {
 
         const priceElement = document.createElement("h3");
         priceElement.classList = "cart-item__product-price";
-        priceElement.textContent = `${productObject.itemCurrency} ${productObject.itemPrice} x ${productObject.itemQty}`;
+        priceElement.textContent = `${productObject.itemCurrency} ${productObject.itemPrice} x ${qtyInCart}`;
 
         const qtyModifierWrapper = document.createElement("div");
         qtyModifierWrapper.classList = "cart-element__qty-mod_wrapper";
+        qtyModifierWrapper.id = `qty-mod_${productObject.itemId}`;
 
         const qtyModifierDeductBtn = document.createElement("button");
         qtyModifierDeductBtn.classList = "cart-element__qty-mod_deduct-btn";
         qtyModifierDeductBtn.innerText = " - ";
+        qtyModifierDeductBtn.id = `qty-deduct-btn_${productObject.itemId}`;
 
         const qtyModifierIndicator = document.createElement("button");
         qtyModifierIndicator.classList = "cart-element__qty-mod_qty";
-        qtyModifierIndicator.innerText = productObject.itemQty;
+        qtyModifierIndicator.innerText = qtyInCart;
 
         const qtyModifierAddBtn = document.createElement("button");
         qtyModifierAddBtn.classList = "cart-element__qty-mod_add-btn";
         qtyModifierAddBtn.innerText = " + ";
+        qtyModifierAddBtn.id = `qty-add-btn_${productObject.itemId}`;
 
         // Assembly HTML code:
 
@@ -298,7 +301,7 @@ export class ViewCart {
         productCardMain.appendChild(cardImageWrapper);
         productCardMain.appendChild(cardSummaryWrapper);
 
-        console.log("productCardMain: ", productCardMain);
+        // console.log("productCardMain: ", productCardMain);
 
         return productCardMain;
     };
@@ -328,7 +331,7 @@ export class ViewCart {
             );
             // console.log("productData: ", productData);
             cartItemsWrapper.appendChild(
-                this.createProductCardForCart(productData)
+                this.createProductCardForCart(productData, productItem.qty)
             );
         }
 
