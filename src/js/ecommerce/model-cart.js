@@ -57,4 +57,22 @@ export class ModelCart {
         }
         return sessionIdCart;
     };
+
+    // Add new product to cart:
+    addProductToCart = (sessionIdCart, itemId, userId) => {
+        // TO-DO: Check if ID is already in cart - add qty then
+
+        const newCartElement = {
+            docId: this.controller.handleNewIdGeneration(),
+            itemId: itemId,
+            qty: 1,
+            userId: userId,
+        };
+
+        console.log("a newCartElement: ", newCartElement);
+        sessionIdCart.push(newCartElement);
+        console.log("an updated [*** sessionIdCart ***]: ", sessionIdCart);
+
+        return sessionIdCart;
+    };
 }

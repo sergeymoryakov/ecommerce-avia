@@ -161,9 +161,9 @@ export class ViewProducts {
 
         const addToCartBtn = document.createElement("button");
         addToCartBtn.classList = "product-card__add-to-cart-btn";
+        addToCartBtn.id = `add-to-cart-btn_${productObject.itemId}`;
 
         const addToCartBtnImg = document.createElement("img");
-        // addToCartBtnImg.classList = "product-item__content_price-btn-img";
         addToCartBtnImg.src = iconAddOrder;
         addToCartBtnImg.alt = "Select";
 

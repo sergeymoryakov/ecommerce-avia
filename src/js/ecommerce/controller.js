@@ -154,6 +154,11 @@ export class Controller {
         this.attachEventListenrs();
     };
 
+    // Generate unique ID
+    handleNewIdGeneration = () => {
+        return this.modelFirebase.generateUniqueId();
+    };
+
     // Get sessionIdCustomer data by customer's ID
     getSessionIdCustomerData = () => {
         sessionIdCustomer = this.modelUser.getSessionIdCustomerByCustomerId(
@@ -331,8 +336,17 @@ export class Controller {
     };
 
     // "Add to Cart" button at detailed product card (page)
-    handleAddToCartBtn = () => {
-        console.log("TO-DO: Add product to cart.");
+    handleAddToCartBtn = (element) => {
+        console.log("TO-DO: Add product to cart.", element.id);
+        const productIdToCart = this.getProdIdFromElementId(element.id);
+        console.log(`TO-DO: Add product with ID ${productIdToCart} to cart.`);
+
+        sessionIdCart = this.modelCart.addProductToCart(
+            sessionIdCart,
+            productIdToCart,
+            sessionIdNumber
+        );
+        this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
     };
 
     // "Go to Cart" button at right panel
@@ -352,14 +366,6 @@ export class Controller {
     // "Proceed to checkout" button at right panel
     handleProceedToCheckoutBtn = () => {
         console.log("Received command PROCEED TO CHECKOUT");
-    };
-
-    // "Add to Cart" button at short product card (main page)
-    handlePriceBtn = (element) => {
-        console.log("Button clicked");
-        console.log("Button id: ", element.id);
-        const productIdToCart = this.getProdIdFromElementId(element.id);
-        console.log(`TO-DO: Add product with ID ${productIdToCart} to cart.`);
     };
 
     // Product card as "button" at main page
@@ -428,7 +434,7 @@ export class Controller {
         // "Add to Cart" button at detailed product card (page)
         const addToCartBtn = target.closest(".product-card__add-to-cart-btn");
         if (addToCartBtn) {
-            this.handleAddToCartBtn();
+            this.handleAddToCartBtn(addToCartBtn);
             return;
         }
 
@@ -438,7 +444,7 @@ export class Controller {
             "product-item__content_price-btn"
         );
         if (priceBtnElement) {
-            this.handlePriceBtn(priceBtnElement);
+            this.handleAddToCartBtn(priceBtnElement);
             return;
         }
 

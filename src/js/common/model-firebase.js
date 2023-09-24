@@ -20,6 +20,9 @@ import {
 // FOR TEST AND TBS - ADD STORAGE FOR IMAGES
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
+// Import random ID generator
+import { v4 as uuidv4 } from "uuid";
+
 // FOR TEST & TBS INITIATE CONFIG / FOR PROD MOVE TO CONST FILE
 const firebaseConfig = {
     apiKey: "AIzaSyAaafzn29XLZBor7sXmsi3PMDsg_cxcakk",
@@ -52,6 +55,11 @@ export class ModelFirebase {
     constructor() {}
     checkModuleLinkage = () => {
         console.log("HELLO, ModelFirebase is connected!");
+    };
+
+    // Generate unique ID
+    generateUniqueId = () => {
+        return uuidv4();
     };
 
     get = async (collectionName) => {
