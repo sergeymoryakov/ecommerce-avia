@@ -114,6 +114,7 @@ export class ViewCart {
 
         const totalAmount = document.createElement("p");
         totalAmount.classList = "cart-total-amount";
+        totalAmount.id = "cart-total-amount";
         totalAmount.innerText = `Total: $${sessionIdCartPrice.total}`;
 
         wrapper.appendChild(totalAmount);
@@ -245,7 +246,8 @@ export class ViewCart {
 
         const priceElement = document.createElement("h3");
         priceElement.classList = "cart-item__product-price";
-        priceElement.textContent = `${productObject.itemCurrency} ${productObject.itemPrice} x ${qtyInCart}`;
+        priceElement.setAttribute("data-price-qty-id", productObject.itemId);
+        priceElement.innerText = `${productObject.itemCurrency} ${productObject.itemPrice} x ${qtyInCart}`;
 
         const qtyModifierWrapper = document.createElement("div");
         qtyModifierWrapper.classList = "cart-element__qty-mod_wrapper";
@@ -256,8 +258,9 @@ export class ViewCart {
         qtyModifierDeductBtn.innerText = " - ";
         qtyModifierDeductBtn.id = `qty-deduct-btn_${productObject.itemId}`;
 
-        const qtyModifierIndicator = document.createElement("button");
+        const qtyModifierIndicator = document.createElement("p");
         qtyModifierIndicator.classList = "cart-element__qty-mod_qty";
+        qtyModifierIndicator.id = `qty-indicator_${productObject.itemId}`;
         qtyModifierIndicator.innerText = qtyInCart;
 
         const qtyModifierAddBtn = document.createElement("button");
@@ -340,5 +343,31 @@ export class ViewCart {
         cartWrapper.appendChild(cartItemsWrapper);
 
         return cartWrapper;
+    };
+
+    updatePartQuantity = (productObject, newQty) => {
+        // Find "price x qty" element by attribute:
+        const priceQtyElement = document.querySelector(
+            `[data-price-qty-id="${productObject.itemId}"]`
+        );
+        if (priceQtyElement) {
+            priceQtyElement.innerText = `${productObject.itemCurrency} ${productObject.itemPrice} x ${newQty}`;
+        }
+
+        // Find "qty indicator" element by id:
+        const qtyIndicator = document.getElementById(
+            `qty-indicator_${productObject.itemId}`
+        );
+        if (qtyIndicator) {
+            qtyIndicator.innerText = newQty;
+        }
+    };
+
+    updateTotalPrice = (newPrice) => {
+        // Find "Total price" element by ID
+        const totalPriceElement = document.getElementById("cart-total-amount");
+        if (totalPriceElement) {
+            totalPriceElement.innerText = `Total: $${newPrice}`;
+        }
     };
 }

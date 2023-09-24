@@ -50,7 +50,7 @@ export class Controller {
         this.viewSuperadmin = new ViewSuperadmin();
         this.modelFirebase = new ModelFirebase();
         this.modelProducts = new ModelProducts();
-        this.modelCart = new ModelCart();
+        this.modelCart = new ModelCart(this);
         this.modelOrders = new ModelOrders();
         this.modelUser = new ModelUser();
 
@@ -381,36 +381,39 @@ export class Controller {
         console.log("Received command to display ORDER with ID: ", element.id);
     };
 
-    handleQtyDeductBtn = (element, sessionIdCard) => {
+    handleQtyChangeBtn = (elementDOM, sessionIdCard, changeValue) => {
         console.log(
             "Received command to deduct qty of product with ID: ",
-            element.id
+            elementDOM.id
         );
-        const itemId = this.getProdIdFromElementId(element.id);
+        const itemId = this.getProdIdFromElementId(elementDOM.id);
         console.log("itemId: ", itemId);
         sessionIdCard = this.modelCart.changeQtyInCart(
             sessionIdCart,
             itemId,
-            -1
+            changeValue
         );
         console.log("sessionIdCard: ", sessionIdCard);
-        this.handleGotoCartBtn();
+        sessionIdCartPrice = this.modelCart.updateCartPriceVariable(
+            sessionIdCart,
+            sessionIdCartPrice,
+            dataBase.productItems,
+            sessionIdCustomer.custHandlingFee
+        );
+        // this.handleGotoCartBtn();
     };
 
-    handleQtyAddBtn = (element, sessionIdCard) => {
-        console.log(
-            "Received command to add qty of product with ID: ",
-            element.id
-        );
-        const itemId = this.getProdIdFromElementId(element.id);
-        console.log("itemId: ", itemId);
-        sessionIdCard = this.modelCart.changeQtyInCart(
-            sessionIdCart,
-            itemId,
-            1
-        );
-        console.log("sessionIdCard: ", sessionIdCard);
-        this.handleGotoCartBtn();
+    handleViewOfPartQty = (itemId, newQty) => {
+        console.log("Got comand to update product qty with:");
+        console.log("Product ID: ", itemId);
+        console.log("New QTY: ", newQty);
+
+        const productObject = this.getProductObjectById(itemId);
+        this.viewCart.updatePartQuantity(productObject, newQty);
+    };
+
+    handleViewOfTotalPrceInCart = (newPrice) => {
+        this.viewCart.updateTotalPrice(newPrice);
     };
 
     handleButtonsClickLeft = (event, sessionIdCard) => {
@@ -450,13 +453,13 @@ export class Controller {
 
         // Qty deduct button at Cart page
         if (target.classList.contains("cart-element__qty-mod_deduct-btn")) {
-            this.handleQtyDeductBtn(target, sessionIdCard);
+            this.handleQtyChangeBtn(target, sessionIdCard, -1);
             return;
         }
 
         // Qty add button at Cart page
         if (target.classList.contains("cart-element__qty-mod_add-btn")) {
-            this.handleQtyAddBtn(target, sessionIdCard);
+            this.handleQtyChangeBtn(target, sessionIdCard, 1);
             return;
         }
     };

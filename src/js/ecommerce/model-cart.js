@@ -1,5 +1,7 @@
 export class ModelCart {
-    constructor() {}
+    constructor(controller) {
+        this.controller = controller;
+    }
     checkModuleLinkage = () => {
         console.log("HELLO, ModelCart is connected!");
     };
@@ -33,6 +35,8 @@ export class ModelCart {
         sessionIdCartPrice.total = newItemsPrice + newHandlingFee;
 
         console.log("new sessionIdCartPrice: ", sessionIdCartPrice);
+
+        this.controller.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
         return sessionIdCartPrice;
     };
 
@@ -41,11 +45,13 @@ export class ModelCart {
             if (product.itemId === itemId) {
                 if (product.qty + adder <= 0) {
                     confirm("Hi there, do you like to delete item from cart?");
+                    // TO-DO: delete product from cart
                     console.log(
                         `ACTION NEEDED: DELETE PRODUCT WITH ID ${product.itemId} FROM CART.`
                     );
                 } else {
                     product.qty += adder;
+                    this.controller.handleViewOfPartQty(itemId, product.qty);
                 }
             }
         }
