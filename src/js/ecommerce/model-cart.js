@@ -76,6 +76,7 @@ export class ModelCart {
                             docId
                         );
                     this.controller.renderCartSummary(sessionIdCart);
+                    this.controller.handleViewOfTotalPrceInCart();
                 }
             }
         }
