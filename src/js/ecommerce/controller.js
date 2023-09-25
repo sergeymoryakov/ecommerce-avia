@@ -15,7 +15,7 @@ import { dbCollectionNames } from "../common/constants.js";
 // Init database instance (dataBase):
 let dataBase = {};
 
-// Init current session personal variables:
+// Initiate CURRENT SESSION VARIABLES:
 let sessionIdNumber = "";
 let sessionIdUser = {};
 let sessionIdCustomer = {};
@@ -105,45 +105,44 @@ export class Controller {
         // FOR TEST AND TBS - REMOVE IN PROD:
         // console.log("imageLinksMap: ", imageLinksMap);
 
-        // Assign to sessionIdNumber a first ID from DB (usersData[0])
+        // Assign to sessionIdNumber a userId of the first user object/document from DB (usersData[0].userId)
         sessionIdNumber = dataBase.usersData[0].userId;
         console.log("Assigned to [*** sessionIdNumber ***]: ", sessionIdNumber);
 
-        // Assign to sessionIdUser a first element of the usersData[0]
+        // Assign to sessionIdUser a first object/document from DB (usersData[0])
         sessionIdUser = dataBase.usersData[0];
         console.log("[*** sessionIdUser ***] initiated: ", sessionIdUser);
 
-        // Get sessionIdCustomer data by customer's ID
-        this.getSessionIdCustomerData();
+        // Assign to sessionIdCustomer an object/document associated with sesstionIdUser (by userId)
+        sessionIdCustomer = this.getSessionIdCustomerData();
         console.log(
             "[*** sessionIdCustomer ***] initiated: ",
             sessionIdCustomer
         );
 
-        // Alert - Popup inform the test name usage
-        // This section was updated during last commit but failed to deploy
-        // ACTION NEEDED: UNCOMMENT BELOW FOR PRODUCTION:
-        // confirm(
-        //     `Hi there, this application was set for demonstration purpose, therefore a User ID ${sessionIdNumber} was assigned for this session. Fake Name, Lastname, and other user properties are generated for practice purpose only. Should you wish to use this application and/or customize it fo the purpose of your business please reach out to the developer at seppo.gigital@gmail.com.`
-        // );
-
-        // Left Container - Render product items
-        this.renderProductItemsList(dataBase.productItems);
-
-        // Get values to Sesstion Variables: 1-2
-        // 1. Get cart items by sesstion user ID:
+        // Get values to CURRENT SESSION VARIABLES
+        // 1. Set "sessionIdCart" by sesstion's userId (sessionIdNumber):
         sessionIdCart = this.getCartItemsByUserID(sessionIdNumber);
         console.log(
             `Cart items [*** sessionIdCart ***] for User ID ${sessionIdNumber}: `,
             sessionIdCart
         );
 
-        // 2. Get orders list by user ID:
+        // 2. Set "sessionIdOrders" by sesstion's userId (sessionIdNumber):
         sessionIdOrders = this.getOrdersByUserID(sessionIdNumber);
         console.log(
             `Orders History [*** sessionIdOrders ***] for User ID ${sessionIdNumber}: `,
             sessionIdOrders
         );
+
+        // ALERT - POPOUP DISCLAMER
+        // *** ACTION NEEDED ***: UNCOMMENT FOR PROD
+        // confirm(
+        //     `Hi there, this application was set for demonstration purpose, therefore a User ID ${sessionIdNumber} was assigned for this session. Fake Name, Lastname, and other user properties are generated for practice purpose only. Should you wish to use this application and/or customize it fo the purpose of your business please reach out to the developer at seppo.gigital@gmail.com.`
+        // );
+
+        // Left Container - Render product items
+        this.renderProductItemsList(dataBase.productItems);
 
         // Right Container - Render Cart Summary
         this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
@@ -153,28 +152,7 @@ export class Controller {
         // TEST-TBS ONLY:
     };
 
-    // Generate unique ID
-    handleNewIdGeneration = () => {
-        return this.modelFirebase.generateUniqueId();
-    };
-
-    // Get sessionIdCustomer data by customer's ID
-    getSessionIdCustomerData = () => {
-        sessionIdCustomer = this.modelUser.getSessionIdCustomerByCustomerId(
-            sessionIdUser.custId,
-            dataBase.customersData
-        );
-    };
-
-    // Clear container
-    clearContainerLeft = () => {
-        this.containerLeftNode.innerHTML = "";
-    };
-
-    clearContainerRight = () => {
-        this.containerRightNode.innerHTML = "";
-    };
-
+    // TO-DO: check where it is used?
     askForImageUrlFromStorage = async (imageName) => {
         const imageURL = await this.modelFirebase
             .getLinkToImage(imageName)
@@ -186,6 +164,20 @@ export class Controller {
                 console.log("Error getting download URL: ", error);
             });
         console.log("imageURL: ", imageURL);
+    };
+
+    // Generate unique ID
+    handleNewIdGeneration = () => {
+        return this.modelFirebase.generateUniqueId();
+    };
+
+    // Clear container
+    clearContainerLeft = () => {
+        this.containerLeftNode.innerHTML = "";
+    };
+
+    clearContainerRight = () => {
+        this.containerRightNode.innerHTML = "";
     };
 
     deleteObjectFromArrayByDocId = (arrayData, docId) => {
@@ -200,16 +192,28 @@ export class Controller {
         return arrayData;
     };
 
+    // Assign to sessionIdCustomer an object/document associated with sesstionIdUser (by userId)
+    getSessionIdCustomerData = () => {
+        sessionIdCustomer = this.modelUser.getSessionIdCustomerByCustomerId(
+            sessionIdUser.custId,
+            dataBase.customersData
+        );
+        return sessionIdCustomer;
+    };
+
+    // Revert back from map an image URL by image name
     getUrlByNameLocal = (imageName) => {
         return imageLinksMap.get(imageName);
     };
 
+    // Set "sessionIdCart" by sesstion's userId (sessionIdNumber):
     getCartItemsByUserID = (sessionIdNumber) => {
         return dataBase.cartsData.filter(
             (order) => order.userId === sessionIdNumber
         );
     };
 
+    // Set "sessionIdOrders" by sesstion's userId (sessionIdNumber):
     getOrdersByUserID = (sessionIdNumber) => {
         return dataBase.ordersData.filter(
             (order) => order.userId === sessionIdNumber
@@ -231,11 +235,15 @@ export class Controller {
         return idString.split("_")[1];
     };
 
+    // Get product/object from "dataBase.productItems" product ID (itemId):
     getProductObjectById = (productId) => {
         // Filter product array => single object array
         const filteredArray = dataBase.productItems.filter(
             (product) => product.itemId === productId
         );
+        if (filteredArray.length === 0) {
+            return null;
+        }
         // return object
         return filteredArray[0];
     };
@@ -250,6 +258,137 @@ export class Controller {
             return null;
         }
         return filteredArray[0].docId;
+    };
+
+    callToUpdateCartPriceVariable = () => {
+        console.log("Received command to call for Price Variable update");
+        // TEST-TBD
+        this.updateCartPriceVariable(
+            sessionIdCart,
+            sessionIdCartPrice,
+            dataBase.productItems,
+            sessionIdCustomer.custHandlingFee
+        );
+    };
+
+    // MIGHT BE A PART OF MODEL:
+    updateCartPriceVariable = (
+        sessionIdCart,
+        sessionIdCartPrice,
+        productItems,
+        handlingRate
+    ) => {
+        let newItemsPrice = 0;
+        let newHandlingFee = 0;
+
+        // TO-DO: CHECK, if it is required here. Delete for now:
+        console.log("MODEL - [*** sessionIdCart ***]: ", sessionIdCart);
+        console.log(
+            "MODEL - [*** sessionIdCartPrice ***]: ",
+            sessionIdCartPrice
+        );
+        console.log(
+            "MODEL - [*** dataBase.productItems ***]: ",
+            dataBase.productItems
+        );
+        console.log("MODEL - [*** sessionIdCustome ***]: ", sessionIdCustomer);
+
+        for (const item of sessionIdCart) {
+            newItemsPrice +=
+                item.qty *
+                this.modelCart.getPriceByProductId(productItems, item.itemId);
+        }
+
+        newHandlingFee = newItemsPrice * handlingRate;
+
+        sessionIdCartPrice.items = newItemsPrice;
+        sessionIdCartPrice.handling = newHandlingFee;
+        sessionIdCartPrice.total = newItemsPrice + newHandlingFee;
+
+        console.log("new sessionIdCartPrice: ", sessionIdCartPrice);
+
+        // TO-DO: CHECK, if it is required here. Delete for now:
+        // this.controller.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
+        return sessionIdCartPrice;
+    };
+
+    handleChangeQtyInCart = (sessionIdCart, itemId, adder) => {
+        // TEST-TBS REMOVE IN PROD
+        console.log("sessionIdCart: ", sessionIdCart);
+        for (const product of sessionIdCart) {
+            if (product.itemId === itemId) {
+                if (product.qty + adder > 0) {
+                    product.qty += adder;
+                    console.log(
+                        "MODEL: try to update in sessionIdCart a [*** product *** ]: ",
+                        product
+                    );
+                    this.handleUpdateDocInFirestore("cartsData", product);
+
+                    // TO-DO: CHECK, if it is required here. Delete for now:
+                    // console.log(
+                    //     "MODEL - [*** sessionIdCart ***]: ",
+                    //     sessionIdCart
+                    // );
+                    // console.log(
+                    //     "MODEL - [*** sessionIdCartPrice ***]: ",
+                    //     sessionIdCartPrice
+                    // );
+                    // console.log(
+                    //     "MODEL - [*** dataBase.productItems ***]: ",
+                    //     dataBase.productItems
+                    // );
+                    // console.log(
+                    //     "MODEL - [*** sessionIdCustome ***]: ",
+                    //     sessionIdCustomer
+                    // );
+
+                    // TO-DO: CHECK, if it is required here. Delete for now:
+                    this.callToUpdateCartPriceVariable();
+                    this.handleViewOfPartQty(itemId, product.qty);
+                } else {
+                    confirm("Hi there, do you like to delete item from cart?");
+                    // Get docId by itemId
+                    const docId = this.getDocIdFromArrayByItemId(
+                        sessionIdCart,
+                        itemId
+                    );
+                    console.log(
+                        `MODEL: TRY TO DELETE PRODUCT WITH DocID ${docId} from database.cartsData`
+                    );
+                    this.handleDeleteDocFromFirestore("cartsData", docId);
+                    // Delete object element with docId from array:
+                    sessionIdCart = this.deleteObjectFromArrayByDocId(
+                        sessionIdCart,
+                        docId
+                    );
+
+                    // TO-DO: CHECK, if it is required here. Delete for now:
+                    // console.log(
+                    //     "MODEL - [*** sessionIdCart ***]: ",
+                    //     sessionIdCart
+                    // );
+                    // console.log(
+                    //     "MODEL - [*** sessionIdCartPrice ***]: ",
+                    //     sessionIdCartPrice
+                    // );
+                    // console.log(
+                    //     "MODEL - [*** dataBase.productItems ***]: ",
+                    //     dataBase.productItems
+                    // );
+                    // console.log(
+                    //     "MODEL - [*** sessionIdCustome ***]: ",
+                    //     sessionIdCustomer
+                    // );
+
+                    this.callToUpdateCartPriceVariable();
+                    // TO-DO: CHECK, if it is required here. Delete for now:
+                    this.renderCartSummary(sessionIdCart);
+                }
+            }
+        }
+        this.handleViewOfTotalPrceInCart();
+        return sessionIdCart;
     };
 
     // Left Container - Render product items
@@ -277,18 +416,10 @@ export class Controller {
     renderCartSummary = (sessionIdCart) => {
         const productCardForCartHTML =
             this.viewCart.createCartPage(sessionIdCart);
+
         this.clearContainerLeft();
         this.containerLeftNode.appendChild(productCardForCartHTML);
     };
-
-    // TEST-TBS - REMOVE FOR PROD
-    // Left Container - Re-Render product Items
-    // returnRenderProductsList = () => {
-    //     // TEST-TBS - REMOVE FOR PROD
-    //     console.log("productsList: ", productsList.innerHTML);
-    //     this.clearContainerLeft();
-    //     this.containerLeftNode.appendChild(productsList);
-    // };
 
     // Right Container - Render Cart (no price) and Orders Summaries
     renderCartAndOrdersSummary = (sessionIdCart, sessionIdOrders) => {
@@ -355,7 +486,8 @@ export class Controller {
     // "< Back to Products" button
     handleGotoProductsBtn = () => {
         this.renderProductItemsList(dataBase.productItems);
-        this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
+        // TO-DO: CHECK, if it is required here. Delete for now:
+        // this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
     };
 
     // "Add to Cart" button at detailed product card (page)
@@ -375,7 +507,7 @@ export class Controller {
     handleGotoCartBtn = () => {
         console.log("Received command to display CART.");
         // TEST-TBD
-        this.modelCart.updateCartPriceVariable(
+        this.updateCartPriceVariable(
             sessionIdCart,
             sessionIdCartPrice,
             dataBase.productItems,
@@ -398,9 +530,12 @@ export class Controller {
         const productIdToDisplay = this.getProdIdFromElementId(element.id);
         const productToDisplay = this.getProductObjectById(productIdToDisplay);
         this.renderProductCard(productToDisplay);
-        this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
+
+        // TO-DO: CHECK, if it is required here. Delete for now:
+        // this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
     };
 
+    // TO-DO: Create ORDER POP UP:
     handleDisplayHistoricalOrder = (element) => {
         // TEST-TBS REMOVE IN PROD
         console.log("Display ORDER with ID: ", element.id);
@@ -408,26 +543,30 @@ export class Controller {
 
     handleQtyChangeBtn = (elementDOM, sessionIdCart, changeValue) => {
         // TEST-TBS REMOVE IN PROD
-        console.log("Deduct qty for product ID: ", elementDOM.id);
-        console.log("sessionIdCart: ", sessionIdCart);
+        console.log(
+            `Function: handleQtyChangeBtn() - request to update QTY of product ID: ${elementDOM.id}, for "sessionIdCart: ${sessionIdCart}`
+        );
         const itemId = this.getProdIdFromElementId(elementDOM.id);
         // TEST-TBS REMOVE IN PROD
         console.log("itemId: ", itemId);
-        sessionIdCart = this.modelCart.changeQtyInCart(
+        sessionIdCart = this.handleChangeQtyInCart(
             sessionIdCart,
             itemId,
-            changeValue
-        );
-        // TEST-TBS REMOVE IN PROD
-        console.log("sessionIdCart: ", sessionIdCart);
-        sessionIdCartPrice = this.modelCart.updateCartPriceVariable(
-            sessionIdCart,
+            changeValue,
             sessionIdCartPrice,
-            dataBase.productItems,
-            sessionIdCustomer.custHandlingFee
+            sessionIdCustomer
         );
+        // TO-DO: CHECK, if it is required here. Delete for now:
+        // console.log("sessionIdCart: ", sessionIdCart);
+        // sessionIdCartPrice = this.modelCart.updateCartPriceVariable(
+        //     sessionIdCart,
+        //     sessionIdCartPrice,
+        //     dataBase.productItems,
+        //     sessionIdCustomer.custHandlingFee
+        // );
     };
 
+    // Update product QTY in CART in 2 locations: price and selector
     handleViewOfPartQty = (itemId, newQty) => {
         // TEST-TBS REMOVE IN PROD
         console.log("Got comand to update product qty with:");
@@ -438,6 +577,7 @@ export class Controller {
         this.viewCart.updatePartQuantity(productObject, newQty);
     };
 
+    // Update total price (items + handling) in menu (right container)
     handleViewOfTotalPrceInCart = (newPrice) => {
         this.viewCart.updateTotalPrice(newPrice);
     };

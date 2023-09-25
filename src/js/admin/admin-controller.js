@@ -4,7 +4,7 @@ import { ModelFirebase } from "../common/model-firebase.js";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { dbCollectionNames } from "../common/constants.js";
+import { dbCollectionNames, integerNames } from "../common/constants.js";
 
 let isViewBackup = false;
 let dataInstance = {};
@@ -303,7 +303,68 @@ export class AdminController {
             console.log("Action called: TEST COMMAND");
             console.log("Imported backupInstance: ", backupInstance);
         });
+
+        // Parse Pricing Strings to Integers
+        this.adminView.parseIntBtnNode.addEventListener("click", () => {
+            console.log("Action called: PARSE INT");
+            this.applyParseAndUpdate();
+        });
     }
+
+    // The function to parse integers and update Firestore
+    async parseIntForKeys(arrayOfObjects, keyNames, collectionName) {
+        const promises = arrayOfObjects.map(async (obj) => {
+            let isModified = false;
+
+            keyNames.forEach((key) => {
+                if (obj.hasOwnProperty(key)) {
+                    obj[key] = parseInt(obj[key], 10);
+                    isModified = true;
+                }
+            });
+
+            if (isModified) {
+                await this.adminFirebase.updateDocInFirestore(
+                    collectionName,
+                    obj
+                );
+            }
+        });
+
+        await Promise.all(promises);
+    }
+
+    // // Fetch data from Firestore into dataInstance
+    // async fetchDataFromFirestore() {
+    //     console.log("Action: Import from Firestore to dataInstance:");
+    //     for (const collectionName of dbCollectionNames) {
+    //         dataInstance[collectionName] = await this.adminFirebase.get(
+    //             collectionName
+    //         );
+    //     }
+    // }
+
+    // Apply parseInt and update Firestore for each collection
+    async applyParseAndUpdate() {
+        for (const collectionName of dbCollectionNames) {
+            if (dataInstance.hasOwnProperty(collectionName)) {
+                await this.parseIntForKeys(
+                    dataInstance[collectionName],
+                    integerNames,
+                    collectionName
+                );
+            }
+        }
+    }
+
+    //     // Run the operations
+    // fetchDataFromFirestore()
+    //   .then(() => {
+    //     return applyParseAndUpdate();
+    //   })
+    //   .then(() => {
+    //     console.log("All parsing and Firestore updates are complete.");
+    //   });
 }
 
 // // FUNCTIONS: SUPPORT AND TBS

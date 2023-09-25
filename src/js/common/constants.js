@@ -7,6 +7,16 @@ export const dbCollectionNames = [
     "productItems",
 ];
 
+export const integerNames = [
+    "custHandlingFee",
+    "qty",
+    "orderPriceHandling",
+    "orderPriceItems",
+    "orderPriceTotal",
+    "itemPrice",
+    "itemQty",
+];
+
 // IMPORT TO MODEL-FIREBASE.JS REMOVED FOR TEST-TBS // FOR PROD RE-ACTIVATE
 export const firebaseConfig = {
     apiKey: "AIzaSyAaafzn29XLZBor7sXmsi3PMDsg_cxcakk",

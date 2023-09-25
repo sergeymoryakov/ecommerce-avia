@@ -345,6 +345,7 @@ export class ViewCart {
         return cartWrapper;
     };
 
+    // Update total price (items + handling) in menu (right container)
     updatePartQuantity = (productObject, newQty) => {
         // Find "price x qty" element by attribute:
         const priceQtyElement = document.querySelector(
@@ -363,6 +364,7 @@ export class ViewCart {
         }
     };
 
+    // Update total price (items + handling) in menu (right container)
     updateTotalPrice = (newPrice) => {
         // Find "Total price" element by ID
         const totalPriceElement = document.getElementById("cart-total-amount");

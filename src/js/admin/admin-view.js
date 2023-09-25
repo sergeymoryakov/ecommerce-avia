@@ -9,6 +9,7 @@ export class AdminView {
         this.backupBtnNode = document.getElementById("backupBtn");
         this.getServerBtnNode = document.getElementById("getServerBtn");
         this.getLocalBtnNode = document.getElementById("getLocalBtn");
+        this.parseIntBtnNode = document.getElementById("parseIntBtn");
     }
     checkModuleLinkage = () => {
         console.log("HELLO, AdminView is connected!");
