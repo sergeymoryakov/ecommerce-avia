@@ -41,17 +41,41 @@ export class ModelCart {
     };
 
     changeQtyInCart = (sessionIdCart, itemId, adder) => {
+        // TEST-TBS REMOVE IN PROD
+        console.log("sessionIdCart: ", sessionIdCart);
         for (const product of sessionIdCart) {
             if (product.itemId === itemId) {
-                if (product.qty + adder <= 0) {
-                    confirm("Hi there, do you like to delete item from cart?");
-                    // TO-DO: delete product from cart
-                    console.log(
-                        `ACTION NEEDED: DELETE PRODUCT WITH ID ${product.itemId} FROM CART.`
-                    );
-                } else {
+                if (product.qty + adder > 0) {
                     product.qty += adder;
+                    console.log(
+                        `MODEL: try to update a [*** product *** ]: ${product} in database.cartsData`
+                    );
+                    this.controller.handleAddDocToFirestore(
+                        "cartsData",
+                        product
+                    );
                     this.controller.handleViewOfPartQty(itemId, product.qty);
+                } else {
+                    confirm("Hi there, do you like to delete item from cart?");
+                    // Get docId by itemId
+                    const docId = this.controller.getDocIdFromArrayByItemId(
+                        sessionIdCart,
+                        itemId
+                    );
+                    console.log(
+                        `MODEL: TRY TO DELETE PRODUCT WITH DocID ${docId} from database.cartsData`
+                    );
+                    this.controller.handleDeleteDocFromFirestore(
+                        "cartsData",
+                        docId
+                    );
+                    // Delete object element with docId from array:
+                    sessionIdCart =
+                        this.controller.deleteObjectFromArrayByDocId(
+                            sessionIdCart,
+                            docId
+                        );
+                    this.controller.renderCartSummary(sessionIdCart);
                 }
             }
         }
@@ -60,18 +84,33 @@ export class ModelCart {
 
     // Add new product to cart:
     addProductToCart = (sessionIdCart, itemId, userId) => {
-        // TO-DO: Check if ID is already in cart - add qty then
+        // Check if itemId is already in cart - add qty then
+        const isInTheCart = this.controller.getDocIdFromArrayByItemId(
+            sessionIdCart,
+            itemId
+        );
 
-        const newCartElement = {
-            docId: this.controller.handleNewIdGeneration(),
-            itemId: itemId,
-            qty: 1,
-            userId: userId,
-        };
+        if (isInTheCart) {
+            this.changeQtyInCart(sessionIdCart, itemId, 1);
+        } else {
+            const newCartElement = {
+                docId: this.controller.handleNewIdGeneration(),
+                itemId: itemId,
+                qty: 1,
+                userId: userId,
+            };
 
-        console.log("a newCartElement: ", newCartElement);
-        sessionIdCart.push(newCartElement);
-        console.log("an updated [*** sessionIdCart ***]: ", sessionIdCart);
+            console.log(
+                `MODEL: try to add a [*** newCartElement *** ]: ${newCartElement} to database.cartsData`
+            );
+            this.controller.handleAddDocToFirestore(
+                "cartsData",
+                newCartElement
+            );
+
+            sessionIdCart.push(newCartElement);
+            console.log("an updated [*** sessionIdCart ***]: ", sessionIdCart);
+        }
 
         return sessionIdCart;
     };

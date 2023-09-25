@@ -9,9 +9,6 @@ import { ModelCart } from "./model-cart.js";
 import { ModelOrders } from "./model-orders.js";
 import { ModelUser } from "./model-user.js";
 
-// Import random ID generator
-import { v4 as uuidv4 } from "uuid";
-
 // Get DB collection names (dbCollectionNames) from constants.js
 import { dbCollectionNames } from "../common/constants.js";
 
@@ -22,8 +19,8 @@ let dataBase = {};
 let sessionIdNumber = "";
 let sessionIdUser = {};
 let sessionIdCustomer = {};
-let sessionIdOrders = {};
-let sessionIdCart = {};
+let sessionIdOrders = [];
+let sessionIdCart = [];
 let sessionIdCartPrice = {
     items: 800000,
     handling: 8000,
@@ -152,6 +149,8 @@ export class Controller {
         this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
 
         this.attachEventListenrs();
+
+        // TEST-TBS ONLY:
     };
 
     // Generate unique ID
@@ -187,6 +186,18 @@ export class Controller {
                 console.log("Error getting download URL: ", error);
             });
         console.log("imageURL: ", imageURL);
+    };
+
+    deleteObjectFromArrayByDocId = (arrayData, docId) => {
+        const index = arrayData.filter((object) => object.docId === docId);
+
+        if (index !== -1) {
+            arrayData.splice(index, 1);
+            console.log("Deleted element/document with docId = ", docId);
+        } else {
+            console.log("Not found element/document with docId = ", docId);
+        }
+        return arrayData;
     };
 
     getUrlByNameLocal = (imageName) => {
@@ -227,6 +238,18 @@ export class Controller {
         );
         // return object
         return filteredArray[0];
+    };
+
+    getDocIdFromArrayByItemId = (array, itemId) => {
+        const filteredArray = array.filter(
+            (object) => object.itemId === itemId
+        );
+        // TEST-TBS - REMOVE FOR PROD
+        console.log("[*** filteredArray ***]: ", filteredArray);
+        if (filteredArray.length === 0) {
+            return null;
+        }
+        return filteredArray[0].docId;
     };
 
     // Left Container - Render product items
@@ -337,7 +360,6 @@ export class Controller {
 
     // "Add to Cart" button at detailed product card (page)
     handleAddToCartBtn = (element) => {
-        console.log("TO-DO: Add product to cart.", element.id);
         const productIdToCart = this.getProdIdFromElementId(element.id);
         console.log(`TO-DO: Add product with ID ${productIdToCart} to cart.`);
 
@@ -371,12 +393,8 @@ export class Controller {
     // Product card as "button" at main page
     handleProductItem = (element) => {
         // TEST-TBS REMOVE IN PROD
-        console.log(
-            "Received command to display PRODUCT CARD with ID: ",
-            element.id
-        );
+        console.log("Display CARD for product ID: ", element.id);
 
-        console.log("Clicked inside product item");
         const productIdToDisplay = this.getProdIdFromElementId(element.id);
         const productToDisplay = this.getProductObjectById(productIdToDisplay);
         this.renderProductCard(productToDisplay);
@@ -384,32 +402,34 @@ export class Controller {
     };
 
     handleDisplayHistoricalOrder = (element) => {
-        console.log("Received command to display ORDER with ID: ", element.id);
+        // TEST-TBS REMOVE IN PROD
+        console.log("Display ORDER with ID: ", element.id);
     };
 
-    handleQtyChangeBtn = (elementDOM, sessionIdCard, changeValue) => {
-        console.log(
-            "Received command to deduct qty of product with ID: ",
-            elementDOM.id
-        );
+    handleQtyChangeBtn = (elementDOM, sessionIdCart, changeValue) => {
+        // TEST-TBS REMOVE IN PROD
+        console.log("Deduct qty for product ID: ", elementDOM.id);
+        console.log("sessionIdCart: ", sessionIdCart);
         const itemId = this.getProdIdFromElementId(elementDOM.id);
+        // TEST-TBS REMOVE IN PROD
         console.log("itemId: ", itemId);
-        sessionIdCard = this.modelCart.changeQtyInCart(
+        sessionIdCart = this.modelCart.changeQtyInCart(
             sessionIdCart,
             itemId,
             changeValue
         );
-        console.log("sessionIdCard: ", sessionIdCard);
+        // TEST-TBS REMOVE IN PROD
+        console.log("sessionIdCart: ", sessionIdCart);
         sessionIdCartPrice = this.modelCart.updateCartPriceVariable(
             sessionIdCart,
             sessionIdCartPrice,
             dataBase.productItems,
             sessionIdCustomer.custHandlingFee
         );
-        // this.handleGotoCartBtn();
     };
 
     handleViewOfPartQty = (itemId, newQty) => {
+        // TEST-TBS REMOVE IN PROD
         console.log("Got comand to update product qty with:");
         console.log("Product ID: ", itemId);
         console.log("New QTY: ", newQty);
@@ -422,7 +442,7 @@ export class Controller {
         this.viewCart.updateTotalPrice(newPrice);
     };
 
-    handleButtonsClickLeft = (event, sessionIdCard) => {
+    handleButtonsClickLeft = (event) => {
         const target = event.target;
 
         // "< Back to Products" button
@@ -459,13 +479,13 @@ export class Controller {
 
         // Qty deduct button at Cart page
         if (target.classList.contains("cart-element__qty-mod_deduct-btn")) {
-            this.handleQtyChangeBtn(target, sessionIdCard, -1);
+            this.handleQtyChangeBtn(target, sessionIdCart, -1);
             return;
         }
 
         // Qty add button at Cart page
         if (target.classList.contains("cart-element__qty-mod_add-btn")) {
-            this.handleQtyChangeBtn(target, sessionIdCard, 1);
+            this.handleQtyChangeBtn(target, sessionIdCart, 1);
             return;
         }
     };
@@ -514,5 +534,27 @@ export class Controller {
             "click",
             this.handleButtonsClickRight
         );
+    };
+
+    // Database support functions
+    handleAddDocToFirestore = (collectionName, documentObject) => {
+        console.log(
+            `Controller: got a requst to add [object]: ${documentObject} to [collction]: ${collectionName}`
+        );
+        this.modelFirebase.addDocToFirestore(collectionName, documentObject);
+    };
+
+    handleUpdateDocInFirestore = (collectionName, documentObject) => {
+        console.log(
+            `Controller: got a requst update [object]: ${documentObject} in [collction]: ${collectionName}`
+        );
+        this.modelFirebase.updateDocInFirestore(collectionName, documentObject);
+    };
+
+    handleDeleteDocFromFirestore = (collectionName, documentId) => {
+        console.log(
+            `Controller: got a requst to delete [object]: ${documentId} from [collction]: ${collectionName}`
+        );
+        this.modelFirebase.deleteDocFromFirestore(collectionName, documentId);
     };
 }
