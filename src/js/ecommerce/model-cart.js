@@ -147,7 +147,8 @@ export class ModelCart {
             };
 
             console.log(
-                `MODEL: try to add a [*** newCartElement *** ]: ${newCartElement} to database.cartsData`
+                "MODEL: try to add to database.cartsData a [*** newCartElement *** ]: ",
+                newCartElement
             );
             this.controller.handleAddDocToFirestore(
                 "cartsData",

@@ -22,9 +22,9 @@ let sessionIdCustomer = {};
 let sessionIdOrders = [];
 let sessionIdCart = [];
 let sessionIdCartPrice = {
-    items: 800000,
-    handling: 8000,
-    total: 808000,
+    // items: 800000,
+    // handling: 8000,
+    // total: 808000,
 };
 
 // Init HTML variables:
@@ -306,90 +306,54 @@ export class Controller {
         sessionIdCartPrice.total = newItemsPrice + newHandlingFee;
 
         console.log("new sessionIdCartPrice: ", sessionIdCartPrice);
+        console.log("for sessionIdCart: ", sessionIdCart);
 
         // TO-DO: CHECK, if it is required here. Delete for now:
         // this.controller.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
         return sessionIdCartPrice;
     };
 
-    handleChangeQtyInCart = (sessionIdCart, itemId, adder) => {
-        // TEST-TBS REMOVE IN PROD
-        console.log("sessionIdCart: ", sessionIdCart);
-        for (const product of sessionIdCart) {
-            if (product.itemId === itemId) {
-                if (product.qty + adder > 0) {
-                    product.qty += adder;
-                    console.log(
-                        "MODEL: try to update in sessionIdCart a [*** product *** ]: ",
-                        product
-                    );
-                    this.handleUpdateDocInFirestore("cartsData", product);
+    // handleChangeQtyInCart = (sessionIdCart, itemId, adder) => {
+    //     // TEST-TBS REMOVE IN PROD
+    //     console.log("sessionIdCart: ", sessionIdCart);
+    //     for (const product of sessionIdCart) {
+    //         if (product.itemId === itemId) {
+    //             if (product.qty + adder > 0) {
+    //                 product.qty += adder;
+    //                 console.log(
+    //                     "MODEL: try to update in sessionIdCart a [*** product *** ]: ",
+    //                     product
+    //                 );
+    //                 this.handleUpdateDocInFirestore("cartsData", product);
 
-                    // TO-DO: CHECK, if it is required here. Delete for now:
-                    // console.log(
-                    //     "MODEL - [*** sessionIdCart ***]: ",
-                    //     sessionIdCart
-                    // );
-                    // console.log(
-                    //     "MODEL - [*** sessionIdCartPrice ***]: ",
-                    //     sessionIdCartPrice
-                    // );
-                    // console.log(
-                    //     "MODEL - [*** dataBase.productItems ***]: ",
-                    //     dataBase.productItems
-                    // );
-                    // console.log(
-                    //     "MODEL - [*** sessionIdCustome ***]: ",
-                    //     sessionIdCustomer
-                    // );
+    //                 // TO-DO: CHECK, if it is required here. Delete for now:
+    //                 this.handleViewOfPartQty(itemId, product.qty);
+    //                 this.callToUpdateCartPriceVariable();
+    //                 this.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
+    //             } else {
+    //                 confirm("Hi there, do you like to delete item from cart?");
+    //                 // Get docId by itemId
+    //                 const docId = this.getDocIdFromArrayByItemId(
+    //                     sessionIdCart,
+    //                     itemId
+    //                 );
+    //                 console.log(
+    //                     `MODEL: TRY TO DELETE PRODUCT WITH DocID ${docId} from database.cartsData`
+    //                 );
+    //                 this.handleDeleteDocFromFirestore("cartsData", docId);
+    //                 // Delete object element with docId from array:
+    //                 sessionIdCart = this.deleteObjectFromArrayByDocId(
+    //                     sessionIdCart,
+    //                     docId
+    //                 );
 
-                    // TO-DO: CHECK, if it is required here. Delete for now:
-                    this.callToUpdateCartPriceVariable();
-                    this.handleViewOfPartQty(itemId, product.qty);
-                } else {
-                    confirm("Hi there, do you like to delete item from cart?");
-                    // Get docId by itemId
-                    const docId = this.getDocIdFromArrayByItemId(
-                        sessionIdCart,
-                        itemId
-                    );
-                    console.log(
-                        `MODEL: TRY TO DELETE PRODUCT WITH DocID ${docId} from database.cartsData`
-                    );
-                    this.handleDeleteDocFromFirestore("cartsData", docId);
-                    // Delete object element with docId from array:
-                    sessionIdCart = this.deleteObjectFromArrayByDocId(
-                        sessionIdCart,
-                        docId
-                    );
-
-                    // TO-DO: CHECK, if it is required here. Delete for now:
-                    // console.log(
-                    //     "MODEL - [*** sessionIdCart ***]: ",
-                    //     sessionIdCart
-                    // );
-                    // console.log(
-                    //     "MODEL - [*** sessionIdCartPrice ***]: ",
-                    //     sessionIdCartPrice
-                    // );
-                    // console.log(
-                    //     "MODEL - [*** dataBase.productItems ***]: ",
-                    //     dataBase.productItems
-                    // );
-                    // console.log(
-                    //     "MODEL - [*** sessionIdCustome ***]: ",
-                    //     sessionIdCustomer
-                    // );
-
-                    this.callToUpdateCartPriceVariable();
-                    // TO-DO: CHECK, if it is required here. Delete for now:
-                    this.renderCartSummary(sessionIdCart);
-                }
-            }
-        }
-        this.handleViewOfTotalPrceInCart();
-        return sessionIdCart;
-    };
+    //                 // TO-DO: CHECK, if it is required here. Delete for now:
+    //                 this.handleGotoCartBtn();
+    //             }
+    //         }
+    //     }
+    //     return sessionIdCart;
+    // };
 
     // Left Container - Render product items
     renderProductItemsList = (arrayProducts) => {
@@ -487,7 +451,7 @@ export class Controller {
     handleGotoProductsBtn = () => {
         this.renderProductItemsList(dataBase.productItems);
         // TO-DO: CHECK, if it is required here. Delete for now:
-        // this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
+        this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
     };
 
     // "Add to Cart" button at detailed product card (page)
@@ -541,30 +505,115 @@ export class Controller {
         console.log("Display ORDER with ID: ", element.id);
     };
 
-    handleQtyChangeBtn = (elementDOM, sessionIdCart, changeValue) => {
-        // TEST-TBS REMOVE IN PROD
-        console.log(
-            `Function: handleQtyChangeBtn() - request to update QTY of product ID: ${elementDOM.id}, for "sessionIdCart: ${sessionIdCart}`
-        );
+    handleQtyChangeBtn = (elementDOM, adder) => {
         const itemId = this.getProdIdFromElementId(elementDOM.id);
         // TEST-TBS REMOVE IN PROD
-        console.log("itemId: ", itemId);
-        sessionIdCart = this.handleChangeQtyInCart(
-            sessionIdCart,
-            itemId,
-            changeValue,
-            sessionIdCartPrice,
-            sessionIdCustomer
+        console.log(
+            "Function: 'handleQtyChangeBtn()': update QTY of prod ID: ",
+            elementDOM.id
         );
-        // TO-DO: CHECK, if it is required here. Delete for now:
-        // console.log("sessionIdCart: ", sessionIdCart);
-        // sessionIdCartPrice = this.modelCart.updateCartPriceVariable(
-        //     sessionIdCart,
-        //     sessionIdCartPrice,
-        //     dataBase.productItems,
-        //     sessionIdCustomer.custHandlingFee
-        // );
+        console.log("'sessionIdCart': ", sessionIdCart);
+        console.log("itemId: ", itemId);
+
+        // product/object to update:
+        const productToUpdate = JSON.parse(
+            JSON.stringify(
+                sessionIdCart.find((product) => product.itemId === itemId)
+            )
+        );
+
+        if (!productToUpdate) {
+            console.log("Product/object not found");
+            return;
+        }
+
+        // remove product from array:
+
+        const filteredSessionIdCart = sessionIdCart.filter(
+            (product) => product.itemId !== itemId
+        );
+
+        if (productToUpdate.qty + adder > 0) {
+            this.updateProduct(filteredSessionIdCart, productToUpdate, adder);
+        } else {
+            this.deleteProduct(filteredSessionIdCart, productToUpdate);
+        }
+
+        this.updateCartDOM();
+
+        // // DELETE EVERYTHING BELOW:
+        // // Loop to find a product/object with selected "itemId"
+        // for (const product of sessionIdCart) {
+        //     if (product.itemId === itemId) {
+        //         // if result of adding "adder" ('1' or '-1') is above '0', update 'qty' everywhere
+        //         if (product.qty + adder > 0) {
+        //             //  change 'qty'property of 'sessionIdCart' product/object (global variable)
+        //             product.qty += adder;
+        //             console.log(
+        //                 "MODEL: try to update in sessionIdCart a [*** product *** ]: ",
+        //                 product
+        //                 );
+        //             //  try to change 'qty' property of affected product/document in Firestore (async function)
+        //             this.handleUpdateDocInFirestore("cartsData", product);
+
+        //             //  update/re-render 'qty' in user's cart (DOM)
+        //             this.handleViewOfPartQty(itemId, product.qty);
+        //             //  update total price 'sessionIdCartPrice' (global variable)
+        //             this.callToUpdateCartPriceVariable();
+        //             //  update/re-render 'total price' in user's cart (DOM)
+        //             this.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
+        //         } else {
+        //             // if result of adding "adder" ('1' or '-1') is '0' or below, delete product/object from everywhere
+        //             confirm("Hi there, do you like to delete item from cart?");
+        //             // Get docId by itemId
+        //             const docId = this.getDocIdFromArrayByItemId(
+        //                 sessionIdCart,
+        //                 itemId
+        //             );
+        //             console.log(
+        //                 `MODEL: TRY TO DELETE PRODUCT WITH DocID ${docId} from database.cartsData`
+        //                 );
+        //                 // try to delete delete product/object from Firestore (async function)
+        //                 this.handleDeleteDocFromFirestore("cartsData", docId);
+        //                 // Delete object element with docId from 'sessionIdCart' product/object (global variable)
+        //                 sessionIdCart = this.deleteObjectFromArrayByDocId(
+        //                     sessionIdCart,
+        //                 docId
+        //                 );
+
+        //             // Re-render Cart and Cart summary in user's DOM
+        //             this.handleGotoCartBtn();
+        //         }
+        //     }
+        // }
+        // return sessionIdCart;
     };
+
+    updateProduct(filteredSessionIdCart, productToUpdate, adder) {
+        // Modify product/object
+        productToUpdate.qty += adder;
+
+        // Add product back to array
+        filteredSessionIdCart.push(productToUpdate);
+
+        // Update Firestore
+        this.handleUpdateDocInFirestore("cartsData", productToUpdate);
+
+        // Update global variable
+        sessionIdCart = filteredSessionIdCart;
+    }
+
+    deleteProduct(filteredSessionIdCart, productToUpdate) {
+        // Delete product from Firestore
+        this.handleDeleteDocFromFirestore("cartsData", productToUpdate.docId);
+
+        // Update global variable
+        sessionIdCart = filteredSessionIdCart;
+    }
+
+    updateCartDOM() {
+        this.handleGotoCartBtn();
+    }
 
     // Update product QTY in CART in 2 locations: price and selector
     handleViewOfPartQty = (itemId, newQty) => {
@@ -619,13 +668,13 @@ export class Controller {
 
         // Qty deduct button at Cart page
         if (target.classList.contains("cart-element__qty-mod_deduct-btn")) {
-            this.handleQtyChangeBtn(target, sessionIdCart, -1);
+            this.handleQtyChangeBtn(target, -1);
             return;
         }
 
         // Qty add button at Cart page
         if (target.classList.contains("cart-element__qty-mod_add-btn")) {
-            this.handleQtyChangeBtn(target, sessionIdCart, 1);
+            this.handleQtyChangeBtn(target, 1);
             return;
         }
     };
@@ -679,22 +728,28 @@ export class Controller {
     // Database support functions
     handleAddDocToFirestore = (collectionName, documentObject) => {
         console.log(
-            `Controller: got a requst to add [object]: ${documentObject} to [collction]: ${collectionName}`
+            "Controller: got a requst to add [object]: ",
+            documentObject
         );
+        console.log("to [collction]: ", collectionName);
         this.modelFirebase.addDocToFirestore(collectionName, documentObject);
     };
 
     handleUpdateDocInFirestore = (collectionName, documentObject) => {
         console.log(
-            `Controller: got a requst update [object]: ${documentObject} in [collction]: ${collectionName}`
+            "Controller: got a requst update [object]: ",
+            documentObject
         );
+        console.log("in [collction]: ", collectionName);
         this.modelFirebase.updateDocInFirestore(collectionName, documentObject);
     };
 
     handleDeleteDocFromFirestore = (collectionName, documentId) => {
         console.log(
-            `Controller: got a requst to delete [object]: ${documentId} from [collction]: ${collectionName}`
+            "Controller: got a requst to delete [object]: ",
+            documentId
         );
+        console.log("from [collection]: ", collectionName);
         this.modelFirebase.deleteDocFromFirestore(collectionName, documentId);
     };
 }
