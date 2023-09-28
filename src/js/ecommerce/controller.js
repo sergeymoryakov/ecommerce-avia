@@ -535,58 +535,11 @@ export class Controller {
 
         if (productToUpdate.qty + adder > 0) {
             this.updateProduct(filteredSessionIdCart, productToUpdate, adder);
+            this.updateCartDOM(itemId, productToUpdate);
         } else {
             this.deleteProduct(filteredSessionIdCart, productToUpdate);
+            this.handleGotoCartBtn();
         }
-
-        this.updateCartDOM();
-
-        // // DELETE EVERYTHING BELOW:
-        // // Loop to find a product/object with selected "itemId"
-        // for (const product of sessionIdCart) {
-        //     if (product.itemId === itemId) {
-        //         // if result of adding "adder" ('1' or '-1') is above '0', update 'qty' everywhere
-        //         if (product.qty + adder > 0) {
-        //             //  change 'qty'property of 'sessionIdCart' product/object (global variable)
-        //             product.qty += adder;
-        //             console.log(
-        //                 "MODEL: try to update in sessionIdCart a [*** product *** ]: ",
-        //                 product
-        //                 );
-        //             //  try to change 'qty' property of affected product/document in Firestore (async function)
-        //             this.handleUpdateDocInFirestore("cartsData", product);
-
-        //             //  update/re-render 'qty' in user's cart (DOM)
-        //             this.handleViewOfPartQty(itemId, product.qty);
-        //             //  update total price 'sessionIdCartPrice' (global variable)
-        //             this.callToUpdateCartPriceVariable();
-        //             //  update/re-render 'total price' in user's cart (DOM)
-        //             this.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
-        //         } else {
-        //             // if result of adding "adder" ('1' or '-1') is '0' or below, delete product/object from everywhere
-        //             confirm("Hi there, do you like to delete item from cart?");
-        //             // Get docId by itemId
-        //             const docId = this.getDocIdFromArrayByItemId(
-        //                 sessionIdCart,
-        //                 itemId
-        //             );
-        //             console.log(
-        //                 `MODEL: TRY TO DELETE PRODUCT WITH DocID ${docId} from database.cartsData`
-        //                 );
-        //                 // try to delete delete product/object from Firestore (async function)
-        //                 this.handleDeleteDocFromFirestore("cartsData", docId);
-        //                 // Delete object element with docId from 'sessionIdCart' product/object (global variable)
-        //                 sessionIdCart = this.deleteObjectFromArrayByDocId(
-        //                     sessionIdCart,
-        //                 docId
-        //                 );
-
-        //             // Re-render Cart and Cart summary in user's DOM
-        //             this.handleGotoCartBtn();
-        //         }
-        //     }
-        // }
-        // return sessionIdCart;
     };
 
     updateProduct(filteredSessionIdCart, productToUpdate, adder) {
@@ -611,8 +564,13 @@ export class Controller {
         sessionIdCart = filteredSessionIdCart;
     }
 
-    updateCartDOM() {
-        this.handleGotoCartBtn();
+    updateCartDOM(itemId, productToUpdate) {
+        //  update/re-render 'qty' in user's cart (DOM)
+        this.handleViewOfPartQty(itemId, productToUpdate.qty);
+        //  update total price 'sessionIdCartPrice' (global variable)
+        this.callToUpdateCartPriceVariable();
+        //  update/re-render 'total price' in user's cart (DOM)
+        this.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
     }
 
     // Update product QTY in CART in 2 locations: price and selector
