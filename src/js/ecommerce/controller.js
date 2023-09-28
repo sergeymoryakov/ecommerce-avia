@@ -313,48 +313,6 @@ export class Controller {
         return sessionIdCartPrice;
     };
 
-    // handleChangeQtyInCart = (sessionIdCart, itemId, adder) => {
-    //     // TEST-TBS REMOVE IN PROD
-    //     console.log("sessionIdCart: ", sessionIdCart);
-    //     for (const product of sessionIdCart) {
-    //         if (product.itemId === itemId) {
-    //             if (product.qty + adder > 0) {
-    //                 product.qty += adder;
-    //                 console.log(
-    //                     "MODEL: try to update in sessionIdCart a [*** product *** ]: ",
-    //                     product
-    //                 );
-    //                 this.handleUpdateDocInFirestore("cartsData", product);
-
-    //                 // TO-DO: CHECK, if it is required here. Delete for now:
-    //                 this.handleViewOfPartQty(itemId, product.qty);
-    //                 this.callToUpdateCartPriceVariable();
-    //                 this.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
-    //             } else {
-    //                 confirm("Hi there, do you like to delete item from cart?");
-    //                 // Get docId by itemId
-    //                 const docId = this.getDocIdFromArrayByItemId(
-    //                     sessionIdCart,
-    //                     itemId
-    //                 );
-    //                 console.log(
-    //                     `MODEL: TRY TO DELETE PRODUCT WITH DocID ${docId} from database.cartsData`
-    //                 );
-    //                 this.handleDeleteDocFromFirestore("cartsData", docId);
-    //                 // Delete object element with docId from array:
-    //                 sessionIdCart = this.deleteObjectFromArrayByDocId(
-    //                     sessionIdCart,
-    //                     docId
-    //                 );
-
-    //                 // TO-DO: CHECK, if it is required here. Delete for now:
-    //                 this.handleGotoCartBtn();
-    //             }
-    //         }
-    //     }
-    //     return sessionIdCart;
-    // };
-
     // Left Container - Render product items
     renderProductItemsList = (arrayProducts) => {
         const productItemsList = document.createElement("div");
@@ -456,14 +414,23 @@ export class Controller {
 
     // "Add to Cart" button at detailed product card (page)
     handleAddToCartBtn = (element) => {
-        const productIdToCart = this.getProdIdFromElementId(element.id);
-        console.log(`TO-DO: Add product with ID ${productIdToCart} to cart.`);
+        // TEST-TBS REMOVE IN PROD
+        console.log(`TO-DO: Add product with ID ${element.id} to cart.`);
+        // Get product/object ID (itemId) from DOM element ID (string)
+        const itemId = this.getProdIdFromElementId(element.id);
 
-        sessionIdCart = this.modelCart.addProductToCart(
+        // Check if product already in user's cart
+        const isInTheCart = this.getDocIdFromArrayByItemId(
             sessionIdCart,
-            productIdToCart,
-            sessionIdNumber
+            itemId
         );
+
+        if (isInTheCart) {
+            this.handleQtyChangeBtn(element, 1);
+        } else {
+            this.addProduct(itemId, sessionIdNumber);
+        }
+
         this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
     };
 
@@ -542,7 +509,25 @@ export class Controller {
         }
     };
 
-    updateProduct(filteredSessionIdCart, productToUpdate, adder) {
+    addProduct = (itemId, userId) => {
+        const newProductToCart = {
+            docId: this.handleNewIdGeneration(),
+            itemId: itemId,
+            qty: 1,
+            userId: userId,
+        };
+
+        console.log(
+            "MODEL: try to add to database.cartsData a [*** newProductToCart *** ]: ",
+            newProductToCart
+        );
+        this.handleAddDocToFirestore("cartsData", newProductToCart);
+
+        sessionIdCart.push(newProductToCart);
+        console.log("Updated [*** sessionIdCart ***]: ", sessionIdCart);
+    };
+
+    updateProduct = (filteredSessionIdCart, productToUpdate, adder) => {
         // Modify product/object
         productToUpdate.qty += adder;
 
@@ -554,24 +539,24 @@ export class Controller {
 
         // Update global variable
         sessionIdCart = filteredSessionIdCart;
-    }
+    };
 
-    deleteProduct(filteredSessionIdCart, productToUpdate) {
+    deleteProduct = (filteredSessionIdCart, productToUpdate) => {
         // Delete product from Firestore
         this.handleDeleteDocFromFirestore("cartsData", productToUpdate.docId);
 
         // Update global variable
         sessionIdCart = filteredSessionIdCart;
-    }
+    };
 
-    updateCartDOM(itemId, productToUpdate) {
+    updateCartDOM = (itemId, productToUpdate) => {
         //  update/re-render 'qty' in user's cart (DOM)
         this.handleViewOfPartQty(itemId, productToUpdate.qty);
         //  update total price 'sessionIdCartPrice' (global variable)
         this.callToUpdateCartPriceVariable();
         //  update/re-render 'total price' in user's cart (DOM)
         this.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
-    }
+    };
 
     // Update product QTY in CART in 2 locations: price and selector
     handleViewOfPartQty = (itemId, newQty) => {

@@ -129,36 +129,36 @@ export class ModelCart {
     // };
 
     // Add new product to cart:
-    addProductToCart = (sessionIdCart, itemId, userId) => {
-        // Check if itemId is already in cart - add qty then
-        const isInTheCart = this.controller.getDocIdFromArrayByItemId(
-            sessionIdCart,
-            itemId
-        );
+    // addProductToCart = (sessionIdCart, itemId, userId) => {
+    //     // Check if itemId is already in cart - add qty then
+    //     const isInTheCart = this.controller.getDocIdFromArrayByItemId(
+    //         sessionIdCart,
+    //         itemId
+    //     );
 
-        if (isInTheCart) {
-            this.controller.handleChangeQtyInCart(sessionIdCart, itemId, 1);
-        } else {
-            const newCartElement = {
-                docId: this.controller.handleNewIdGeneration(),
-                itemId: itemId,
-                qty: 1,
-                userId: userId,
-            };
+    //     if (isInTheCart) {
+    //         this.controller.handleChangeQtyInCart(sessionIdCart, itemId, 1);
+    //     } else {
+    //         const newCartElement = {
+    //             docId: this.controller.handleNewIdGeneration(),
+    //             itemId: itemId,
+    //             qty: 1,
+    //             userId: userId,
+    //         };
 
-            console.log(
-                "MODEL: try to add to database.cartsData a [*** newCartElement *** ]: ",
-                newCartElement
-            );
-            this.controller.handleAddDocToFirestore(
-                "cartsData",
-                newCartElement
-            );
+    //         console.log(
+    //             "MODEL: try to add to database.cartsData a [*** newCartElement *** ]: ",
+    //             newCartElement
+    //         );
+    //         this.controller.handleAddDocToFirestore(
+    //             "cartsData",
+    //             newCartElement
+    //         );
 
-            sessionIdCart.push(newCartElement);
-            console.log("an updated [*** sessionIdCart ***]: ", sessionIdCart);
-        }
+    //         sessionIdCart.push(newCartElement);
+    //         console.log("an updated [*** sessionIdCart ***]: ", sessionIdCart);
+    //     }
 
-        return sessionIdCart;
-    };
+    //     return sessionIdCart;
+    // };
 }
