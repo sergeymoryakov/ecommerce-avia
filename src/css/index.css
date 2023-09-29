@@ -177,6 +177,11 @@ html {
     font-size: 1.5rem;
     font-weight: 700;
 }
+.cart-links-empty-msg {
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: italic;
+}
 
 .cart-links-wrapper {
     margin-top: 1em;

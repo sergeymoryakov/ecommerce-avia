@@ -33,31 +33,41 @@ export class ViewCart {
         const wrapper = document.createElement("div");
         wrapper.classList = "cart-links-wrapper";
 
-        // Right Container - Render Cart Icons
-        // console.log("Action: Right Container - Render Cart Icons");
-        for (const productObject of sessionIdCart) {
-            // TEST-TBS - REMOVE IN PROD
-            // console.log("productObject: ", productObject);
-            // console.log("productObject.itemId: ", productObject.itemId);
+        if (sessionIdCart.length === 0) {
+            const emptyCartMessage = document.createElement("p");
+            emptyCartMessage.classList = "cart-links-empty-msg";
+            emptyCartMessage.innerText = "Cart is empty";
 
-            const productImage = this.controller.getImageByProductId(
-                productObject.itemId
-            );
+            wrapper.appendChild(emptyCartMessage);
+        } else {
+            // Right Container - Render Cart Icons
+            // console.log("Action: Right Container - Render Cart Icons");
+            for (const productObject of sessionIdCart) {
+                // TEST-TBS - REMOVE IN PROD
+                // console.log("productObject: ", productObject);
+                // console.log("productObject.itemId: ", productObject.itemId);
 
-            // FOR TEST-TBS
-            // console.log("productImage: ", productImage);
+                const productImage = this.controller.getImageByProductId(
+                    productObject.itemId
+                );
 
-            const imageURL = this.controller.getUrlByNameLocal(productImage);
+                // FOR TEST-TBS
+                // console.log("productImage: ", productImage);
 
-            // FOR TEST-TBS
-            // console.log("imageURL: ", imageURL);
+                const imageURL =
+                    this.controller.getUrlByNameLocal(productImage);
 
-            const cartItem = this.createCartItemButton(
-                imageURL,
-                productObject.itemId
-            );
-            wrapper.appendChild(cartItem);
+                // FOR TEST-TBS
+                // console.log("imageURL: ", imageURL);
+
+                const cartItem = this.createCartItemButton(
+                    imageURL,
+                    productObject.itemId
+                );
+                wrapper.appendChild(cartItem);
+            }
         }
+
         return wrapper;
     };
 
@@ -308,16 +318,18 @@ export class ViewCart {
 
         return productCardMain;
     };
-    // To-DO items:
+
+    // Left Container - Create Cart Page
     createCartPage = (sessionCart) => {
         const cartWrapper = document.createElement("div");
-        cartWrapper.classList = "product-card";
+        cartWrapper.classList = "cart-wrapper";
 
         const goBackBtn = document.createElement("button");
         goBackBtn.classList = "goto-products-btn";
         goBackBtn.innerText = "< Back to Products";
 
         const cartTitle = document.createElement("h2");
+        cartTitle.classList = "cart-title";
         cartTitle.innerText = "Cart";
 
         const cartItemsWrapper = document.createElement("div");
@@ -341,6 +353,25 @@ export class ViewCart {
         cartWrapper.appendChild(goBackBtn);
         cartWrapper.appendChild(cartTitle);
         cartWrapper.appendChild(cartItemsWrapper);
+
+        return cartWrapper;
+    };
+
+    // Left Container - Create Empty Cart Page
+    createEmptyCartPage = () => {
+        const cartWrapper = document.createElement("div");
+        cartWrapper.classList = "cart-wrapper";
+
+        const goBackBtn = document.createElement("button");
+        goBackBtn.classList = "goto-products-btn";
+        goBackBtn.innerText = "< Back to Products";
+
+        const cartTitle = document.createElement("h2");
+        cartTitle.classList = "cart-title";
+        cartTitle.innerText = "Cart is empty";
+
+        cartWrapper.appendChild(goBackBtn);
+        cartWrapper.appendChild(cartTitle);
 
         return cartWrapper;
     };

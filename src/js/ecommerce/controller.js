@@ -231,6 +231,15 @@ export class Controller {
         return productObject[0].itemImg;
     };
 
+    getPriceByProductId = (productItems, productId) => {
+        const productById = productItems.filter(
+            (product) => product.itemId === productId
+        );
+        // console.log("productById: ", productById);
+        // console.log("productById[0]: ", productById[0]);
+        return productById[0].itemPrice;
+    };
+
     getProdIdFromElementId = (idString) => {
         return idString.split("_")[1];
     };
@@ -295,8 +304,7 @@ export class Controller {
 
         for (const item of sessionIdCart) {
             newItemsPrice +=
-                item.qty *
-                this.modelCart.getPriceByProductId(productItems, item.itemId);
+                item.qty * this.getPriceByProductId(productItems, item.itemId);
         }
 
         newHandlingFee = newItemsPrice * handlingRate;
@@ -336,8 +344,14 @@ export class Controller {
 
     // Left Container - Render Order CART
     renderCartSummary = (sessionIdCart) => {
-        const productCardForCartHTML =
-            this.viewCart.createCartPage(sessionIdCart);
+        let productCardForCartHTML;
+        if (sessionIdCart.length === 0) {
+            productCardForCartHTML =
+                this.viewCart.createEmptyCartPage(sessionIdCart);
+        } else {
+            productCardForCartHTML =
+                this.viewCart.createCartPage(sessionIdCart);
+        }
 
         this.clearContainerLeft();
         this.containerLeftNode.appendChild(productCardForCartHTML);
