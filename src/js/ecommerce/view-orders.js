@@ -36,4 +36,184 @@ export class ViewOrders {
 
         return ordersHistorySummary;
     };
+
+    // Right Container - Create OrderSummaryContentBlock
+    createOrderSummaryPriceBlock = (sessionIdCartPrice, orderButton) => {
+        const orderSummary = document.createElement("div");
+        orderSummary.classList = "order-summary";
+
+        const title = document.createElement("h3");
+        title.classList = "order-summary-title";
+        title.innerText = "Order Summary";
+
+        const itemsWrapper = document.createElement("div");
+        itemsWrapper.classList = "flex-between";
+
+        const itemsTitle = document.createElement("p");
+        itemsTitle.innerText = "Items:";
+
+        const itemsAmount = document.createElement("p");
+        itemsAmount.innerText = `$${sessionIdCartPrice.items}`;
+
+        const handlingWrapper = document.createElement("div");
+        handlingWrapper.classList = "flex-between";
+
+        const handlingTitle = document.createElement("p");
+        handlingTitle.innerText = "Handling:";
+
+        const handlingAmount = document.createElement("p");
+        handlingAmount.innerText = `$${sessionIdCartPrice.handling}`;
+
+        const totalWrapper = document.createElement("div");
+        totalWrapper.classList = "flex-between bold";
+
+        const totalTitle = document.createElement("p");
+        totalTitle.innerText = "Total:";
+
+        const totalAmount = document.createElement("p");
+        totalAmount.innerText = `$${sessionIdCartPrice.total}`;
+
+        itemsWrapper.appendChild(itemsTitle);
+        itemsWrapper.appendChild(itemsAmount);
+
+        handlingWrapper.appendChild(handlingTitle);
+        handlingWrapper.appendChild(handlingAmount);
+
+        totalWrapper.appendChild(totalTitle);
+        totalWrapper.appendChild(totalAmount);
+
+        title.appendChild(itemsWrapper);
+        title.appendChild(handlingWrapper);
+        title.appendChild(totalWrapper);
+
+        if (orderButton) {
+            title.appendChild(this.createPlaceOrderButtonBlock());
+        }
+
+        orderSummary.appendChild(title);
+
+        return orderSummary;
+    };
+
+    // Right Container - Create PlaceOrderButtonBlock
+    createPlaceOrderButtonBlock = () => {
+        const wrapper = document.createElement("div");
+        wrapper.classList = "place-order-btn-wrapper";
+
+        const button = document.createElement("button");
+        button.classList = "place-order-btn";
+        button.innerText = "Place Order";
+
+        wrapper.appendChild(button);
+
+        return wrapper;
+    };
+
+    // Left Container - Create createCheckOutWrapper
+    createCheckOutWrapper = () => {
+        const checkOutWrapper = document.createElement("div");
+        checkOutWrapper.classList = "checkout-wrapper";
+
+        const goBackBtn = document.createElement("button");
+        goBackBtn.classList = "goto-cart-btn";
+        goBackBtn.innerText = "< Back to Cart";
+
+        checkOutWrapper.appendChild(goBackBtn);
+
+        return checkOutWrapper;
+    };
+
+    // Left Container - Create BillToAddressContentBlock
+    createBillToAddressContentBlock = (sessionIdCartDetails, updateButton) => {
+        const addressWrapper = document.createElement("div");
+        addressWrapper.classList = "address-wrapper";
+
+        const title = document.createElement("h3");
+        title.classList = "address-title";
+        title.innerText = "Bill to Address";
+
+        const custLegalName = document.createElement("p");
+        custLegalName.innerText = sessionIdCartDetails.custLegalName;
+
+        const custBillToAddress = document.createElement("p");
+        custBillToAddress.innerText = sessionIdCartDetails.custBillToAddress;
+
+        const userName = document.createElement("p");
+        userName.innerText = sessionIdCartDetails.userName;
+
+        const userPhone = document.createElement("p");
+        userPhone.innerText = sessionIdCartDetails.userPhone;
+
+        const userEmail = document.createElement("p");
+        userEmail.innerText = sessionIdCartDetails.userEmail;
+
+        title.appendChild(custLegalName);
+        title.appendChild(custBillToAddress);
+        title.appendChild(userName);
+        title.appendChild(userPhone);
+        title.appendChild(userEmail);
+
+        if (updateButton) {
+            title.appendChild(this.createUpdateButtonBlock());
+        }
+
+        addressWrapper.appendChild(title);
+
+        return addressWrapper;
+    };
+
+    // Left Container - Create PaymentMethodContentBlock
+    createPaymentMethodContentBlock = (sessionIdCartDetails, updateButton) => {
+        const paymentMethodWrapper = document.createElement("div");
+        paymentMethodWrapper.classList = "payment-method-wrapper";
+
+        const title = document.createElement("h3");
+        title.classList = "payment-method-title";
+        title.innerText = "Payment Method";
+
+        const paymentMethod = document.createElement("p");
+        paymentMethod.innerText = sessionIdCartDetails.paymentMethod;
+
+        title.appendChild(paymentMethod);
+
+        if (updateButton) {
+            title.appendChild(this.createUpdateButtonBlock());
+        }
+
+        paymentMethodWrapper.appendChild(title);
+
+        return paymentMethodWrapper;
+    };
+
+    // Left Container - Create UpdateButtonBlock
+    createUpdateButtonBlock = () => {
+        const wrapper = document.createElement("div");
+        wrapper.classList = "update-btn-wrapper";
+
+        const button = document.createElement("button");
+        button.classList = "update-btn";
+        button.innerText = "Update";
+
+        wrapper.appendChild(button);
+
+        return wrapper;
+    };
+
+    // Left Container - createCheckOutCartWrapper
+    createCheckOutCartWrapper = () => {
+        const checkOutCartWrapper = document.createElement("div");
+        checkOutCartWrapper.classList = "checkout-cart-wrapper";
+
+        const title = document.createElement("h3");
+        title.classList = "checkout-cart-title";
+        title.innerText = "Cart";
+
+        const cartItemsWrapper = document.createElement("div");
+        cartItemsWrapper.classList = "checkout-cart-items";
+
+        checkOutCartWrapper.appendChild(title);
+        checkOutCartWrapper.appendChild(cartItemsWrapper);
+
+        return checkOutCartWrapper;
+    };
 }

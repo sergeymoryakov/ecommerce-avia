@@ -20,11 +20,42 @@ let sessionIdNumber = "";
 let sessionIdUser = {};
 let sessionIdCustomer = {};
 let sessionIdOrders = [];
-let sessionIdCart = [];
+let sessionIdCartItems = [];
 let sessionIdCartPrice = {
     // items: 800000,
     // handling: 8000,
     // total: 808000,
+};
+
+let sessionIdCartDetails = {
+    // userId: "1001",
+    // userName: "Mattew Yampolski",
+    // userEmail: "matt.y@aerosupplyplus.aero",
+    // userPhone: "+1 898 9289289",
+    // custId: "c001",
+    // custLegalName: "AeroSupplyPlus LLC",
+    // custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
+    // custHandlingFee: 1,
+};
+
+let newOrderDetails = {
+    // userId: "1001",
+    // userName: "Mattew Yampolski",
+    // userEmail: "matt.y@aerosupplyplus.aero",
+    // userPhone: "+1 898 9289289",
+    // custId: "c001",
+    // custLegalName: "AeroSupplyPlus LLC",
+    // custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
+    // custHandlingFee: 1,
+    // priceItems: 800000,
+    // priceHandling: 8000,
+    // priceTotal: 808000,
+    // orderCurrency: "$",
+    // paymentMethod: "card",
+    // orderId: "100005",
+    // orderDate: "20230828",
+    // paymentDate: "20230828",
+    // docId: "iuyreqouoqoiwyiuyorqwriuyqeoiuyrw",
 };
 
 // Init HTML variables:
@@ -54,6 +85,7 @@ export class Controller {
         this.containerLeftNode = document.getElementById("containerLeft");
         this.containerRightNode = document.getElementById("containerRight");
     }
+
     initializeAppMain = async () => {
         // TEST AND TBS - REMOVE IN PRODUCTION
         console.log("HELLO! INIT CARRIED OUT SUCCESFULLY");
@@ -121,18 +153,25 @@ export class Controller {
         );
 
         // Get values to CURRENT SESSION VARIABLES
-        // 1. Set "sessionIdCart" by sesstion's userId (sessionIdNumber):
-        sessionIdCart = this.getCartItemsByUserID(sessionIdNumber);
+        // 1. Set "sessionIdCartItems" by sesstion's userId (sessionIdNumber):
+        sessionIdCartItems = this.getCartItemsByUserID(sessionIdNumber);
         console.log(
-            `Cart items [*** sessionIdCart ***] for User ID ${sessionIdNumber}: `,
-            sessionIdCart
+            `[*** sessionIdCartItems ***] for User ID ${sessionIdNumber}: `,
+            sessionIdCartItems
         );
 
         // 2. Set "sessionIdOrders" by sesstion's userId (sessionIdNumber):
         sessionIdOrders = this.getOrdersByUserID(sessionIdNumber);
         console.log(
-            `Orders History [*** sessionIdOrders ***] for User ID ${sessionIdNumber}: `,
+            `[*** sessionIdOrders ***] for User ID ${sessionIdNumber}: `,
             sessionIdOrders
+        );
+
+        // 3. Set "sessionIdCartDetails":
+        sessionIdCartDetails = this.getSessionIdCartDetails();
+        console.log(
+            `[*** sessionIdCartDetails ***] for User ID ${sessionIdNumber}: `,
+            sessionIdCartDetails
         );
 
         // ALERT - POPOUP DISCLAMER
@@ -145,7 +184,7 @@ export class Controller {
         this.renderProductItemsList(dataBase.productItems);
 
         // Right Container - Render Cart Summary
-        this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
+        this.renderCartAndOrdersSummary(sessionIdCartItems, sessionIdOrders);
 
         this.attachEventListenrs();
 
@@ -201,12 +240,28 @@ export class Controller {
         return sessionIdCustomer;
     };
 
+    // Set "sessionIdCartDetails":
+    getSessionIdCartDetails = () => {
+        const updatedSessionIdCartDetails = {
+            userId: sessionIdUser.userId,
+            userName: sessionIdUser.userName,
+            userEmail: sessionIdUser.userEmail,
+            userPhone: sessionIdUser.userPhone,
+            custId: sessionIdCustomer.custId,
+            custLegalName: sessionIdCustomer.custLegalName,
+            custBillToAddress: sessionIdCustomer.custBillToAddress,
+            custHandlingFee: sessionIdCustomer.custHandlingFee,
+            paymentMethod: sessionIdCustomer.paymentMethod,
+        };
+        return updatedSessionIdCartDetails;
+    };
+
     // Revert back from map an image URL by image name
     getUrlByNameLocal = (imageName) => {
         return imageLinksMap.get(imageName);
     };
 
-    // Set "sessionIdCart" by sesstion's userId (sessionIdNumber):
+    // Set "sessionIdCartItems" by sesstion's userId (sessionIdNumber):
     getCartItemsByUserID = (sessionIdNumber) => {
         return dataBase.cartsData.filter(
             (order) => order.userId === sessionIdNumber
@@ -273,7 +328,7 @@ export class Controller {
         console.log("Received command to call for Price Variable update");
         // TEST-TBD
         this.updateCartPriceVariable(
-            sessionIdCart,
+            sessionIdCartItems,
             sessionIdCartPrice,
             dataBase.productItems,
             sessionIdCustomer.custHandlingFee
@@ -282,7 +337,7 @@ export class Controller {
 
     // MIGHT BE A PART OF MODEL:
     updateCartPriceVariable = (
-        sessionIdCart,
+        sessionIdCartItems,
         sessionIdCartPrice,
         productItems,
         handlingRate
@@ -291,7 +346,10 @@ export class Controller {
         let newHandlingFee = 0;
 
         // TO-DO: CHECK, if it is required here. Delete for now:
-        console.log("MODEL - [*** sessionIdCart ***]: ", sessionIdCart);
+        console.log(
+            "MODEL - [*** sessionIdCartItems ***]: ",
+            sessionIdCartItems
+        );
         console.log(
             "MODEL - [*** sessionIdCartPrice ***]: ",
             sessionIdCartPrice
@@ -302,7 +360,7 @@ export class Controller {
         );
         console.log("MODEL - [*** sessionIdCustome ***]: ", sessionIdCustomer);
 
-        for (const item of sessionIdCart) {
+        for (const item of sessionIdCartItems) {
             newItemsPrice +=
                 item.qty * this.getPriceByProductId(productItems, item.itemId);
         }
@@ -314,7 +372,7 @@ export class Controller {
         sessionIdCartPrice.total = newItemsPrice + newHandlingFee;
 
         console.log("new sessionIdCartPrice: ", sessionIdCartPrice);
-        console.log("for sessionIdCart: ", sessionIdCart);
+        console.log("for sessionIdCartItems: ", sessionIdCartItems);
 
         // TO-DO: CHECK, if it is required here. Delete for now:
         // this.controller.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
@@ -343,27 +401,35 @@ export class Controller {
     };
 
     // Left Container - Render Order CART
-    renderCartSummary = (sessionIdCart) => {
+    renderCartSummary = (sessionIdCartItems) => {
         let productCardForCartHTML;
-        if (sessionIdCart.length === 0) {
+        if (sessionIdCartItems.length === 0) {
             productCardForCartHTML =
-                this.viewCart.createEmptyCartPage(sessionIdCart);
+                this.viewCart.createEmptyCartPage(sessionIdCartItems);
         } else {
             productCardForCartHTML =
-                this.viewCart.createCartPage(sessionIdCart);
+                this.viewCart.createCartPage(sessionIdCartItems);
         }
 
         this.clearContainerLeft();
         this.containerLeftNode.appendChild(productCardForCartHTML);
     };
 
+    // Left Container - Render Product Card
+    renderProductCard = (productObject) => {
+        const detailedCardHTML =
+            this.viewProducts.createDetailedProductCard(productObject);
+        this.clearContainerLeft();
+        this.containerLeftNode.appendChild(detailedCardHTML);
+    };
+
     // Right Container - Render Cart (no price) and Orders Summaries
-    renderCartAndOrdersSummary = (sessionIdCart, sessionIdOrders) => {
+    renderCartAndOrdersSummary = (sessionIdCartItems, sessionIdOrders) => {
         const cartAndOrdersSummary = document.createElement("div");
         cartAndOrdersSummary.innerHTML = "";
 
         const cartItems =
-            this.viewCart.createNewCartSummaryNoTotal(sessionIdCart);
+            this.viewCart.createNewCartSummaryNoTotal(sessionIdCartItems);
 
         const ordersHistory =
             this.viewOrders.createOrdersHistorySummary(sessionIdOrders);
@@ -380,12 +446,12 @@ export class Controller {
     };
 
     // Right Container - Render Cart (with price)
-    renderCartSummaryWithPrice = (sessionIdCart, sessionIdCartPrice) => {
+    renderCartSummaryWithPrice = (sessionIdCartItems, sessionIdCartPrice) => {
         const cartSummaryWrapper = document.createElement("div");
         cartSummaryWrapper.innerHTML = "";
 
         const cartSummary = this.viewCart.createNewCartSummaryWithPrice(
-            sessionIdCart,
+            sessionIdCartItems,
             sessionIdCartPrice
         );
 
@@ -398,11 +464,59 @@ export class Controller {
         this.containerRightNode.appendChild(cartSummaryWrapper);
     };
 
-    renderProductCard = (productObject) => {
-        const detailedCardHTML =
-            this.viewProducts.createDetailedProductCard(productObject);
+    // Left Container - Render Checkout Panel
+    renderCheckOutPanel = () => {
         this.clearContainerLeft();
-        this.containerLeftNode.appendChild(detailedCardHTML);
+
+        const checkOutWrapper = this.viewOrders.createCheckOutWrapper();
+
+        // Second argument ("true") is to create "Update" button
+        checkOutWrapper.appendChild(
+            this.viewOrders.createBillToAddressContentBlock(
+                sessionIdCartDetails,
+                true
+            )
+        );
+
+        // Second argument ("true") is to create "Update" button
+        checkOutWrapper.appendChild(
+            this.viewOrders.createPaymentMethodContentBlock(
+                sessionIdCartDetails,
+                true
+            )
+        );
+
+        const checkOutCartWrapper = this.viewOrders.createCheckOutCartWrapper();
+
+        for (const productItem of sessionIdCartItems) {
+            const productData = this.getProductObjectById(productItem.itemId);
+            checkOutCartWrapper.appendChild(
+                this.viewCart.createProductCardForCart(
+                    productData,
+                    productItem.qty
+                )
+            );
+        }
+
+        checkOutCartWrapper.appendChild(
+            this.viewOrders.createUpdateButtonBlock()
+        );
+
+        checkOutWrapper.appendChild(checkOutCartWrapper);
+
+        this.containerLeftNode.appendChild(checkOutWrapper);
+    };
+
+    // Right Container - Render Checkout Price Panel
+    renderCheckOutPricePanel = () => {
+        this.clearContainerRight();
+        this.containerRightNode.appendChild(
+            // Second argument ("true") is to create "Place Order" button
+            this.viewOrders.createOrderSummaryPriceBlock(
+                sessionIdCartPrice,
+                true
+            )
+        );
     };
 
     // Support funtions for buttons handler:
@@ -423,7 +537,7 @@ export class Controller {
     handleGotoProductsBtn = () => {
         this.renderProductItemsList(dataBase.productItems);
         // TO-DO: CHECK, if it is required here. Delete for now:
-        this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
+        this.renderCartAndOrdersSummary(sessionIdCartItems, sessionIdOrders);
     };
 
     // "Add to Cart" button at detailed product card (page)
@@ -435,7 +549,7 @@ export class Controller {
 
         // Check if product already in user's cart
         const isInTheCart = this.getDocIdFromArrayByItemId(
-            sessionIdCart,
+            sessionIdCartItems,
             itemId
         );
 
@@ -445,7 +559,7 @@ export class Controller {
             this.addProduct(itemId, sessionIdNumber);
         }
 
-        this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
+        this.renderCartAndOrdersSummary(sessionIdCartItems, sessionIdOrders);
     };
 
     // "Go to Cart" button at right panel
@@ -453,18 +567,20 @@ export class Controller {
         console.log("Received command to display CART.");
         // TEST-TBD
         this.updateCartPriceVariable(
-            sessionIdCart,
+            sessionIdCartItems,
             sessionIdCartPrice,
             dataBase.productItems,
             sessionIdCustomer.custHandlingFee
         );
-        this.renderCartSummary(sessionIdCart);
-        this.renderCartSummaryWithPrice(sessionIdCart, sessionIdCartPrice);
+        this.renderCartSummary(sessionIdCartItems);
+        this.renderCartSummaryWithPrice(sessionIdCartItems, sessionIdCartPrice);
     };
 
     // "Proceed to checkout" button at right panel
     handleProceedToCheckoutBtn = () => {
         console.log("Received command PROCEED TO CHECKOUT");
+        this.renderCheckOutPanel();
+        this.renderCheckOutPricePanel();
     };
 
     // Product card as "button" at main page
@@ -477,7 +593,7 @@ export class Controller {
         this.renderProductCard(productToDisplay);
 
         // TO-DO: CHECK, if it is required here. Delete for now:
-        // this.renderCartAndOrdersSummary(sessionIdCart, sessionIdOrders);
+        // this.renderCartAndOrdersSummary(sessionIdCartItems, sessionIdOrders);
     };
 
     // TO-DO: Create ORDER POP UP:
@@ -493,13 +609,13 @@ export class Controller {
             "Function: 'handleQtyChangeBtn()': update QTY of prod ID: ",
             elementDOM.id
         );
-        console.log("'sessionIdCart': ", sessionIdCart);
+        console.log("'sessionIdCartItems': ", sessionIdCartItems);
         console.log("itemId: ", itemId);
 
         // product/object to update:
         const productToUpdate = JSON.parse(
             JSON.stringify(
-                sessionIdCart.find((product) => product.itemId === itemId)
+                sessionIdCartItems.find((product) => product.itemId === itemId)
             )
         );
 
@@ -510,15 +626,19 @@ export class Controller {
 
         // remove product from array:
 
-        const filteredSessionIdCart = sessionIdCart.filter(
+        const filteredsessionIdCartItems = sessionIdCartItems.filter(
             (product) => product.itemId !== itemId
         );
 
         if (productToUpdate.qty + adder > 0) {
-            this.updateProduct(filteredSessionIdCart, productToUpdate, adder);
+            this.updateProduct(
+                filteredsessionIdCartItems,
+                productToUpdate,
+                adder
+            );
             this.updateCartDOM(itemId, productToUpdate);
         } else {
-            this.deleteProduct(filteredSessionIdCart, productToUpdate);
+            this.deleteProduct(filteredsessionIdCartItems, productToUpdate);
             this.handleGotoCartBtn();
         }
     };
@@ -537,30 +657,33 @@ export class Controller {
         );
         this.handleAddDocToFirestore("cartsData", newProductToCart);
 
-        sessionIdCart.push(newProductToCart);
-        console.log("Updated [*** sessionIdCart ***]: ", sessionIdCart);
+        sessionIdCartItems.push(newProductToCart);
+        console.log(
+            "Updated [*** sessionIdCartItems ***]: ",
+            sessionIdCartItems
+        );
     };
 
-    updateProduct = (filteredSessionIdCart, productToUpdate, adder) => {
+    updateProduct = (filteredsessionIdCartItems, productToUpdate, adder) => {
         // Modify product/object
         productToUpdate.qty += adder;
 
         // Add product back to array
-        filteredSessionIdCart.push(productToUpdate);
+        filteredsessionIdCartItems.push(productToUpdate);
 
         // Update Firestore
         this.handleUpdateDocInFirestore("cartsData", productToUpdate);
 
         // Update global variable
-        sessionIdCart = filteredSessionIdCart;
+        sessionIdCartItems = filteredsessionIdCartItems;
     };
 
-    deleteProduct = (filteredSessionIdCart, productToUpdate) => {
+    deleteProduct = (filteredsessionIdCartItems, productToUpdate) => {
         // Delete product from Firestore
         this.handleDeleteDocFromFirestore("cartsData", productToUpdate.docId);
 
         // Update global variable
-        sessionIdCart = filteredSessionIdCart;
+        sessionIdCartItems = filteredsessionIdCartItems;
     };
 
     updateCartDOM = (itemId, productToUpdate) => {
@@ -656,7 +779,7 @@ export class Controller {
         // Alternative command:
         // const goToCartBtn = target.closest(".cart-goto-btn");
         if (goToCartBtn) {
-            this.handleGotoCartBtn(sessionIdCart);
+            this.handleGotoCartBtn(sessionIdCartItems);
         }
 
         // "Proceed to checkout" button at right panel
