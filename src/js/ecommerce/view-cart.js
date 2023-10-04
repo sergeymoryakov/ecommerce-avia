@@ -179,11 +179,17 @@ export class ViewCart {
     };
 
     // Left Container - Create Product Item Card block
-
-    createProductCardForCart = (productObject, qtyInCart) => {
+    // Third argument ("customClassList") is a classList to pass to 'div' element
+    // Fourth argument ("updateBlock") is to create an "update qty" feature
+    createProductCardForCart = (
+        productObject,
+        qtyInCart,
+        customClassList,
+        updateBlock
+    ) => {
         // Create elements
         const productCardMain = document.createElement("div");
-        productCardMain.classList = "cart-item";
+        productCardMain.classList = customClassList;
         // TO-DO : verify if "itemId" is better to use instead of "docId" here:
         productCardMain.id = `cart-item_${productObject.itemId}`;
 
@@ -301,9 +307,11 @@ export class ViewCart {
         partAvailabilityWrapper.appendChild(partAvailability);
         cardSummary.appendChild(partAvailabilityWrapper);
 
-        qtyModifierWrapper.appendChild(qtyModifierDeductBtn);
-        qtyModifierWrapper.appendChild(qtyModifierIndicator);
-        qtyModifierWrapper.appendChild(qtyModifierAddBtn);
+        if (updateBlock) {
+            qtyModifierWrapper.appendChild(qtyModifierDeductBtn);
+            qtyModifierWrapper.appendChild(qtyModifierIndicator);
+            qtyModifierWrapper.appendChild(qtyModifierAddBtn);
+        }
 
         priceElementWrapper.appendChild(priceElement);
         priceElementWrapper.appendChild(qtyModifierWrapper);
@@ -345,8 +353,16 @@ export class ViewCart {
                 productItem.itemId
             );
             // console.log("productData: ", productData);
+
+            // Third argument ("cart-item") is a classList to pass to 'div' element
+            // Fourth argument ("true") is to create an "update" feature
             cartItemsWrapper.appendChild(
-                this.createProductCardForCart(productData, productItem.qty)
+                this.createProductCardForCart(
+                    productData,
+                    productItem.qty,
+                    "cart-item",
+                    true
+                )
             );
         }
 

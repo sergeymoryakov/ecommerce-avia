@@ -82,15 +82,14 @@ export class ViewOrders {
         totalWrapper.appendChild(totalTitle);
         totalWrapper.appendChild(totalAmount);
 
-        title.appendChild(itemsWrapper);
-        title.appendChild(handlingWrapper);
-        title.appendChild(totalWrapper);
+        orderSummary.appendChild(title);
+        orderSummary.appendChild(itemsWrapper);
+        orderSummary.appendChild(handlingWrapper);
+        orderSummary.appendChild(totalWrapper);
 
         if (orderButton) {
-            title.appendChild(this.createPlaceOrderButtonBlock());
+            orderSummary.appendChild(this.createPlaceOrderButtonBlock());
         }
-
-        orderSummary.appendChild(title);
 
         return orderSummary;
     };
@@ -147,17 +146,16 @@ export class ViewOrders {
         const userEmail = document.createElement("p");
         userEmail.innerText = sessionIdCartDetails.userEmail;
 
-        title.appendChild(custLegalName);
-        title.appendChild(custBillToAddress);
-        title.appendChild(userName);
-        title.appendChild(userPhone);
-        title.appendChild(userEmail);
+        addressWrapper.appendChild(title);
+        addressWrapper.appendChild(custLegalName);
+        addressWrapper.appendChild(custBillToAddress);
+        addressWrapper.appendChild(userName);
+        addressWrapper.appendChild(userPhone);
+        addressWrapper.appendChild(userEmail);
 
         if (updateButton) {
-            title.appendChild(this.createUpdateButtonBlock());
+            addressWrapper.appendChild(this.createUpdateButtonBlock());
         }
-
-        addressWrapper.appendChild(title);
 
         return addressWrapper;
     };
@@ -174,15 +172,32 @@ export class ViewOrders {
         const paymentMethod = document.createElement("p");
         paymentMethod.innerText = sessionIdCartDetails.paymentMethod;
 
-        title.appendChild(paymentMethod);
+        paymentMethodWrapper.appendChild(title);
+        paymentMethodWrapper.appendChild(paymentMethod);
 
         if (updateButton) {
-            title.appendChild(this.createUpdateButtonBlock());
+            paymentMethodWrapper.appendChild(this.createUpdateButtonBlock());
         }
 
-        paymentMethodWrapper.appendChild(title);
-
         return paymentMethodWrapper;
+    };
+
+    // Left Container - createCheckOutCartWrapper
+    createCheckOutCartWrapper = () => {
+        const checkOutCartWrapper = document.createElement("div");
+        checkOutCartWrapper.classList = "checkout-cart-wrapper";
+
+        const title = document.createElement("h3");
+        title.classList = "checkout-cart-title";
+        title.innerText = "Cart";
+
+        // const cartItemsWrapper = document.createElement("div");
+        // cartItemsWrapper.classList = "checkout-cart-items";
+
+        checkOutCartWrapper.appendChild(title);
+        // checkOutCartWrapper.appendChild(cartItemsWrapper);
+
+        return checkOutCartWrapper;
     };
 
     // Left Container - Create UpdateButtonBlock
@@ -197,23 +212,5 @@ export class ViewOrders {
         wrapper.appendChild(button);
 
         return wrapper;
-    };
-
-    // Left Container - createCheckOutCartWrapper
-    createCheckOutCartWrapper = () => {
-        const checkOutCartWrapper = document.createElement("div");
-        checkOutCartWrapper.classList = "checkout-cart-wrapper";
-
-        const title = document.createElement("h3");
-        title.classList = "checkout-cart-title";
-        title.innerText = "Cart";
-
-        const cartItemsWrapper = document.createElement("div");
-        cartItemsWrapper.classList = "checkout-cart-items";
-
-        checkOutCartWrapper.appendChild(title);
-        checkOutCartWrapper.appendChild(cartItemsWrapper);
-
-        return checkOutCartWrapper;
     };
 }
