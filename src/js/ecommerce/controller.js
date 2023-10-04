@@ -38,25 +38,25 @@ let sessionIdCartDetails = {
     // custHandlingFee: 1,
 };
 
-let newOrderDetails = {
-    // userId: "1001",
-    // userName: "Mattew Yampolski",
-    // userEmail: "matt.y@aerosupplyplus.aero",
-    // userPhone: "+1 898 9289289",
-    // custId: "c001",
-    // custLegalName: "AeroSupplyPlus LLC",
-    // custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
-    // custHandlingFee: 1,
-    // priceItems: 800000,
-    // priceHandling: 8000,
-    // priceTotal: 808000,
-    // orderCurrency: "$",
-    // paymentMethod: "card",
-    // orderId: "100005",
-    // orderDate: "20230828",
-    // paymentDate: "20230828",
-    // docId: "iuyreqouoqoiwyiuyorqwriuyqeoiuyrw",
-};
+// let newOrderDetails = {
+//     // userId: "1001",
+//     // userName: "Mattew Yampolski",
+//     // userEmail: "matt.y@aerosupplyplus.aero",
+//     // userPhone: "+1 898 9289289",
+//     // custId: "c001",
+//     // custLegalName: "AeroSupplyPlus LLC",
+//     // custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
+//     // custHandlingFee: 1,
+//     // priceItems: 800000,
+//     // priceHandling: 8000,
+//     // priceTotal: 808000,
+//     // orderCurrency: "$",
+//     // paymentMethod: "card",
+//     // orderId: "100005",
+//     // orderDate: "20230828",
+//     // paymentDate: "20230828",
+//     // docId: "iuyreqouoqoiwyiuyorqwriuyqeoiuyrw",
+// };
 
 // Init HTML variables:
 const productsList = document.createElement("div");
@@ -100,20 +100,8 @@ export class Controller {
         this.modelOrders.checkModuleLinkage();
         this.modelUser.checkModuleLinkage();
 
-        // Get data from database (Firebase) and keep in dataBase{}
-        console.log(
-            "Action: Getdata from database (Firebase) and keep in dataBase{}."
-        );
-
-        for (const collectionName of dbCollectionNames) {
-            dataBase[collectionName] = await this.modelFirebase.get(
-                collectionName
-            );
-            console.log(
-                `[*** dataBase.${collectionName} ***] :`,
-                dataBase[collectionName]
-            );
-        }
+        // Get data from database (Firebase) and keep in local dataBase{}
+        await this.getUpdateLocalDataBase();
 
         // Create Image Links Map:
         console.log("Action: Create Image Links Map imageLinksMap{}:");
@@ -217,6 +205,23 @@ export class Controller {
 
     clearContainerRight = () => {
         this.containerRightNode.innerHTML = "";
+    };
+
+    // Get or Update data from Firebase and keep in local dataBase{}.
+    getUpdateLocalDataBase = async () => {
+        console.log(
+            "Get or Update data from Firebase and keep in local dataBase{}."
+        );
+
+        for (const collectionName of dbCollectionNames) {
+            dataBase[collectionName] = await this.modelFirebase.get(
+                collectionName
+            );
+            console.log(
+                `[*** dataBase.${collectionName} ***] :`,
+                dataBase[collectionName]
+            );
+        }
     };
 
     deleteObjectFromArrayByDocId = (arrayData, docId) => {
@@ -571,10 +576,10 @@ export class Controller {
         this.renderCartAndOrdersSummary(sessionIdCartItems, sessionIdOrders);
     };
 
-    // "Go to Cart" button at right panel
+    // "Go to Cart" button at right panel or checkout panel
     handleGotoCartBtn = () => {
+        // TEST-TBS REMOVE IN PROD
         console.log("Received command to display CART.");
-        // TEST-TBD
         this.updateCartPriceVariable(
             sessionIdCartItems,
             sessionIdCartPrice,
@@ -583,6 +588,87 @@ export class Controller {
         );
         this.renderCartSummary(sessionIdCartItems);
         this.renderCartSummaryWithPrice(sessionIdCartItems, sessionIdCartPrice);
+    };
+
+    // Handle Order Placement
+    handleOrderPlacement = async () => {
+        // TEST-TBS REMOVE IN PROD
+        console.log("Received command to PLACE ORDER (HANDLER CONNECTED).");
+
+        // 1.A. Prepare newOrderDetails to pass to Firestore
+        const newOrderDetails = JSON.parse(
+            JSON.stringify(
+                this.modelFirebase.setNewOrderDetails(
+                    sessionIdCartDetails,
+                    sessionIdCartPrice
+                )
+            )
+        );
+
+        // TEST-TBS REMOVE IN PROD
+        console.log("[*** newOrderDetails ***] set: ", newOrderDetails);
+
+        // 1.B. Pass newOrderDetails to Firestore
+        try {
+            this.handleAddDocToFirestore("ordersData", newOrderDetails);
+        } catch (error) {
+            console.error("Error adding newOrderDetails to Firestore: ", error);
+        }
+
+        // 1.C. Push newOrderDetails to dataBase.ordersData
+        // dataBase.ordersData.push(newOrderDetails);
+
+        // 2.A. Prepare newOrderItems to pass to Firestore
+        const newOrderItems = JSON.parse(JSON.stringify(sessionIdCartItems));
+
+        // TEST-TBS REMOVE IN PROD
+        console.log("[*** newOrderItems ***] set: ", newOrderItems);
+        for (const productItem in newOrderItems) {
+            newOrderItems[productItem].orderId = newOrderDetails.orderId;
+
+            console.log(
+                "[*** productItem ***] set: ",
+                newOrderItems[productItem]
+            );
+            // 2.B. Pass productItem to Firestore
+            try {
+                this.handleAddDocToFirestore(
+                    "orderItemsData",
+                    newOrderItems[productItem]
+                );
+            } catch (error) {
+                console.error("Error adding productItem to Firestore: ", error);
+            }
+
+            // 2.C. Push productItem to dataBase.orderItemsData
+            // dataBase.orderItemsData.push(newOrderItems[productItem]);
+        }
+
+        // 3.A. Clear sessionIdCartItems from Firestore
+        for (const cartItem in sessionIdCartItems) {
+            console.log(
+                "[*** sessionIdCartItems[cartItem].docId ***] to delete from cartsData: ",
+                sessionIdCartItems[cartItem].docId
+            );
+            try {
+                this.handleDeleteDocFromFirestore(
+                    "cartsData",
+                    sessionIdCartItems[cartItem].docId
+                );
+            } catch (error) {
+                console.error(
+                    "Error deleting sessionIdCartItems from Firestore: ",
+                    error
+                );
+            }
+        }
+
+        console.log("UPDATE LOCAL DATABASE VARIABLES HERE");
+        try {
+            await this.getUpdateLocalDataBase();
+        } catch (error) {
+            console.error("Error updating local variables: ", error);
+        }
     };
 
     // "Proceed to checkout" button at right panel
@@ -600,12 +686,8 @@ export class Controller {
         const productIdToDisplay = this.getProdIdFromElementId(element.id);
         const productToDisplay = this.getProductObjectById(productIdToDisplay);
         this.renderProductCard(productToDisplay);
-
-        // TO-DO: CHECK, if it is required here. Delete for now:
-        // this.renderCartAndOrdersSummary(sessionIdCartItems, sessionIdOrders);
     };
 
-    // TO-DO: Create ORDER POP UP:
     handleDisplayHistoricalOrder = (element) => {
         // TEST-TBS REMOVE IN PROD
         console.log("Display ORDER with ID: ", element.id);
@@ -729,6 +811,12 @@ export class Controller {
             return;
         }
 
+        // "< Back to Cart" button
+        if (target.classList.contains("goto-cart-btn")) {
+            this.handleGotoCartBtn();
+            return;
+        }
+
         // "Add to Cart" button at detailed product card (page)
         const addToCartBtn = target.closest(".product-card__add-to-cart-btn");
         if (addToCartBtn) {
@@ -788,7 +876,7 @@ export class Controller {
         // Alternative command:
         // const goToCartBtn = target.closest(".cart-goto-btn");
         if (goToCartBtn) {
-            this.handleGotoCartBtn(sessionIdCartItems);
+            this.handleGotoCartBtn();
         }
 
         // "Proceed to checkout" button at right panel
@@ -799,6 +887,17 @@ export class Controller {
         if (proceedToCheckoutBtn) {
             // TO-DO
             this.handleProceedToCheckoutBtn();
+        }
+
+        // "Place Order" button at right panel
+        const placeOrderBtn = this.findAncestorByClass(
+            target,
+            "place-order-btn"
+        );
+        if (placeOrderBtn) {
+            // TO-DO
+            console.log("Received PLACE ORDER command.");
+            this.handleOrderPlacement();
         }
     };
 

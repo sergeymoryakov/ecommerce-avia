@@ -13,6 +13,7 @@ import {
     setDoc,
     deleteDoc,
     updateDoc,
+    serverTimestamp,
     // query,
     // orderBy,
 } from "firebase/firestore";
@@ -55,11 +56,6 @@ export class ModelFirebase {
     constructor() {}
     checkModuleLinkage = () => {
         console.log("HELLO, ModelFirebase is connected!");
-    };
-
-    // Generate unique ID
-    generateUniqueId = () => {
-        return uuidv4();
     };
 
     get = async (collectionName) => {
@@ -114,6 +110,24 @@ export class ModelFirebase {
         }
     };
 
+    // Support Functions
+
+    // Generate unique ID
+    generateUniqueId = () => {
+        return uuidv4();
+    };
+
+    // Generate a unique alphanumeric Order Number array
+    generateOrderNumber = (arrayLength) => {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let result = "";
+        for (let i = 0; i < arrayLength; i++) {
+            const randomIndex = Math.floor(Math.random() * chars.length);
+            result += chars[randomIndex];
+        }
+        return result;
+    };
+
     getLinkToImage = async (imageName) => {
         return new Promise((resolve, reject) => {
             const specificImageRef = ref(storage, `images/${imageName}`);
@@ -126,5 +140,29 @@ export class ModelFirebase {
                     reject(error);
                 });
         });
+    };
+
+    // Set newOrderDetails variable
+    setNewOrderDetails = (sessionIdCartDetails, sessionIdCartPrice) => {
+        const newOrderDetails = {
+            userId: sessionIdCartDetails.userId,
+            userName: sessionIdCartDetails.userName,
+            userEmail: sessionIdCartDetails.userEmail,
+            userPhone: sessionIdCartDetails.userPhone,
+            custId: sessionIdCartDetails.custId,
+            custLegalName: sessionIdCartDetails.custLegalName,
+            custBillToAddress: sessionIdCartDetails.custBillToAddress,
+            custHandlingFee: sessionIdCartDetails.custHandlingFee,
+            paymentMethod: sessionIdCartDetails.paymentMethod,
+            priceItems: sessionIdCartPrice.items,
+            priceHandling: sessionIdCartPrice.handling,
+            priceTotal: sessionIdCartPrice.total,
+            orderCurrency: "$",
+            orderId: this.generateOrderNumber(8),
+            orderDate: serverTimestamp(),
+            paymentDate: serverTimestamp(),
+            docId: this.generateUniqueId(),
+        };
+        return newOrderDetails;
     };
 }
