@@ -370,7 +370,7 @@ export class Controller {
                 item.qty * this.getPriceByProductId(productItems, item.itemId);
         }
 
-        newHandlingFee = newItemsPrice * handlingRate;
+        newHandlingFee = (newItemsPrice * handlingRate) / 100;
 
         sessionIdCartPrice.items = newItemsPrice;
         sessionIdCartPrice.handling = newHandlingFee;
@@ -519,6 +519,58 @@ export class Controller {
         checkOutWrapper.appendChild(checkOutCartWrapper);
 
         this.containerLeftNode.appendChild(checkOutWrapper);
+    };
+
+    // Left Container - Render Order Panel
+    renderOrderPanel = () => {
+        this.clearContainerLeft();
+
+        const orderWrapper = this.viewOrders.createOrderWrapper();
+
+        // // Second argument ("true") is to create "Update" button
+        // checkOutWrapper.appendChild(
+        //     this.viewOrders.createBillToAddressContentBlock(
+        //         sessionIdCartDetails,
+        //         true
+        //     )
+        // );
+
+        // // Second argument ("true") is to create "Update" button
+        // checkOutWrapper.appendChild(
+        //     this.viewOrders.createPaymentMethodContentBlock(
+        //         sessionIdCartDetails,
+        //         true
+        //     )
+        // );
+
+        // const checkOutCartWrapper = this.viewOrders.createCheckOutCartWrapper();
+
+        // const cartItems = document.createElement("div");
+        // cartItems.classList = "checkout-cart-items";
+
+        // for (const productItem of sessionIdCartItems) {
+        //     const productData = this.getProductObjectById(productItem.itemId);
+        //     // Third argument ("checkout-cart-item") is a classList to pass to 'div' element
+        //     // Fourth argument ("true") is for not to create a "qty update" feature
+        //     cartItems.appendChild(
+        //         this.viewCart.createProductCardForCart(
+        //             productData,
+        //             productItem.qty,
+        //             "checkout-cart-item",
+        //             false
+        //         )
+        //     );
+        // }
+
+        // checkOutCartWrapper.appendChild(cartItems);
+
+        // checkOutCartWrapper.appendChild(
+        //     this.viewOrders.createUpdateButtonBlock()
+        // );
+
+        // checkOutWrapper.appendChild(checkOutCartWrapper);
+
+        // this.containerLeftNode.appendChild(checkOutWrapper);
     };
 
     // Right Container - Render Checkout Price Panel

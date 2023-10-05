@@ -13,7 +13,7 @@ import {
     setDoc,
     deleteDoc,
     updateDoc,
-    serverTimestamp,
+    // serverTimestamp,
     // query,
     // orderBy,
 } from "firebase/firestore";
@@ -144,6 +144,7 @@ export class ModelFirebase {
 
     // Set newOrderDetails variable
     setNewOrderDetails = (sessionIdCartDetails, sessionIdCartPrice) => {
+        const timestamp = Date.now();
         const newOrderDetails = {
             userId: sessionIdCartDetails.userId,
             userName: sessionIdCartDetails.userName,
@@ -159,8 +160,8 @@ export class ModelFirebase {
             priceTotal: sessionIdCartPrice.total,
             orderCurrency: "$",
             orderId: this.generateOrderNumber(8),
-            orderDate: serverTimestamp(),
-            paymentDate: serverTimestamp(),
+            orderDate: timestamp,
+            paymentDate: timestamp,
             docId: this.generateUniqueId(),
         };
         return newOrderDetails;
