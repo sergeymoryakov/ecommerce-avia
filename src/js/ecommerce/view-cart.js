@@ -125,7 +125,7 @@ export class ViewCart {
         const totalAmount = document.createElement("p");
         totalAmount.classList = "cart-total-amount";
         totalAmount.id = "cart-total-amount";
-        totalAmount.innerText = `Total: $${sessionIdCartPrice.total}`;
+        totalAmount.innerText = `Total: $${sessionIdCartPrice.priceTotal}`;
 
         wrapper.appendChild(totalAmount);
 

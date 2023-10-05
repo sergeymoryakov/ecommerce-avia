@@ -22,9 +22,9 @@ let sessionIdCustomer = {};
 let sessionIdOrders = [];
 let sessionIdCartItems = [];
 let sessionIdCartPrice = {
-    // items: 800000,
-    // handling: 8000,
-    // total: 808000,
+    // priceItems: 800000,
+    // priceHandling: 8000,
+    // priceTotal: 808000,
 };
 
 let sessionIdCartDetails = {
@@ -280,6 +280,20 @@ export class Controller {
         );
     };
 
+    // Get "orderDetailsToDisplay" by orderNumber:
+    getOrderDetailsToDisplay = (orderNumber) => {
+        return dataBase.ordersData.filter(
+            (order) => order.orderId === orderNumber
+        )[0];
+    };
+
+    // Get "orderItemsToDisplay" by orderNumber:
+    getOrderItemsToDisplay = (orderNumber) => {
+        return dataBase.orderItemsData.filter(
+            (order) => order.orderId === orderNumber
+        );
+    };
+
     getImageByProductId = (productId) => {
         const productObject = dataBase.productItems.filter(
             (product) => product.itemId === productId
@@ -372,15 +386,15 @@ export class Controller {
 
         newHandlingFee = (newItemsPrice * handlingRate) / 100;
 
-        sessionIdCartPrice.items = newItemsPrice;
-        sessionIdCartPrice.handling = newHandlingFee;
-        sessionIdCartPrice.total = newItemsPrice + newHandlingFee;
+        sessionIdCartPrice.priceItems = newItemsPrice;
+        sessionIdCartPrice.priceHandling = newHandlingFee;
+        sessionIdCartPrice.priceTotal = newItemsPrice + newHandlingFee;
 
         console.log("new sessionIdCartPrice: ", sessionIdCartPrice);
         console.log("for sessionIdCartItems: ", sessionIdCartItems);
 
         // TO-DO: CHECK, if it is required here. Delete for now:
-        // this.controller.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
+        // this.controller.handleViewOfTotalPrceInCart(sessionIdCartPrice.priceTotal);
         return sessionIdCartPrice;
     };
 
@@ -522,55 +536,55 @@ export class Controller {
     };
 
     // Left Container - Render Order Panel
-    renderOrderPanel = () => {
+    renderOrderPanel = (orderDetailsToDisplay, orderItemsToDisplay) => {
         this.clearContainerLeft();
 
-        const orderWrapper = this.viewOrders.createOrderWrapper();
+        const orderWrapper = this.viewOrders.createOrderWrapper(
+            orderDetailsToDisplay
+        );
 
-        // // Second argument ("true") is to create "Update" button
-        // checkOutWrapper.appendChild(
-        //     this.viewOrders.createBillToAddressContentBlock(
-        //         sessionIdCartDetails,
-        //         true
-        //     )
-        // );
+        // Second argument ("false") is to DO NOT create "Update" button
+        orderWrapper.appendChild(
+            this.viewOrders.createBillToAddressContentBlock(
+                orderDetailsToDisplay,
+                false
+            )
+        );
 
-        // // Second argument ("true") is to create "Update" button
-        // checkOutWrapper.appendChild(
-        //     this.viewOrders.createPaymentMethodContentBlock(
-        //         sessionIdCartDetails,
-        //         true
-        //     )
-        // );
+        // Second argument ("false") is to DO NOT create "Update" button
+        orderWrapper.appendChild(
+            this.viewOrders.createPaymentMethodContentBlock(
+                orderDetailsToDisplay,
+                false
+            )
+        );
 
-        // const checkOutCartWrapper = this.viewOrders.createCheckOutCartWrapper();
+        const orderCartWrapper = this.viewOrders.createCheckOutCartWrapper();
 
-        // const cartItems = document.createElement("div");
-        // cartItems.classList = "checkout-cart-items";
+        const cartItems = document.createElement("div");
+        cartItems.classList = "checkout-cart-items";
 
-        // for (const productItem of sessionIdCartItems) {
-        //     const productData = this.getProductObjectById(productItem.itemId);
-        //     // Third argument ("checkout-cart-item") is a classList to pass to 'div' element
-        //     // Fourth argument ("true") is for not to create a "qty update" feature
-        //     cartItems.appendChild(
-        //         this.viewCart.createProductCardForCart(
-        //             productData,
-        //             productItem.qty,
-        //             "checkout-cart-item",
-        //             false
-        //         )
-        //     );
-        // }
+        for (const productItem of orderItemsToDisplay) {
+            const productData = this.getProductObjectById(productItem.itemId);
+            // Third argument ("checkout-cart-item") is a classList to pass to 'div' element
+            // Fourth argument ("true") is for not to create a "qty update" feature
+            cartItems.appendChild(
+                this.viewCart.createProductCardForCart(
+                    productData,
+                    productItem.qty,
+                    "checkout-cart-item",
+                    false
+                )
+            );
+        }
 
-        // checkOutCartWrapper.appendChild(cartItems);
+        orderCartWrapper.appendChild(cartItems);
 
-        // checkOutCartWrapper.appendChild(
-        //     this.viewOrders.createUpdateButtonBlock()
-        // );
+        // orderCartWrapper.appendChild(this.viewOrders.createUpdateButtonBlock());
 
-        // checkOutWrapper.appendChild(checkOutCartWrapper);
+        orderWrapper.appendChild(orderCartWrapper);
 
-        // this.containerLeftNode.appendChild(checkOutWrapper);
+        this.containerLeftNode.appendChild(orderWrapper);
     };
 
     // Right Container - Render Checkout Price Panel
@@ -581,6 +595,18 @@ export class Controller {
             this.viewOrders.createOrderSummaryPriceBlock(
                 sessionIdCartPrice,
                 true
+            )
+        );
+    };
+
+    // Right Container - Render Order Price Panel
+    renderOrderPricePanel = (orderDetailsToDisplay) => {
+        this.clearContainerRight();
+        this.containerRightNode.appendChild(
+            // Second argument ("false") is to NOT TO create "Place Order" button
+            this.viewOrders.createOrderSummaryPriceBlock(
+                orderDetailsToDisplay,
+                false
             )
         );
     };
@@ -672,11 +698,12 @@ export class Controller {
 
         // 2.A. Prepare newOrderItems to pass to Firestore
         const newOrderItems = JSON.parse(JSON.stringify(sessionIdCartItems));
+        const newOrderId = JSON.parse(JSON.stringify(newOrderDetails.orderId));
 
         // TEST-TBS REMOVE IN PROD
         console.log("[*** newOrderItems ***] set: ", newOrderItems);
         for (const productItem in newOrderItems) {
-            newOrderItems[productItem].orderId = newOrderDetails.orderId;
+            newOrderItems[productItem].orderId = newOrderId;
 
             console.log(
                 "[*** productItem ***] set: ",
@@ -721,6 +748,8 @@ export class Controller {
         } catch (error) {
             console.error("Error updating local variables: ", error);
         }
+
+        this.handleDisplayOrder(newOrderId);
     };
 
     // "Proceed to checkout" button at right panel
@@ -740,9 +769,30 @@ export class Controller {
         this.renderProductCard(productToDisplay);
     };
 
+    // Display Order By Order Number
+    handleDisplayOrder = (orderNumber) => {
+        console.log("Received command DISPLAY ORDER:", orderNumber);
+
+        // Get "orderDetailsToDisplay" by orderNumber:
+        const orderDetailsToDisplay =
+            this.getOrderDetailsToDisplay(orderNumber);
+        console.log("orderDetailsToDisplay: ", orderDetailsToDisplay);
+
+        // Get "orderItemsToDisplay" by orderNumber:
+        const orderItemsToDisplay = this.getOrderItemsToDisplay(orderNumber);
+        console.log("orderItemsToDisplay: ", orderItemsToDisplay);
+
+        this.renderOrderPanel(orderDetailsToDisplay, orderItemsToDisplay);
+        this.renderOrderPricePanel(orderDetailsToDisplay);
+    };
+
     handleDisplayHistoricalOrder = (element) => {
         // TEST-TBS REMOVE IN PROD
         console.log("Display ORDER with ID: ", element.id);
+
+        const orderNumber = this.getProdIdFromElementId(element.id);
+
+        this.handleDisplayOrder(orderNumber);
     };
 
     handleQtyChangeBtn = (elementDOM, adder) => {
@@ -835,7 +885,7 @@ export class Controller {
         //  update total price 'sessionIdCartPrice' (global variable)
         this.callToUpdateCartPriceVariable();
         //  update/re-render 'total price' in user's cart (DOM)
-        this.handleViewOfTotalPrceInCart(sessionIdCartPrice.total);
+        this.handleViewOfTotalPrceInCart(sessionIdCartPrice.priceTotal);
     };
 
     // Update product QTY in CART in 2 locations: price and selector

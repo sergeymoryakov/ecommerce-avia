@@ -53,7 +53,7 @@ export class ViewOrders {
         itemsTitle.innerText = "Items:";
 
         const itemsAmount = document.createElement("p");
-        itemsAmount.innerText = `$${sessionIdCartPrice.items}`;
+        itemsAmount.innerText = `$${sessionIdCartPrice.priceItems}`;
 
         const handlingWrapper = document.createElement("div");
         handlingWrapper.classList = "flex-between";
@@ -62,7 +62,7 @@ export class ViewOrders {
         handlingTitle.innerText = "Handling:";
 
         const handlingAmount = document.createElement("p");
-        handlingAmount.innerText = `$${sessionIdCartPrice.handling}`;
+        handlingAmount.innerText = `$${sessionIdCartPrice.priceHandling}`;
 
         const totalWrapper = document.createElement("div");
         totalWrapper.classList = "flex-between bold";
@@ -71,7 +71,7 @@ export class ViewOrders {
         totalTitle.innerText = "Total:";
 
         const totalAmount = document.createElement("p");
-        totalAmount.innerText = `$${sessionIdCartPrice.total}`;
+        totalAmount.innerText = `$${sessionIdCartPrice.priceTotal}`;
 
         itemsWrapper.appendChild(itemsTitle);
         itemsWrapper.appendChild(itemsAmount);
@@ -120,6 +120,25 @@ export class ViewOrders {
         checkOutWrapper.appendChild(goBackBtn);
 
         return checkOutWrapper;
+    };
+
+    // Left Container - Create createOrderWrapper
+    createOrderWrapper = (orderDetailsToDisplay) => {
+        const orderWrapper = document.createElement("div");
+        orderWrapper.classList = "order-wrapper";
+
+        const goBackBtn = document.createElement("button");
+        goBackBtn.classList = "goto-products-btn";
+        goBackBtn.innerText = "< Back to Products";
+
+        const title = document.createElement("h2");
+        title.classList = "order-number";
+        title.innerText = `Order # ${orderDetailsToDisplay.orderId}`;
+
+        orderWrapper.appendChild(goBackBtn);
+        orderWrapper.appendChild(title);
+
+        return orderWrapper;
     };
 
     // Left Container - Create BillToAddressContentBlock
