@@ -851,6 +851,26 @@ export class Controller {
         }
     };
 
+    // Update payment method if new one is selected by User
+    updatePaymentMethodInSession = () => {
+        const selectedRadioId = this.handleRadioButtonSelection();
+
+        if (selectedRadioId !== null) {
+            // Check if a radio button was selected
+            if (sessionIdCartDetails.paymentMethod !== selectedRadioId) {
+                // Compare with current value
+                sessionIdCartDetails.paymentMethod = selectedRadioId; // Update if different
+                console.log(`Updated paymentMethod to ${selectedRadioId}`);
+            } else {
+                console.log("paymentMethod is the same. No update needed.");
+            }
+        } else {
+            console.log(
+                "No radio button selected. Cannot update paymentMethod."
+            );
+        }
+    };
+
     addProduct = (itemId, userId) => {
         const newProductToCart = {
             docId: this.handleNewIdGeneration(),
@@ -925,8 +945,10 @@ export class Controller {
         // Clear Popup Content
         console.log("Got comand to ACTIVATE POPUP");
         this.popupContentNode.innerHTML = "";
-        this.popupContentNode.innerHTML =
-            this.viewOrders.createPopupUpdateAddress();
+        const newAddress = this.viewOrders.createPopupUpdateAddress();
+        this.popupContentNode.appendChild(newAddress);
+        // this.popupContentNode.innerHTML =
+        //     this.viewOrders.createPopupUpdateAddress();
         this.togglePopup();
     };
 
@@ -934,14 +956,37 @@ export class Controller {
         // Clear Popup Content
         console.log("Got comand to ACTIVATE POPUP");
         this.popupContentNode.innerHTML = "";
-        this.popupContentNode.innerHTML =
-            this.viewOrders.createPopupUpdatePaymentMethod();
+        this.popupContentNode.appendChild(
+            this.viewOrders.createPopupUpdatePaymentMethod(paymentMethods)
+        );
         this.togglePopup();
     };
 
     togglePopup = () => {
         this.bodyNode.classList.toggle(BODY_FIXED_CLASSNAME);
         this.containerPupupNode.classList.toggle(POPUP_OPEN_CLASSNAME);
+    };
+
+    // Function to handle radio button selection in POPUP SECTION
+    handleRadioButtonSelection = () => {
+        const radioButtons = document.querySelectorAll(
+            'input[type="radio"][name="method"]'
+        );
+        let selectedRadioId = null;
+
+        radioButtons.forEach((radio) => {
+            if (radio.checked) {
+                selectedRadioId = radio.id;
+            }
+        });
+
+        if (selectedRadioId) {
+            console.log("Selected radio button ID: ", selectedRadioId);
+            return selectedRadioId;
+        } else {
+            console.log("No radio button selected!");
+            return null;
+        }
     };
 
     // *** BUTTON CLICK HANDLERS ***
@@ -1073,7 +1118,26 @@ export class Controller {
     };
 
     handleButtonsClickPupup = (event) => {
-        // *** TODO OPEN ***
+        const target = event.target;
+
+        // Update Address Button
+        if (target.id === "updateAddressBtn") {
+            console.log("clicked element with class: ", target.classList);
+
+            this.togglePopup();
+        }
+
+        // Update Payment Method Button
+        if (target.id === "updatePaymentMethodBtn") {
+            console.log("clicked element with class: ", target.classList);
+            this.updatePaymentMethodInSession();
+            console.log(
+                "Check if sessionIdCartDetails updated: ",
+                sessionIdCartDetails
+            );
+            this.renderCheckOutPanel();
+            this.togglePopup();
+        }
     };
 
     attachEventListenrs = () => {
