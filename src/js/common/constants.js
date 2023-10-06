@@ -17,6 +17,12 @@ export const integerNames = [
     "itemQty",
 ];
 
+export const paymentMethods = {
+    wire: "C.I.A. Wire transfer.",
+    card: "C.I.A. Company credit card.",
+    net30: "Net30. Pay within 30 calendar days.",
+};
+
 // IMPORT TO MODEL-FIREBASE.JS REMOVED FOR TEST-TBS // FOR PROD RE-ACTIVATE
 export const firebaseConfig = {
     apiKey: "AIzaSyAaafzn29XLZBor7sXmsi3PMDsg_cxcakk",

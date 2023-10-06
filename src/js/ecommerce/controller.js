@@ -10,7 +10,7 @@ import { ModelOrders } from "./model-orders.js";
 import { ModelUser } from "./model-user.js";
 
 // Get DB collection names (dbCollectionNames) from constants.js
-import { dbCollectionNames } from "../common/constants.js";
+import { dbCollectionNames, paymentMethods } from "../common/constants.js";
 
 // Init database instance (dataBase):
 let dataBase = {};
@@ -37,6 +37,10 @@ let sessionIdCartDetails = {
     // custBillToAddress: "2023, Cactus Road, Springdale, FL, 33761 USA",
     // custHandlingFee: 1,
 };
+
+// TO-DO: MOVE TO CONSTANTS
+const POPUP_OPEN_CLASSNAME = "popup-container-open";
+const BODY_FIXED_CLASSNAME = "body-fixed";
 
 // let newOrderDetails = {
 //     // userId: "1001",
@@ -82,8 +86,11 @@ export class Controller {
         this.modelOrders = new ModelOrders();
         this.modelUser = new ModelUser();
 
+        this.bodyNode = document.querySelector("body");
         this.containerLeftNode = document.getElementById("containerLeft");
         this.containerRightNode = document.getElementById("containerRight");
+        this.containerPupupNode = document.getElementById("containerPupup");
+        this.popupContentNode = document.getElementById("popupContent");
     }
 
     initializeAppMain = async () => {
@@ -259,6 +266,11 @@ export class Controller {
             paymentMethod: sessionIdCustomer.paymentMethod,
         };
         return updatedSessionIdCartDetails;
+    };
+
+    // Reset Session Cart Items (when order placed)
+    resetSessionIdCartItems = () => {
+        sessionIdCartItems = [];
     };
 
     // Revert back from map an image URL by image name
@@ -742,6 +754,9 @@ export class Controller {
             }
         }
 
+        // 3.B. Reset sessionIdCartItems
+        this.resetSessionIdCartItems();
+
         console.log("UPDATE LOCAL DATABASE VARIABLES HERE");
         try {
             await this.getUpdateLocalDataBase();
@@ -904,6 +919,32 @@ export class Controller {
         this.viewCart.updateTotalPrice(newPrice);
     };
 
+    // *** POPUP SECTION FUNCTIONS ***
+
+    activatePopupUpdateAddress = () => {
+        // Clear Popup Content
+        console.log("Got comand to ACTIVATE POPUP");
+        this.popupContentNode.innerHTML = "";
+        this.popupContentNode.innerHTML =
+            this.viewOrders.createPopupUpdateAddress();
+        this.togglePopup();
+    };
+
+    activatePopupUpdatePaymentMethod = () => {
+        // Clear Popup Content
+        console.log("Got comand to ACTIVATE POPUP");
+        this.popupContentNode.innerHTML = "";
+        this.popupContentNode.innerHTML =
+            this.viewOrders.createPopupUpdatePaymentMethod();
+        this.togglePopup();
+    };
+
+    togglePopup = () => {
+        this.bodyNode.classList.toggle(BODY_FIXED_CLASSNAME);
+        this.containerPupupNode.classList.toggle(POPUP_OPEN_CLASSNAME);
+    };
+
+    // *** BUTTON CLICK HANDLERS ***
     handleButtonsClickLeft = (event) => {
         const target = event.target;
 
@@ -956,6 +997,36 @@ export class Controller {
             this.handleQtyChangeBtn(target, 1);
             return;
         }
+
+        // "Update" button for Bill-to-Address at checkout
+        const updateAddress = this.findAncestorByClass(
+            target,
+            "address-wrapper"
+        );
+        if (updateAddress) {
+            console.log("Got command to UPDATE ADDRESS");
+            this.activatePopupUpdateAddress();
+        }
+
+        // "Update" button for Payment Method at checkout
+        const updatePaymentMethod = this.findAncestorByClass(
+            target,
+            "payment-method-wrapper"
+        );
+        if (updatePaymentMethod) {
+            console.log("Got command to UPDATE PAYMENT METHOD");
+            this.activatePopupUpdatePaymentMethod();
+        }
+
+        // "Update" button for Cart Items at checkout
+        const updateCheckoutCart = this.findAncestorByClass(
+            target,
+            "checkout-cart-wrapper"
+        );
+        if (updateCheckoutCart) {
+            console.log("Got command to UPDATE CHECKOUT CART ITEMS");
+            this.handleGotoCartBtn();
+        }
     };
 
     handleButtonsClickRight = (event) => {
@@ -987,7 +1058,6 @@ export class Controller {
             "cart-checkout-btn"
         );
         if (proceedToCheckoutBtn) {
-            // TO-DO
             this.handleProceedToCheckoutBtn();
         }
 
@@ -997,10 +1067,13 @@ export class Controller {
             "place-order-btn"
         );
         if (placeOrderBtn) {
-            // TO-DO
             console.log("Received PLACE ORDER command.");
             this.handleOrderPlacement();
         }
+    };
+
+    handleButtonsClickPupup = (event) => {
+        // *** TODO OPEN ***
     };
 
     attachEventListenrs = () => {
@@ -1012,6 +1085,11 @@ export class Controller {
         this.containerRightNode.addEventListener(
             "click",
             this.handleButtonsClickRight
+        );
+
+        this.containerPupupNode.addEventListener(
+            "click",
+            this.handleButtonsClickPupup
         );
     };
 

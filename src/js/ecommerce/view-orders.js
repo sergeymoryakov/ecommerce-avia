@@ -232,4 +232,95 @@ export class ViewOrders {
 
         return wrapper;
     };
+
+    createPopupUpdateAddress = () => {
+        const updateAddress = `                
+                <div class="popup-address">
+                    <div class="popup-item-wrapper">
+                        <label for="custLegalName">Company Name</label>
+                        <input
+                            type="text"
+                            name="custLegalName"
+                            id=""
+                            placeholder="AeroSupplyPlus LLC"
+                        />
+                    </div>
+                    <div class="popup-item-wrapper">
+                        <label for="custAddress">Company Address</label>
+                        <input
+                            type="text"
+                            name="custAddress"
+                            id=""
+                            placeholder="Suite 2023, Cactus Road, Springdale, FL, 33761 USA"
+                        />
+                    </div>
+                    <div class="popup-item-wrapper">
+                        <label for="custContactName">Company Contact</label>
+                        <input
+                            type="text"
+                            name="custContactName"
+                            id=""
+                            placeholder="Mattew Yampolski"
+                        />
+                    </div>
+                    <div class="popup-item-wrapper">
+                        <label for="custPhone">Company Contact Phone</label>
+                        <input
+                            type="tel"
+                            name="custPhone"
+                            id=""
+                            placeholder="+1 898 928928928"
+                        />
+                    </div>
+                    <div class="popup-item-wrapper">
+                        <label for="custEmail">Company Contact Email</label>
+                        <input
+                            type="email"
+                            name="custEmail"
+                            id=""
+                            placeholder="supply@aerosupplyplus.aero"
+                        />
+                    </div>
+                    <button class="update-btn" id="updateAddressBtn">Update</button>
+                </div>`;
+        return updateAddress;
+    };
+
+    createPopupUpdatePaymentMethod = () => {
+        const updatePaymentMethod = `
+            <div class="popup-payment-method">
+                <div>
+                    <input
+                        type="radio"
+                        name="method"
+                        id="wire"
+                        value="C.I.A. Wire transfer."
+                    />
+                    <label for="wire">C.I.A. Wire transfer.</label>
+                </div>
+                <div>
+                    <input
+                        type="radio"
+                        name="method"
+                        id="card"
+                        value="C.I.A. Company credit card."
+                    />
+                    <label for="card">C.I.A. Company credit card.</label>
+                </div>
+                <div>
+                    <input
+                        type="radio"
+                        name="method"
+                        id="net30"
+                        value="Net30. Pay within 30 calendar days."
+                    />
+                    <label for="net30"
+                        >Net30. Pay within 30 calendar days.</label
+                    >
+                </div>
+                <button class="update-btn" id="updatePaymentMethodBtn">Update</button>
+            </div>
+        `;
+        return updatePaymentMethod;
+    };
 }
