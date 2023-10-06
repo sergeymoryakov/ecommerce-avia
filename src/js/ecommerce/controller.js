@@ -15,6 +15,7 @@ import {
     paymentMethods,
     welcomeDisclaimer,
     errorInsufficientPermission,
+    errorEmptyCart,
     messageArrayTest,
 } from "../common/constants.js";
 
@@ -113,9 +114,6 @@ export class Controller {
         this.modelOrders.checkModuleLinkage();
         this.modelUser.checkModuleLinkage();
 
-        // RUN DISCLAIMER FIRST
-        this.activatePopupWelcomeDisclaimer();
-
         // Get data from database (Firebase) and keep in local dataBase{}
         await this.getUpdateLocalDataBase();
 
@@ -137,6 +135,9 @@ export class Controller {
 
             imageLinksMap.set(docName.itemImg, imageURL);
         }
+
+        // RUN DISCLAIMER FIRST
+        this.activatePopupWelcomeDisclaimer();
 
         // FOR TEST AND TBS - REMOVE IN PROD:
         // console.log("imageLinksMap: ", imageLinksMap);
@@ -295,10 +296,17 @@ export class Controller {
     };
 
     // Set "sessionIdOrders" by sesstion's userId (sessionIdNumber):
+    // getOrdersByUserID = (sessionIdNumber) => {
+    //     return dataBase.ordersData.filter(
+    //         (order) => order.userId === sessionIdNumber
+    //     );
+    // };
+
+    // New version:
     getOrdersByUserID = (sessionIdNumber) => {
-        return dataBase.ordersData.filter(
-            (order) => order.userId === sessionIdNumber
-        );
+        return dataBase.ordersData
+            .filter((order) => order.userId === sessionIdNumber)
+            .sort((a, b) => a.orderDate - b.orderDate);
     };
 
     // Get "orderDetailsToDisplay" by orderNumber:
@@ -696,6 +704,11 @@ export class Controller {
         // TEST-TBS REMOVE IN PROD
         console.log("Received command to PLACE ORDER (HANDLER CONNECTED).");
 
+        if (sessionIdCartPrice.priceTotal === 0) {
+            this.activatePopupMessage(errorEmptyCart);
+            return;
+        }
+
         // 1.A. Prepare newOrderDetails to pass to Firestore
         const newOrderDetails = JSON.parse(
             JSON.stringify(
@@ -958,8 +971,6 @@ export class Controller {
         this.popupContentNode.innerHTML = "";
         const newContent = this.viewAdmin.createPopupMessage(welcomeDisclaimer);
         this.popupContentNode.appendChild(newContent);
-        // this.popupContentNode.innerHTML =
-        //     this.viewOrders.createPopupUpdateAddress();
         this.togglePopup();
     };
 
@@ -969,8 +980,6 @@ export class Controller {
         this.popupContentNode.innerHTML = "";
         const newContent = this.viewAdmin.createPopupMessage(customMessage);
         this.popupContentNode.appendChild(newContent);
-        // this.popupContentNode.innerHTML =
-        //     this.viewOrders.createPopupUpdateAddress();
         this.togglePopup();
     };
 
@@ -978,10 +987,8 @@ export class Controller {
         // Clear Popup Content
         console.log("Got comand to ACTIVATE POPUP");
         this.popupContentNode.innerHTML = "";
-        const newAddress = this.viewOrders.createPopupUpdateAddress();
+        const newAddress = this.viewAdmin.createPopupUpdateAddress();
         this.popupContentNode.appendChild(newAddress);
-        // this.popupContentNode.innerHTML =
-        //     this.viewOrders.createPopupUpdateAddress();
         this.togglePopup();
     };
 
@@ -990,7 +997,7 @@ export class Controller {
         console.log("Got comand to ACTIVATE POPUP");
         this.popupContentNode.innerHTML = "";
         this.popupContentNode.appendChild(
-            this.viewOrders.createPopupUpdatePaymentMethod(paymentMethods)
+            this.viewAdmin.createPopupUpdatePaymentMethod(paymentMethods)
         );
         this.togglePopup();
     };

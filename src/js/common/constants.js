@@ -54,3 +54,9 @@ export const errorInsufficientPermission = [
     "Please contact your organization's purchasing approver to resolve this issue.",
     "We sincerely apologize for the inconvenience.",
 ];
+
+export const errorEmptyCart = [
+    "Hold on a moment!",
+    "It looks like your cart is empty.",
+    "Add some items to your cart to continue with the checkout process.",
+];
