@@ -180,7 +180,11 @@ export class ViewOrders {
     };
 
     // Left Container - Create PaymentMethodContentBlock
-    createPaymentMethodContentBlock = (sessionIdCartDetails, updateButton) => {
+    createPaymentMethodContentBlock = (
+        sessionIdCartDetails,
+        updateButton,
+        paymentMethods
+    ) => {
         const paymentMethodWrapper = document.createElement("div");
         paymentMethodWrapper.classList = "payment-method-wrapper";
 
@@ -189,7 +193,8 @@ export class ViewOrders {
         title.innerText = "Payment Method";
 
         const paymentMethod = document.createElement("p");
-        paymentMethod.innerText = sessionIdCartDetails.paymentMethod;
+        paymentMethod.innerText =
+            paymentMethods[sessionIdCartDetails.paymentMethod];
 
         paymentMethodWrapper.appendChild(title);
         paymentMethodWrapper.appendChild(paymentMethod);
@@ -310,13 +315,6 @@ export class ViewOrders {
         // Create the main wrapper div
         const popupPaymentMethod = document.createElement("div");
         popupPaymentMethod.classList.add("popup-payment-method");
-
-        // Define the paymentMethods object
-        // const paymentMethods = {
-        //     wire: "C.I.A. Wire transfer.",
-        //     card: "C.I.A. Company credit card.",
-        //     net30: "Net30. Pay within 30 calendar days.",
-        // };
 
         // Use Object.entries to iterate over paymentMethods object
         Object.entries(paymentMethods).forEach(([key, value], index) => {

@@ -10,7 +10,13 @@ import { ModelOrders } from "./model-orders.js";
 import { ModelUser } from "./model-user.js";
 
 // Get DB collection names (dbCollectionNames) from constants.js
-import { dbCollectionNames, paymentMethods } from "../common/constants.js";
+import {
+    dbCollectionNames,
+    paymentMethods,
+    welcomeDisclaimer,
+    errorInsufficientPermission,
+    messageArrayTest,
+} from "../common/constants.js";
 
 // Init database instance (dataBase):
 let dataBase = {};
@@ -107,6 +113,9 @@ export class Controller {
         this.modelOrders.checkModuleLinkage();
         this.modelUser.checkModuleLinkage();
 
+        // RUN DISCLAIMER FIRST
+        this.activatePopupWelcomeDisclaimer();
+
         // Get data from database (Firebase) and keep in local dataBase{}
         await this.getUpdateLocalDataBase();
 
@@ -169,7 +178,7 @@ export class Controller {
             sessionIdCartDetails
         );
 
-        // ALERT - POPOUP DISCLAMER
+        // ALERT - POPOUP DISCLAIMER
         // *** ACTION NEEDED ***: UNCOMMENT FOR PROD
         // confirm(
         //     `Hi there, this application was set for demonstration purpose, therefore a User ID ${sessionIdNumber} was assigned for this session. Fake Name, Lastname, and other user properties are generated for practice purpose only. Should you wish to use this application and/or customize it fo the purpose of your business please reach out to the developer at seppo.gigital@gmail.com.`
@@ -513,7 +522,8 @@ export class Controller {
         checkOutWrapper.appendChild(
             this.viewOrders.createPaymentMethodContentBlock(
                 sessionIdCartDetails,
-                true
+                true,
+                paymentMethods
             )
         );
 
@@ -567,7 +577,8 @@ export class Controller {
         orderWrapper.appendChild(
             this.viewOrders.createPaymentMethodContentBlock(
                 orderDetailsToDisplay,
-                false
+                false,
+                paymentMethods
             )
         );
 
@@ -941,6 +952,28 @@ export class Controller {
 
     // *** POPUP SECTION FUNCTIONS ***
 
+    activatePopupWelcomeDisclaimer = () => {
+        // Clear Popup Content
+        console.log("Got comand to ACTIVATE WELCOME DISCLAIMER");
+        this.popupContentNode.innerHTML = "";
+        const newContent = this.viewAdmin.createPopupMessage(welcomeDisclaimer);
+        this.popupContentNode.appendChild(newContent);
+        // this.popupContentNode.innerHTML =
+        //     this.viewOrders.createPopupUpdateAddress();
+        this.togglePopup();
+    };
+
+    activatePopupMessage = (customMessage) => {
+        // Clear Popup Content
+        console.log("Got comand to ACTIVATE CUSTOM MESSAGE");
+        this.popupContentNode.innerHTML = "";
+        const newContent = this.viewAdmin.createPopupMessage(customMessage);
+        this.popupContentNode.appendChild(newContent);
+        // this.popupContentNode.innerHTML =
+        //     this.viewOrders.createPopupUpdateAddress();
+        this.togglePopup();
+    };
+
     activatePopupUpdateAddress = () => {
         // Clear Popup Content
         console.log("Got comand to ACTIVATE POPUP");
@@ -1120,11 +1153,18 @@ export class Controller {
     handleButtonsClickPupup = (event) => {
         const target = event.target;
 
+        // Update button in Update Address section
+        if (target.id === "agreeBtn") {
+            console.log("clicked element with class: ", target.classList);
+            this.togglePopup();
+        }
+
         // Update Address Button
         if (target.id === "updateAddressBtn") {
             console.log("clicked element with class: ", target.classList);
 
             this.togglePopup();
+            this.activatePopupMessage(errorInsufficientPermission);
         }
 
         // Update Payment Method Button

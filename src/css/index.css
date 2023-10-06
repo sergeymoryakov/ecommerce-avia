@@ -816,6 +816,25 @@ html {
     border-radius: 1.5em; */
 }
 
+.popup-welcome-wrapper {
+    /* position: relative;
+    margin-inline: 1em;
+    padding: 1em;
+    width: 100%;
+    max-width: 600px;
+    max-height: 100%; */
+
+    /* NOTE: "overflow-y" Might Create scroll - remove if not needed  */
+    /* overflow-y: auto; */
+
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    /* background-color: var(--clr-white);
+    border-radius: 1.5em; */
+}
+
 @media (min-width: 400px) {
     .popup-content {
         margin-inline: 2em;
