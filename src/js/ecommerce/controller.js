@@ -281,14 +281,7 @@ export class Controller {
         );
     };
 
-    // Set "sessionIdOrders" by sesstion's userId (sessionIdNumber):
-    // Old version:
-    // getOrdersByUserID = (sessionIdNumber) => {
-    //     return dataBase.ordersData.filter(
-    //         (order) => order.userId === sessionIdNumber
-    //     );
-    // };
-    // New version (sorted):
+    // Set "sessionIdOrders" by sesstion's userId and sorted by orderDate:
     getOrdersByUserID = (sessionIdNumber) => {
         return dataBase.ordersData
             .filter((order) => order.userId === sessionIdNumber)

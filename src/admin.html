@@ -19,18 +19,25 @@
         <link rel="stylesheet" href="./css/index.css" />
     </head>
     <body>
-        <div class="nav">
-            <a class="admin-btn" href="index.html">Index</a>
-            <button class="admin-btn" id="getServerBtn">Server Only</button>
-            <button class="admin-btn" id="getLocalBtn">Backup & Server</button>
-            <button class="admin-btn" id="parseIntBtn">Pricing to Int</button>
-            <button class="admin-btn" id="testBtn">BackUp DB to Console</button>
-            <button class="admin-btn" id="backupBtn">Backup to Local</button>
-            <!-- <a class="nav-link" href="index.html">index</a> -->
-        </div>
-        <div class="master-container">
-            <div class="container-left" id="containerLeft"></div>
-            <div class="container-right" id="containerRight"></div>
+        <div class="admin-container">
+            <div class="nav-bar">
+                <a class="admin-btn" href="index.html">Index</a>
+                <button class="admin-btn" id="getServerBtn">Server Only</button>
+                <button class="admin-btn" id="getLocalBtn">
+                    Backup & Server
+                </button>
+                <button class="admin-btn" id="parseIntBtn">
+                    Pricing -> Integers
+                </button>
+                <button class="admin-btn" id="testBtn">
+                    BackUp DB to Console
+                </button>
+                <button class="admin-btn" id="backupBtn">
+                    Backup to Local
+                </button>
+            </div>
+            <div class="nav-collections" id="containerRight"></div>
+            <div class="tables-collections" id="containerLeft"></div>
         </div>
         <script type="module" src="./js/admin/admin-index.js"></script>
     </body>

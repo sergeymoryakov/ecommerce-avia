@@ -1,0 +1,129 @@
+/* ORDERS LIST */
+.order-list-title {
+    margin-top: 1em;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.orders-list {
+    margin-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
+    gap: 1em;
+    /* border: 1px dashed red; */
+}
+
+.order-number-btn {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+.order-number-btn:hover {
+    font-weight: 700;
+    text-decoration: underline;
+}
+/* END of ORDERS LIST */
+
+/* ORDER SUMMARY */
+.order-summary {
+    padding: 1em;
+    background-color: var(--clr-white);
+    border-radius: 1.5em;
+}
+
+.order-summary-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.flex-between {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+/* .order-summary-total {
+    margin-top: 0.5em;
+    padding-top: 0.5em;
+    font-size: 1.15rem;
+    font-weight: 700;
+    border-top: 1px solid var(--clr-dark);
+} */
+
+.place-order-btn-wrapper {
+    margin-top: 0.5em;
+    padding-top: 0.5em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* border: 1px dashed red; */
+    border-top: 1px solid var(--clr-dark);
+}
+
+.place-order-btn {
+    font-family: inherit;
+    padding: 0.5em 1em;
+    color: var(--clr-white);
+    background-color: var(--clr-black);
+    border: 1px solid var(--clr-grey);
+    border-radius: 0.7em;
+    cursor: pointer;
+}
+
+.place-order-btn:hover {
+    color: var(--clr-black);
+    background-color: var(--clr-white);
+}
+/* END of ORDER SUMMARY */
+
+/* ORDER */
+.order-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    /* border: 1px dashed red; */
+}
+
+.order-number {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.order-cart-item-wrapper {
+    padding: 1em;
+    /* margin-top: 0.5em; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* gap: 0.5em; */
+    background-color: var(--clr-white);
+    border-radius: 1.5em;
+    /* border: 1px dashed green; */
+}
+.order-cart-item {
+    /* padding-bottom: 0.5em; */
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    /* border-bottom: 1px solid var(--clr-dark); */
+}
+
+@media (min-width: 300px) {
+    .order-cart-item {
+        flex-direction: row;
+    }
+
+    /* .cart-item__img-wrapper {
+        flex: 1;
+    }
+
+    .cart-item__summary-wrapper {
+        flex: 3;
+    } */
+}
+/* END of ORDER*/

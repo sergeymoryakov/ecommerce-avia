@@ -1,0 +1,150 @@
+/* ADMIN SECTION */
+
+/* ADMIN SECTION ONLY */
+.admin-container {
+    margin: 0 auto;
+    padding: 0 1em;
+    max-width: 1400px;
+    height: 100svh;
+    overflow: auto;
+}
+
+.nav-bar {
+    margin: 0 auto 1em;
+    padding: 1em 1em;
+    /* max-width: 1400px; */
+    background-color: #ededed;
+    color: var(--clr-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.5em;
+}
+
+@media (min-width: 800px) {
+    .nav-bar {
+        flex-direction: row;
+        gap: 1em;
+    }
+}
+
+.admin-btn {
+    padding: 0.25em;
+    color: #fff;
+    background-color: #000;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    text-decoration: none;
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
+.menu-title {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* .admin-menu-btn-wrapper, */
+.menu-btn-wrapper {
+    display: block;
+    margin-top: 1em;
+    width: 100%;
+    /* border: 1px dashed red; */
+}
+
+/* .admin-menu-btn, */
+.menu-btn {
+    display: block;
+    font-family: inherit;
+    padding: 0.5em;
+    text-align: center;
+    color: var(--clr-white);
+    background-color: var(--clr-black);
+    border: 1px solid var(--clr-black);
+    border-radius: 0.7em;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* .admin-menu-btn:hover, */
+.menu-btn:hover {
+    color: var(--clr-black);
+    background-color: var(--clr-white);
+}
+
+/* .admin-users,
+.admin-customers,
+.admin-orders,
+.admin-products, */
+.db-section {
+    margin-bottom: 1em;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    /* white-space: nowrap; */
+}
+
+/* .admin-users__title,
+.admin-customers__title,
+.admin-orders__title,
+.admin-products__title,
+.admin-menu-title, */
+.db-section__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* .admin-users__table,
+.admin-customers__table,
+.admin-orders__table,
+.admin-products__table, */
+.db-section__table {
+    margin-top: 1em;
+    width: max-content;
+    font-size: 1rem;
+}
+
+/* .admin-users table,
+.admin-users th,
+.admin-users td,
+.admin-customers table,
+.admin-customers th,
+.admin-customers td,
+.admin-orders table,
+.admin-orders th,
+.admin-orders td,
+.admin-products table,
+.admin-products th,
+.admin-products td, */
+.db-section table,
+.db-section th,
+.db-section td {
+    border: 1px solid black;
+}
+
+/* .admin-users__table-raw_data,
+.admin-customers__table-raw_data,
+.admin-orders__table-raw_data,
+.admin-products__table-raw_data, */
+.db-section__table_cell {
+    padding: 0.2em;
+    width: fit-content;
+    max-width: 20em;
+}
+
+/* .add-btn,
+.admin-update-btn, */
+.db-section__table_btn {
+    background-color: var(--clr-black);
+    color: var(--clr-white);
+    font-weight: 700;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.db-section__table_btn:hover {
+    color: var(--clr-black);
+    background-color: var(--clr-white);
+}

@@ -148,17 +148,51 @@ export class AdminView {
         this.containerLeftNode.appendChild(tableWrapper);
     };
 
-    createMenuBtn = (arrayName) => {
-        const menuBtnWrapper = document.createElement("li");
-        menuBtnWrapper.classList = "menu-btn-wrapper";
+    // createMenuBtn = (arrayName) => {
+    //     const menuBtnWrapper = document.createElement("li");
+    //     menuBtnWrapper.classList = "menu-btn-wrapper";
 
+    //     const menuBtn = document.createElement("a");
+    //     menuBtn.classList = "menu-btn";
+    //     menuBtn.href = `#0_${arrayName}`;
+    //     menuBtn.innerText = `${arrayName}`;
+
+    //     menuBtnWrapper.appendChild(menuBtn);
+    //     return menuBtnWrapper;
+    // };
+
+    // createMenu = (collectionNames) => {
+    //     // Init menu wrapper:
+    //     const menuWrapper = document.createElement("div");
+    //     menuWrapper.classList = "menu-section";
+
+    //     // Add menu title:
+    //     const menuTitle = document.createElement("h2");
+    //     menuTitle.classList = "menu-title";
+    //     menuTitle.innerText = "Tables";
+    //     menuWrapper.appendChild(menuTitle);
+
+    //     // Create menu list:
+    //     const menuList = document.createElement("ul");
+
+    //     for (const arrayName of collectionNames) {
+    //         const newBtn = this.createMenuBtn(arrayName);
+    //         menuList.appendChild(newBtn);
+    //     }
+
+    //     // Add menu to wrapper:
+    //     menuWrapper.appendChild(menuList);
+
+    //     return menuWrapper;
+    // };
+
+    createMenuBtn = (arrayName) => {
         const menuBtn = document.createElement("a");
-        menuBtn.classList = "menu-btn";
+        menuBtn.classList = "admin-btn";
         menuBtn.href = `#0_${arrayName}`;
         menuBtn.innerText = `${arrayName}`;
 
-        menuBtnWrapper.appendChild(menuBtn);
-        return menuBtnWrapper;
+        return menuBtn;
     };
 
     createMenu = (collectionNames) => {
@@ -169,19 +203,20 @@ export class AdminView {
         // Add menu title:
         const menuTitle = document.createElement("h2");
         menuTitle.classList = "menu-title";
-        menuTitle.innerText = "Tables";
+        menuTitle.innerText = "DB Collections";
         menuWrapper.appendChild(menuTitle);
 
         // Create menu list:
-        const menuList = document.createElement("ul");
+        const menuDiv = document.createElement("div");
+        menuDiv.classList = "nav-bar";
 
         for (const arrayName of collectionNames) {
             const newBtn = this.createMenuBtn(arrayName);
-            menuList.appendChild(newBtn);
+            menuDiv.appendChild(newBtn);
         }
 
         // Add menu to wrapper:
-        menuWrapper.appendChild(menuList);
+        menuWrapper.appendChild(menuDiv);
 
         return menuWrapper;
     };

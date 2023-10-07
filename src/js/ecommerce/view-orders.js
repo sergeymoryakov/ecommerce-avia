@@ -10,13 +10,16 @@ export class ViewOrders {
     createOrdersHistoryTitle = () => {
         const title = document.createElement("h2");
         title.classList = "order-list-title";
-        title.innerText = "Orders";
+        title.innerText = "Orders History";
         return title;
     };
 
     // Right Container - Render Order Links
     createOrdersHistorySummary = (sessionIdOrders) => {
         const ordersHistorySummary = this.createOrdersHistoryTitle();
+
+        // Sorting ORDER ID strings alphabetically
+        sessionIdOrders.sort((a, b) => a.orderId.localeCompare(b.orderId));
 
         const ordersWrapper = document.createElement("div");
         ordersWrapper.classList = "orders-list";
@@ -30,9 +33,6 @@ export class ViewOrders {
         }
 
         ordersHistorySummary.appendChild(ordersWrapper);
-
-        // TEST-TBS - REMOVE FO PROD
-        // console.log("ordersHistorySummary: ", ordersHistorySummary);
 
         return ordersHistorySummary;
     };
