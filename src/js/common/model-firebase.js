@@ -72,6 +72,10 @@ export class ModelFirebase {
             }
             newCollection.push(newCollectionItem);
         });
+
+        if (collectionName === "productItems") {
+            newCollection.sort((a, b) => a.itemName.localeCompare(b.itemName));
+        }
         // console.log(newCollection);
         return newCollection;
     };
