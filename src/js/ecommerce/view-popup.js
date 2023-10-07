@@ -1,7 +1,7 @@
-export class ViewAdmin {
+export class ViewPopup {
     constructor() {}
     checkModuleLinkage = () => {
-        console.log("HELLO, ViewAdmin is connected!");
+        console.log("HELLO, ViewPopup is connected!");
     };
 
     createPopupMessage = (messageArray) => {

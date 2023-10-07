@@ -1,7 +1,7 @@
 import { ViewProducts } from "./view-products.js";
 import { ViewCart } from "./view-cart.js";
 import { ViewOrders } from "./view-orders.js";
-import { ViewAdmin } from "./view-admin.js";
+import { ViewPopup } from "./view-popup.js";
 import { ViewSuperadmin } from "./view-superadmin.js";
 import { ModelFirebase } from "../common/model-firebase.js";
 import { ModelProducts } from "./model-products.js";
@@ -16,7 +16,7 @@ import {
     welcomeDisclaimer,
     errorInsufficientPermission,
     errorEmptyCart,
-    messageArrayTest,
+    // messageArrayTest,
 } from "../common/constants.js";
 
 // Init database instance (dataBase):
@@ -85,7 +85,7 @@ export class Controller {
         this.viewProducts = new ViewProducts(this);
         this.viewCart = new ViewCart(this);
         this.viewOrders = new ViewOrders(this);
-        this.viewAdmin = new ViewAdmin();
+        this.viewPopup = new ViewPopup();
         this.viewSuperadmin = new ViewSuperadmin();
         this.modelFirebase = new ModelFirebase();
         this.modelProducts = new ModelProducts();
@@ -106,7 +106,7 @@ export class Controller {
         this.viewProducts.checkModuleLinkage();
         this.viewCart.checkModuleLinkage();
         this.viewOrders.checkModuleLinkage();
-        this.viewAdmin.checkModuleLinkage();
+        this.viewPopup.checkModuleLinkage();
         this.viewSuperadmin.checkModuleLinkage();
         this.modelFirebase.checkModuleLinkage();
         this.modelProducts.checkModuleLinkage();
@@ -479,7 +479,7 @@ export class Controller {
         cartSummaryWrapper.appendChild(cartSummary);
 
         // TEST-TBS - REMOVE IN PROD
-        console.log("cart Summary with Total: ", cartSummaryWrapper);
+        // console.log("cart Summary with Total: ", cartSummaryWrapper);
 
         this.clearContainerRight();
         this.containerRightNode.appendChild(cartSummaryWrapper);
@@ -938,7 +938,7 @@ export class Controller {
         // Clear Popup Content
         console.log("Got comand to ACTIVATE WELCOME DISCLAIMER");
         this.popupContentNode.innerHTML = "";
-        const newContent = this.viewAdmin.createPopupMessage(welcomeDisclaimer);
+        const newContent = this.viewPopup.createPopupMessage(welcomeDisclaimer);
         this.popupContentNode.appendChild(newContent);
         this.togglePopup();
     };
@@ -947,7 +947,7 @@ export class Controller {
         // Clear Popup Content
         console.log("Got comand to ACTIVATE CUSTOM MESSAGE");
         this.popupContentNode.innerHTML = "";
-        const newContent = this.viewAdmin.createPopupMessage(customMessage);
+        const newContent = this.viewPopup.createPopupMessage(customMessage);
         this.popupContentNode.appendChild(newContent);
         this.togglePopup();
     };
@@ -956,7 +956,7 @@ export class Controller {
         // Clear Popup Content
         console.log("Got comand to ACTIVATE POPUP");
         this.popupContentNode.innerHTML = "";
-        const newAddress = this.viewAdmin.createPopupUpdateAddress();
+        const newAddress = this.viewPopup.createPopupUpdateAddress();
         this.popupContentNode.appendChild(newAddress);
         this.togglePopup();
     };
@@ -966,7 +966,7 @@ export class Controller {
         console.log("Got comand to ACTIVATE POPUP");
         this.popupContentNode.innerHTML = "";
         this.popupContentNode.appendChild(
-            this.viewAdmin.createPopupUpdatePaymentMethod(paymentMethods)
+            this.viewPopup.createPopupUpdatePaymentMethod(paymentMethods)
         );
         this.togglePopup();
     };
