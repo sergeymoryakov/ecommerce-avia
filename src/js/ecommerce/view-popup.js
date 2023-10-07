@@ -29,7 +29,7 @@ export class ViewPopup {
         return messageWrapper;
     };
 
-    createPopupUpdateAddress = () => {
+    createPopupUpdateAddress = (sessionIdCartDetails) => {
         // Create the main wrapper div
         const popupAddress = document.createElement("div");
         popupAddress.classList.add("popup-address");
@@ -40,32 +40,31 @@ export class ViewPopup {
                 label: "Company Name",
                 name: "custLegalName",
                 type: "text",
-                placeholder: "AeroSupplyPlus LLC",
+                placeholder: sessionIdCartDetails.custLegalName,
             },
             {
                 label: "Company Address",
-                name: "custAddress",
+                name: "custBillToAddress",
                 type: "text",
-                placeholder:
-                    "Suite 2023, Cactus Road, Springdale, FL, 33761 USA",
+                placeholder: sessionIdCartDetails.custBillToAddress,
             },
             {
                 label: "Company Contact",
-                name: "custContactName",
+                name: "userName",
                 type: "text",
-                placeholder: "Matthew Yampolski",
+                placeholder: sessionIdCartDetails.userName,
             },
             {
                 label: "Company Contact Phone",
-                name: "custPhone",
+                name: "userPhone",
                 type: "tel",
-                placeholder: "+1 898 928928928",
+                placeholder: sessionIdCartDetails.userPhone,
             },
             {
                 label: "Company Contact Email",
-                name: "custEmail",
+                name: "userEmail",
                 type: "email",
-                placeholder: "supply@aerosupplyplus.aero",
+                placeholder: sessionIdCartDetails.userEmail,
             },
         ];
 

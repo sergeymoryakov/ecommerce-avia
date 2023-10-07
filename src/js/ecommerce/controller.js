@@ -2,7 +2,6 @@ import { ViewProducts } from "./view-products.js";
 import { ViewCart } from "./view-cart.js";
 import { ViewOrders } from "./view-orders.js";
 import { ViewPopup } from "./view-popup.js";
-import { ViewSuperadmin } from "./view-superadmin.js";
 import { ModelFirebase } from "../common/model-firebase.js";
 import { ModelProducts } from "./model-products.js";
 import { ModelCart } from "./model-cart.js";
@@ -86,7 +85,6 @@ export class Controller {
         this.viewCart = new ViewCart(this);
         this.viewOrders = new ViewOrders(this);
         this.viewPopup = new ViewPopup();
-        this.viewSuperadmin = new ViewSuperadmin();
         this.modelFirebase = new ModelFirebase();
         this.modelProducts = new ModelProducts();
         this.modelCart = new ModelCart(this);
@@ -107,7 +105,6 @@ export class Controller {
         this.viewCart.checkModuleLinkage();
         this.viewOrders.checkModuleLinkage();
         this.viewPopup.checkModuleLinkage();
-        this.viewSuperadmin.checkModuleLinkage();
         this.modelFirebase.checkModuleLinkage();
         this.modelProducts.checkModuleLinkage();
         this.modelCart.checkModuleLinkage();
@@ -956,7 +953,8 @@ export class Controller {
         // Clear Popup Content
         console.log("Got comand to ACTIVATE POPUP");
         this.popupContentNode.innerHTML = "";
-        const newAddress = this.viewPopup.createPopupUpdateAddress();
+        const newAddress =
+            this.viewPopup.createPopupUpdateAddress(sessionIdCartDetails);
         this.popupContentNode.appendChild(newAddress);
         this.togglePopup();
     };
