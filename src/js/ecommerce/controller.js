@@ -139,9 +139,6 @@ export class Controller {
         // RUN DISCLAIMER FIRST
         this.activatePopupWelcomeDisclaimer();
 
-        // FOR TEST AND TBS - REMOVE IN PROD:
-        // console.log("imageLinksMap: ", imageLinksMap);
-
         // Assign to sessionIdNumber a userId of the first user object/document from DB (usersData[0].userId)
         sessionIdNumber = dataBase.usersData[0].userId;
         console.log("Assigned to [*** sessionIdNumber ***]: ", sessionIdNumber);
@@ -157,7 +154,7 @@ export class Controller {
             sessionIdCustomer
         );
 
-        // Get values to CURRENT SESSION VARIABLES
+        // GET VALUES TO CURRENT SESSION VARIABLES
         // 1. Set "sessionIdCartItems" by sesstion's userId (sessionIdNumber):
         sessionIdCartItems = this.getCartItemsByUserID(sessionIdNumber);
         console.log(
@@ -179,12 +176,6 @@ export class Controller {
             sessionIdCartDetails
         );
 
-        // ALERT - POPOUP DISCLAIMER
-        // *** ACTION NEEDED ***: UNCOMMENT FOR PROD
-        // confirm(
-        //     `Hi there, this application was set for demonstration purpose, therefore a User ID ${sessionIdNumber} was assigned for this session. Fake Name, Lastname, and other user properties are generated for practice purpose only. Should you wish to use this application and/or customize it fo the purpose of your business please reach out to the developer at seppo.gigital@gmail.com.`
-        // );
-
         // Left Container - Render product items
         this.renderProductItemsList(dataBase.productItems);
 
@@ -192,8 +183,6 @@ export class Controller {
         this.renderCartAndOrdersSummary(sessionIdCartItems, sessionIdOrders);
 
         this.attachEventListenrs();
-
-        // TEST-TBS ONLY:
     };
 
     // TO-DO: check where it is used?
@@ -296,13 +285,13 @@ export class Controller {
     };
 
     // Set "sessionIdOrders" by sesstion's userId (sessionIdNumber):
+    // Old version:
     // getOrdersByUserID = (sessionIdNumber) => {
     //     return dataBase.ordersData.filter(
     //         (order) => order.userId === sessionIdNumber
     //     );
     // };
-
-    // New version:
+    // New version (sorted):
     getOrdersByUserID = (sessionIdNumber) => {
         return dataBase.ordersData
             .filter((order) => order.userId === sessionIdNumber)
@@ -328,9 +317,6 @@ export class Controller {
             (product) => product.itemId === productId
         );
 
-        // TEST-TBS - REMOVE IN PROD
-        // console.log("productObject: ", productObject);
-        // console.log("productObject[0].itemImg: ", productObject[0].itemImg);
         return productObject[0].itemImg;
     };
 
@@ -338,8 +324,6 @@ export class Controller {
         const productById = productItems.filter(
             (product) => product.itemId === productId
         );
-        // console.log("productById: ", productById);
-        // console.log("productById[0]: ", productById[0]);
         return productById[0].itemPrice;
     };
 
@@ -356,7 +340,6 @@ export class Controller {
         if (filteredArray.length === 0) {
             return null;
         }
-        // return object
         return filteredArray[0];
     };
 
@@ -373,8 +356,8 @@ export class Controller {
     };
 
     callToUpdateCartPriceVariable = () => {
-        console.log("Received command to call for Price Variable update");
         // TEST-TBD
+        console.log("Received command to call for Price Variable update");
         this.updateCartPriceVariable(
             sessionIdCartItems,
             sessionIdCartPrice,
@@ -394,19 +377,19 @@ export class Controller {
         let newHandlingFee = 0;
 
         // TO-DO: CHECK, if it is required here. Delete for now:
-        console.log(
-            "MODEL - [*** sessionIdCartItems ***]: ",
-            sessionIdCartItems
-        );
-        console.log(
-            "MODEL - [*** sessionIdCartPrice ***]: ",
-            sessionIdCartPrice
-        );
-        console.log(
-            "MODEL - [*** dataBase.productItems ***]: ",
-            dataBase.productItems
-        );
-        console.log("MODEL - [*** sessionIdCustome ***]: ", sessionIdCustomer);
+        // console.log(
+        //     "MODEL - [*** sessionIdCartItems ***]: ",
+        //     sessionIdCartItems
+        // );
+        // console.log(
+        //     "MODEL - [*** sessionIdCartPrice ***]: ",
+        //     sessionIdCartPrice
+        // );
+        // console.log(
+        //     "MODEL - [*** dataBase.productItems ***]: ",
+        //     dataBase.productItems
+        // );
+        // console.log("MODEL - [*** sessionIdCustome ***]: ", sessionIdCustomer);
 
         for (const item of sessionIdCartItems) {
             newItemsPrice +=
@@ -422,8 +405,6 @@ export class Controller {
         console.log("new sessionIdCartPrice: ", sessionIdCartPrice);
         console.log("for sessionIdCartItems: ", sessionIdCartItems);
 
-        // TO-DO: CHECK, if it is required here. Delete for now:
-        // this.controller.handleViewOfTotalPrceInCart(sessionIdCartPrice.priceTotal);
         return sessionIdCartPrice;
     };
 
@@ -435,14 +416,6 @@ export class Controller {
         productItemsList.appendChild(
             this.viewProducts.createProductItemsList(arrayProducts)
         );
-        // TEST-TBS - REMOVE FOR PROD
-        // Reset global variable:
-        // productsList.innerHTML = "";
-        // productsList.appendChild(productItemsList);
-
-        // TEST-TBS - REMOVE FOR PROD
-        // console.log("productsList: ", productsList);
-        // console.log("productsList: ", productsList.innerHTML);
 
         this.clearContainerLeft();
         this.containerLeftNode.appendChild(productItemsList);
@@ -483,8 +456,8 @@ export class Controller {
             this.viewOrders.createOrdersHistorySummary(sessionIdOrders);
 
         // TEST-TBS - REMOVE IN PROD
-        console.log("cartSummaryNoTotal: ", cartItems);
-        console.log("ordersHistorySummary: ", ordersHistory);
+        // console.log("cartSummaryNoTotal: ", cartItems);
+        // console.log("ordersHistorySummary: ", ordersHistory);
 
         cartAndOrdersSummary.appendChild(cartItems);
         cartAndOrdersSummary.appendChild(ordersHistory);
@@ -611,8 +584,6 @@ export class Controller {
 
         orderCartWrapper.appendChild(cartItems);
 
-        // orderCartWrapper.appendChild(this.viewOrders.createUpdateButtonBlock());
-
         orderWrapper.appendChild(orderCartWrapper);
 
         this.containerLeftNode.appendChild(orderWrapper);
@@ -642,8 +613,7 @@ export class Controller {
         );
     };
 
-    // Support funtions for buttons handler:
-
+    // SUPPORT FUNCTIONS FOR BUTTON HANDLERS
     // Handle click of complex element by picking it's parent element class
     findAncestorByClass = (element, className) => {
         let currentElement = element;
@@ -964,7 +934,6 @@ export class Controller {
     };
 
     // *** POPUP SECTION FUNCTIONS ***
-
     activatePopupWelcomeDisclaimer = () => {
         // Clear Popup Content
         console.log("Got comand to ACTIVATE WELCOME DISCLAIMER");
@@ -1204,7 +1173,7 @@ export class Controller {
         );
     };
 
-    // Database support functions
+    // DATABASE SUPPORT FUNCTIONS
     handleAddDocToFirestore = (collectionName, documentObject) => {
         console.log(
             "Controller: got a requst to add [object]: ",

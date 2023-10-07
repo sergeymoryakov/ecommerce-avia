@@ -215,11 +215,7 @@ export class ViewOrders {
         title.classList = "checkout-cart-title";
         title.innerText = "Cart";
 
-        // const cartItemsWrapper = document.createElement("div");
-        // cartItemsWrapper.classList = "checkout-cart-items";
-
         checkOutCartWrapper.appendChild(title);
-        // checkOutCartWrapper.appendChild(cartItemsWrapper);
 
         return checkOutCartWrapper;
     };

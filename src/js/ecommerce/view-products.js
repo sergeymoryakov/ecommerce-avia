@@ -80,10 +80,6 @@ export class ViewProducts {
             productList.appendChild(newProductItemCard);
         }
 
-        // Render product list container
-        // this.controller.containerLeftNode.appendChild(productList);
-
-        console.log("productList: ", productList);
         return productList;
     };
 
