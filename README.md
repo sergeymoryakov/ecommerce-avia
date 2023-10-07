@@ -23,7 +23,7 @@ The application is built using:
 
 ## 🛠 Installation
 
-As this is a training project, there's no installation process required. Simply visit the [GitHub page](https://github.com/sergeymoryakov) to access the application.
+As this is a training project, there's no installation process required. Simply visit the [GitHub page](https://sergeymoryakov.github.io/ecommerce-avia/) to access the application.
 
 ## 🤝 Contributing
 
