@@ -115,7 +115,7 @@ export class Controller {
         await this.getUpdateLocalDataBase();
 
         // Create Image Links Map:
-        console.log("Action: Create Image Links Map imageLinksMap{}:");
+        // console.log("Action: Create Image Links Map imageLinksMap{}:");
 
         for (const docName of dataBase.productItems) {
             const imageURL = await this.modelFirebase
@@ -926,7 +926,7 @@ export class Controller {
     // *** POPUP SECTION FUNCTIONS ***
     activatePopupWelcomeDisclaimer = () => {
         // Clear Popup Content
-        console.log("Got comand to ACTIVATE WELCOME DISCLAIMER");
+        // console.log("Got comand to ACTIVATE WELCOME DISCLAIMER");
         this.popupContentNode.innerHTML = "";
         const newContent = this.viewPopup.createPopupMessage(welcomeDisclaimer);
         this.popupContentNode.appendChild(newContent);
@@ -1122,7 +1122,7 @@ export class Controller {
 
         // Update button in Update Address section
         if (target.id === "agreeBtn") {
-            console.log("clicked element with class: ", target.classList);
+            // console.log("clicked element with class: ", target.classList);
             this.togglePopup();
         }
 
