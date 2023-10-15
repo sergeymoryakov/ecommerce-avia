@@ -210,4 +210,22 @@ export class ViewProducts {
 
         return productCardMain;
     };
+
+    createSpinner = () => {
+        const spinnerFrame = document.createElement("div");
+        spinnerFrame.classList = "spinnerFrame";
+
+        const spinner = document.createElement("div");
+        spinner.classList = "spinner";
+        spinner.id = "spinner";
+
+        const spinnerText = document.createElement("div");
+        spinnerText.classList = "spinnerText";
+        spinnerText.textContent = "One moment, I'm downloading content...";
+
+        spinnerFrame.appendChild(spinner);
+        spinnerFrame.appendChild(spinnerText);
+
+        return spinnerFrame;
+    };
 }

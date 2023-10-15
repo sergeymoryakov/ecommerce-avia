@@ -114,6 +114,8 @@ export class Controller {
         // Get data from database (Firebase) and keep in local dataBase{}
         await this.getUpdateLocalDataBase();
 
+        this.renderSpinner();
+
         // Create Image Links Map:
         // console.log("Action: Create Image Links Map imageLinksMap{}:");
 
@@ -180,6 +182,13 @@ export class Controller {
         this.renderCartAndOrdersSummary(sessionIdCartItems, sessionIdOrders);
 
         this.attachEventListenrs();
+    };
+
+    renderSpinner = () => {
+        const spinner = this.viewProducts.createSpinner();
+
+        this.clearContainerLeft();
+        this.containerLeftNode.appendChild(spinner);
     };
 
     // TO-DO: check where it is used?
